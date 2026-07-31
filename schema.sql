@@ -131,6 +131,15 @@ INSERT OR IGNORE INTO company_stats (title, value, unit, description, icon, sect
 ('不锈钢焊接筛网', '1', '万㎡', '筛网类产品', 'grid-3x3', 'parts_capacity', 2),
 ('筛板', '4000', '㎡', '筛板类产品', 'layout-grid', 'parts_capacity', 3);
 
+-- 默认产品数据
+INSERT OR IGNORE INTO products (name, slug, summary, icon, category, sort_order, is_featured, is_published) VALUES
+('LL-A 立式刮刀卸料离心脱水机', 'll-a-centrifuge', '末精煤、末中煤脱水；入料粒度 0–13mm；立式刮刀卸料防堵、独立稀油站强制润滑。', 'refresh-cw', '脱水设备', 1, 1, 1),
+('机械搅拌式浮选机', 'mechanical-flotation-machine', '-0.5mm 细粒煤泥分选；自吸矿浆+自吸空气；叶轮-定子组优化，精煤回收率高。', 'droplets', '分选设备', 2, 1, 1),
+('跳汰机及跳汰成套设备', 'jig-machine', '粗、中粒煤排矸与分选；单机或成套；电控、排料、风阀按煤质配置。', 'arrow-up-down', '分选设备', 3, 0, 1),
+('旋流器及旋流器组', 'hydrocyclone', '分级、浓缩、重介分选三用；耐磨衬里与进料压力段可改型。', 'target', '分选设备', 4, 0, 1),
+('高频筛 / 弧形筛', 'high-frequency-screen', '脱水、脱介、分级；常与离心机、旋流器串联形成小段工艺。', 'layout-grid', '筛分设备', 5, 0, 1),
+('自产配件', 'spare-parts', '筛篮、不锈钢焊接筛网、筛板、旋流器衬件、浮选机叶轮定子、离心机刮刀。', 'package', '配件', 6, 0, 1);
+
 -- 索引
 CREATE INDEX IF NOT EXISTS idx_contacts_status ON contacts(status);
 CREATE INDEX IF NOT EXISTS idx_contacts_created_at ON contacts(created_at);
