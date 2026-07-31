@@ -293,6 +293,35 @@
           }
         ]
       }
+    },
+    {
+      "id": "page-admin-dashboard-v2",
+      "title": "管理仪表盘 - 优化版",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785521141000,
+      "canvasData": {
+        "x": 1240,
+        "y": 2106,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/admin-dashboard-v2.html",
+        "interactions": [
+          {
+            "domId": "nav-site",
+            "targetPageId": "page-index",
+            "hideEdge": true,
+            "transitionLabel": "访问官网"
+          },
+          {
+            "domId": "logout-btn",
+            "targetPageId": "page-admin-login",
+            "hideEdge": true,
+            "transitionLabel": "退出登录"
+          }
+        ]
+      }
     }
   ],
   "config": {

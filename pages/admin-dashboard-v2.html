@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理仪表盘 - 优化版 - 唐山嘉港环保科技有限公司</title>
+    <style id="theme-vars">
+:root {
+  --jiagang-background: #ffffff;
+  --jiagang-foreground: #0f172a;
+  --jiagang-card: #ffffff;
+  --jiagang-card-foreground: #0f172a;
+  --jiagang-popover: #ffffff;
+  --jiagang-popover-foreground: #0f172a;
+  --jiagang-primary: #0d9488;
+  --jiagang-primary-foreground: #ffffff;
+  --jiagang-muted: #f1f5f9;
+  --jiagang-muted-foreground: #64748b;
+  --jiagang-border: #e2e8f0;
+  --jiagang-input: #e2e8f0;
+  --jiagang-ring: #0d9488;
+  --jiagang-radius-small: 4px;
+  --jiagang-radius-medium: 8px;
+  --jiagang-radius-large: 12px;
+
+  --jiagang-primary-50: #f0fdfa;
+  --jiagang-primary-100: #ccfbf1;
+  --jiagang-primary-200: #99f6e4;
+  --jiagang-primary-300: #5eead4;
+  --jiagang-primary-400: #2dd4bf;
+  --jiagang-primary-500: #14b8a6;
+  --jiagang-primary-600: #0d9488;
+  --jiagang-primary-700: #0f766e;
+  --jiagang-primary-800: #115e59;
+  --jiagang-primary-900: #134e4a;
+
+  --jiagang-neutral-50: #f8fafc;
+  --jiagang-neutral-100: #f1f5f9;
+  --jiagang-neutral-200: #e2e8f0;
+  --jiagang-neutral-300: #cbd5e1;
+  --jiagang-neutral-400: #94a3b8;
+  --jiagang-neutral-500: #64748b;
+  --jiagang-neutral-600: #475569;
+  --jiagang-neutral-700: #334155;
+  --jiagang-neutral-800: #1e293b;
+  --jiagang-neutral-900: #0f172a;
+
+  --state-success: #10b981;
+  --state-warning: #f59e0b;
+  --state-error: #ef4444;
+  --state-info: #3b82f6;
+
+  --font-title: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.dark {
+  --jiagang-background: #0f172a;
+  --jiagang-foreground: #f8fafc;
+  --jiagang-card: #1e293b;
+  --jiagang-card-foreground: #f8fafc;
+  --jiagang-popover: #1e293b;
+  --jiagang-popover-foreground: #f8fafc;
+  --jiagang-primary: #14b8a6;
+  --jiagang-primary-foreground: #0f172a;
+  --jiagang-muted: #1e293b;
+  --jiagang-muted-foreground: #94a3b8;
+  --jiagang-border: #334155;
+  --jiagang-input: #334155;
+  --jiagang-ring: #14b8a6;
+}
+
+.font-title { font-family: var(--font-title); }
+.font-body { font-family: var(--font-body); }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--jiagang-background);
+    --color-foreground: var(--jiagang-foreground);
+    --color-card: var(--jiagang-card);
+    --color-card-foreground: var(--jiagang-card-foreground);
+    --color-popover: var(--jiagang-popover);
+    --color-popover-foreground: var(--jiagang-popover-foreground);
+    --color-primary: var(--jiagang-primary);
+    --color-primary-foreground: var(--jiagang-primary-foreground);
+    --color-muted: var(--jiagang-muted);
+    --color-muted-foreground: var(--jiagang-muted-foreground);
+    --color-border: var(--jiagang-border);
+    --color-input: var(--jiagang-input);
+    --color-ring: var(--jiagang-ring);
+    --radius-sm: var(--jiagang-radius-small);
+    --radius-md: var(--jiagang-radius-medium);
+    --radius-lg: var(--jiagang-radius-large);
+  }
+  @layer base {
+    body { background: var(--jiagang-background); color: var(--jiagang-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--jiagang-background); }
+      .text-background { color: var(--jiagang-background); }
+      .border-background { border-color: var(--jiagang-background); }
+      .ring-background { --tw-ring-color: var(--jiagang-background); }
+      .bg-foreground { background-color: var(--jiagang-foreground); }
+      .text-foreground { color: var(--jiagang-foreground); }
+      .border-foreground { border-color: var(--jiagang-foreground); }
+      .ring-foreground { --tw-ring-color: var(--jiagang-foreground); }
+      .bg-card { background-color: var(--jiagang-card); }
+      .text-card { color: var(--jiagang-card); }
+      .border-card { border-color: var(--jiagang-card); }
+      .ring-card { --tw-ring-color: var(--jiagang-card); }
+      .bg-card-foreground { background-color: var(--jiagang-card-foreground); }
+      .text-card-foreground { color: var(--jiagang-card-foreground); }
+      .border-card-foreground { border-color: var(--jiagang-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--jiagang-card-foreground); }
+      .bg-popover { background-color: var(--jiagang-popover); }
+      .text-popover { color: var(--jiagang-popover); }
+      .border-popover { border-color: var(--jiagang-popover); }
+      .ring-popover { --tw-ring-color: var(--jiagang-popover); }
+      .bg-popover-foreground { background-color: var(--jiagang-popover-foreground); }
+      .text-popover-foreground { color: var(--jiagang-popover-foreground); }
+      .border-popover-foreground { border-color: var(--jiagang-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--jiagang-popover-foreground); }
+      .bg-primary { background-color: var(--jiagang-primary); }
+      .text-primary { color: var(--jiagang-primary); }
+      .border-primary { border-color: var(--jiagang-primary); }
+      .ring-primary { --tw-ring-color: var(--jiagang-primary); }
+      .bg-primary-foreground { background-color: var(--jiagang-primary-foreground); }
+      .text-primary-foreground { color: var(--jiagang-primary-foreground); }
+      .border-primary-foreground { border-color: var(--jiagang-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--jiagang-primary-foreground); }
+      .bg-muted { background-color: var(--jiagang-muted); }
+      .text-muted { color: var(--jiagang-muted); }
+      .border-muted { border-color: var(--jiagang-muted); }
+      .ring-muted { --tw-ring-color: var(--jiagang-muted); }
+      .bg-muted-foreground { background-color: var(--jiagang-muted-foreground); }
+      .text-muted-foreground { color: var(--jiagang-muted-foreground); }
+      .border-muted-foreground { border-color: var(--jiagang-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--jiagang-muted-foreground); }
+      .bg-border { background-color: var(--jiagang-border); }
+      .text-border { color: var(--jiagang-border); }
+      .border-border { border-color: var(--jiagang-border); }
+      .ring-border { --tw-ring-color: var(--jiagang-border); }
+      .bg-input { background-color: var(--jiagang-input); }
+      .text-input { color: var(--jiagang-input); }
+      .border-input { border-color: var(--jiagang-input); }
+      .ring-input { --tw-ring-color: var(--jiagang-input); }
+      .bg-ring { background-color: var(--jiagang-ring); }
+      .text-ring { color: var(--jiagang-ring); }
+      .border-ring { border-color: var(--jiagang-ring); }
+      .ring-ring { --tw-ring-color: var(--jiagang-ring); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+
+      .admin-sidebar { background: var(--jiagang-neutral-900); }
+      .admin-sidebar a, .admin-sidebar button { transition: background-color .2s ease, color .2s ease; }
+      .admin-sidebar a:hover, .admin-sidebar button:hover { background: var(--jiagang-neutral-800); }
+      .admin-sidebar a.active { background: var(--jiagang-primary); color: var(--jiagang-primary-foreground); }
+
+      .stat-card { transition: transform .15s ease, box-shadow .15s ease; }
+      .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,.08); }
+
+      .contacts-table-wrap { overflow-x: auto; }
+      .contacts-table { width: 100%; border-collapse: collapse; }
+      .contacts-table th { background: var(--jiagang-muted); color: var(--jiagang-neutral-700); font-weight: 600; }
+      .contacts-table tbody tr { transition: background-color .15s ease; border-bottom: 1px solid var(--jiagang-border); }
+      .contacts-table tbody tr:hover { background: var(--jiagang-neutral-50); cursor: pointer; }
+      .contacts-table td, .contacts-table th { padding: .875rem 1rem; text-align: left; font-size: .875rem; }
+
+      .sortable { cursor: pointer; user-select: none; }
+      .sortable:hover { color: var(--jiagang-primary); }
+
+      .detail-drawer {
+        position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0;
+        transition: opacity .2s ease;
+      }
+      .detail-drawer.open { pointer-events: auto; opacity: 1; }
+      .detail-backdrop { position: absolute; inset: 0; background: rgba(15,23,42,.45); }
+      .detail-panel {
+        position: absolute; top: 0; right: 0; height: 100%; width: min(480px, 90vw);
+        background: var(--jiagang-card); border-left: 1px solid var(--jiagang-border);
+        transform: translateX(100%); transition: transform .25s ease;
+        display: flex; flex-direction: column;
+      }
+      .detail-drawer.open .detail-panel { transform: translateX(0); }
+
+      .toast {
+        position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 60;
+        transform: translateY(120%); opacity: 0; transition: transform .25s ease, opacity .25s ease;
+        background: var(--jiagang-card); border: 1px solid var(--jiagang-border);
+        box-shadow: 0 10px 30px rgba(15,23,42,.12); border-radius: var(--jiagang-radius-medium);
+        padding: .875rem 1.125rem; display: flex; align-items: center; gap: .625rem;
+        max-width: 24rem;
+      }
+      .toast.show { transform: translateY(0); opacity: 1; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .detail-drawer, .detail-panel, .toast, .contacts-table tbody tr, .stat-card, .admin-sidebar a, .admin-sidebar button {
+          transition: none !important;
+        }
+      }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row">
+    <aside class="admin-sidebar text-white w-full md:w-64 md:min-h-screen shrink-0">
+        <div class="p-6 flex items-center justify-between md:block">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold">嘉</div>
+                <div class="font-bold">嘉港后台</div>
+            </div>
+            <button id="sidebar-toggle" class="md:hidden p-2 text-[var(--jiagang-neutral-400)]" aria-label="切换菜单"><span data-lucide="menu" class="w-5 h-5"></span></button>
+        </div>
+        <nav id="sidebar-nav" class="hidden md:block px-4 pb-4 space-y-1">
+            <a href="#" class="active flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-dom-id="nav-dashboard"><span data-lucide="layout-dashboard" class="w-5 h-5"></span>仪表盘</a>
+            <a href="#contacts" class="flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-dom-id="nav-contacts"><span data-lucide="message-square" class="w-5 h-5"></span>留言管理</a>
+            <a href="#products" class="flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-dom-id="nav-products-admin"><span data-lucide="box" class="w-5 h-5"></span>产品管理</a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-dom-id="nav-site"><span data-lucide="external-link" class="w-5 h-5"></span>访问官网</a>
+            <button id="logout-btn" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)] text-left" data-dom-id="logout-btn"><span data-lucide="log-out" class="w-5 h-5"></span>退出登录</button>
+        </nav>
+    </aside>
+
+    <main class="flex-1 min-w-0 bg-[var(--jiagang-background)]">
+        <header class="sticky top-0 z-30 bg-[var(--jiagang-card)]/95 backdrop-blur border-b border-[var(--jiagang-border)] px-6 py-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <button id="header-sidebar-toggle" class="md:hidden p-2 rounded-lg hover:bg-[var(--jiagang-muted)] text-[var(--jiagang-muted-foreground)]" aria-label="切换菜单"><span data-lucide="menu" class="w-5 h-5"></span></button>
+                <h1 class="text-lg md:text-xl font-bold text-[var(--jiagang-foreground)]">管理仪表盘</h1>
+            </div>
+            <div class="flex items-center gap-4 md:gap-6 text-sm text-[var(--jiagang-muted-foreground)]">
+                <div class="hidden sm:flex items-center gap-2"><span data-lucide="calendar" class="w-4 h-4"></span><span id="current-date">--</span></div>
+                <div class="flex items-center gap-2"><span data-lucide="user" class="w-4 h-4"></span><span id="admin-name">管理员</span></div>
+            </div>
+        </header>
+
+        <div class="p-6 lg:p-10">
+            <div class="stats-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10" style="background:var(--jiagang-primary); transform:translate(30%,-30%);"></div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="message-square" class="w-5 h-5"></span></div>
+                        <div class="text-sm text-[var(--jiagang-muted-foreground)]">今日留言</div>
+                    </div>
+                    <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-today">0</div>
+                    <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">较昨日 <span id="trend-today" class="font-medium" style="color:var(--state-success);">+0</span></div>
+                </div>
+                <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10" style="background:var(--state-warning); transform:translate(30%,-30%);"></div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="clock" class="w-5 h-5"></span></div>
+                        <div class="text-sm text-[var(--jiagang-muted-foreground)]">未处理留言</div>
+                    </div>
+                    <div class="text-3xl font-bold text-[var(--jiagang-primary)]" id="stat-pending">0</div>
+                    <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">待跟进 <span id="trend-pending" class="font-medium" style="color:var(--state-warning);">请及时处理</span></div>
+                </div>
+                <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10" style="background:var(--state-info); transform:translate(30%,-30%);"></div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="check-circle-2" class="w-5 h-5"></span></div>
+                        <div class="text-sm text-[var(--jiagang-muted-foreground)]">累计留言</div>
+                    </div>
+                    <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-total">0</div>
+                    <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">总计收录 <span id="trend-total" class="font-medium" style="color:var(--jiagang-muted-foreground);">全部时间</span></div>
+                </div>
+                <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10" style="background:var(--state-success); transform:translate(30%,-30%);"></div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="box" class="w-5 h-5"></span></div>
+                        <div class="text-sm text-[var(--jiagang-muted-foreground)]">产品数量</div>
+                    </div>
+                    <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-products">6</div>
+                    <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">在线展示 <span class="font-medium" style="color:var(--state-success);">正常</span></div>
+                </div>
+            </div>
+
+            <section id="contacts" class="mb-10">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">留言管理</h2>
+                    <button id="refresh-contacts" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors" data-dom-id="refresh-contacts"><span data-lucide="refresh-cw" class="w-4 h-4"></span>刷新</button>
+                </div>
+
+                <div class="filter-toolbar flex flex-col lg:flex-row gap-3 mb-4 p-4 rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)]">
+                    <div class="relative flex-1 min-w-[12rem]">
+                        <span data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--jiagang-muted-foreground)]"></span>
+                        <input id="search-contacts" type="text" placeholder="搜索称呼、公司、电话或内容" class="w-full pl-9 pr-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] placeholder:text-[var(--jiagang-muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]" data-dom-id="search-contacts">
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative">
+                            <span data-lucide="filter" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--jiagang-muted-foreground)]"></span>
+                            <select id="filter-status" class="pl-9 pr-8 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]" data-dom-id="filter-status">
+                                <option value="">全部状态</option>
+                                <option value="pending">未处理</option>
+                                <option value="done">已处理</option>
+                            </select>
+                        </div>
+                        <select id="filter-type" class="px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]" data-dom-id="filter-type">
+                            <option value="">全部需求类型</option>
+                            <option value="产品咨询">产品咨询</option>
+                            <option value="技术支持">技术支持</option>
+                            <option value="合作洽谈">合作洽谈</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="contacts-table-wrap rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)]">
+                    <table class="contacts-table min-w-full">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="created_at">时间 <span data-lucide="chevron-down" class="w-3 h-3 inline-block align-middle"></span></th>
+                                <th>称呼</th>
+                                <th>公司</th>
+                                <th>电话</th>
+                                <th>需求类型</th>
+                                <th>留言内容</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contacts-body" data-dom-id="contacts-body">
+                            <tr><td colspan="8" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="pagination" class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 text-sm text-[var(--jiagang-muted-foreground)]">
+                    <div class="flex items-center gap-2">
+                        <span>每页</span>
+                        <select id="page-size" class="px-2 py-1 rounded border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                        <span>条，共 <span id="total-items">0</span> 条</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button id="page-prev" class="px-3 py-1.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] hover:bg-[var(--jiagang-muted)] disabled:opacity-50 disabled:cursor-not-allowed"><span data-lucide="chevron-left" class="w-4 h-4"></span></button>
+                        <span id="page-info" class="px-2">1 / 1</span>
+                        <button id="page-next" class="px-3 py-1.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] hover:bg-[var(--jiagang-muted)] disabled:opacity-50 disabled:cursor-not-allowed"><span data-lucide="chevron-right" class="w-4 h-4"></span></button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="products">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">产品管理</h2>
+                    <span class="text-xs px-2 py-1 rounded border border-[var(--jiagang-border)] text-[var(--jiagang-muted-foreground)]">静态页面维护</span>
+                </div>
+                <p class="text-sm text-[var(--jiagang-muted-foreground)] mb-4">产品信息可通过编辑 pages/products.html 与 pages/product-detail.html 更新，或后续对接 CMS 数据表。点击“查看”可跳转至对应前台页面。</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-5 flex items-start justify-between gap-4">
+                        <div>
+                            <div class="font-semibold text-[var(--jiagang-foreground)] mb-1">LL-A 立式刮刀卸料离心脱水机</div>
+                            <div class="text-xs text-[var(--jiagang-muted-foreground)]">主力产品 · 详情页维护</div>
+                        </div>
+                        <a href="product-detail.html" class="shrink-0 inline-flex items-center gap-1 text-sm font-medium" style="color:var(--jiagang-primary);"><span data-lucide="eye" class="w-4 h-4"></span>查看</a>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-5 flex items-start justify-between gap-4">
+                        <div>
+                            <div class="font-semibold text-[var(--jiagang-foreground)] mb-1">机械搅拌式浮选机</div>
+                            <div class="text-xs text-[var(--jiagang-muted-foreground)]">产品列表 · 通用维护</div>
+                        </div>
+                        <a href="products.html" class="shrink-0 inline-flex items-center gap-1 text-sm font-medium" style="color:var(--jiagang-primary);"><span data-lucide="eye" class="w-4 h-4"></span>查看</a>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-5 flex items-start justify-between gap-4">
+                        <div>
+                            <div class="font-semibold text-[var(--jiagang-foreground)] mb-1">跳汰机及成套设备</div>
+                            <div class="text-xs text-[var(--jiagang-muted-foreground)]">产品列表 · 通用维护</div>
+                        </div>
+                        <a href="products.html" class="shrink-0 inline-flex items-center gap-1 text-sm font-medium" style="color:var(--jiagang-primary);"><span data-lucide="eye" class="w-4 h-4"></span>查看</a>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-5 flex items-start justify-between gap-4">
+                        <div>
+                            <div class="font-semibold text-[var(--jiagang-foreground)] mb-1">旋流器 / 高频筛 / 弧形筛 / 配件</div>
+                            <div class="text-xs text-[var(--jiagang-muted-foreground)]">产品列表 · 通用维护</div>
+                        </div>
+                        <a href="products.html" class="shrink-0 inline-flex items-center gap-1 text-sm font-medium" style="color:var(--jiagang-primary);"><span data-lucide="eye" class="w-4 h-4"></span>查看</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="detail-drawer" class="detail-drawer" data-dom-id="detail-drawer" aria-hidden="true">
+        <div id="detail-backdrop" class="detail-backdrop" data-dom-id="detail-backdrop"></div>
+        <div class="detail-panel">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-[var(--jiagang-border)]">
+                <h3 class="text-lg font-bold text-[var(--jiagang-foreground)]">留言详情</h3>
+                <button id="detail-close" class="p-2 rounded-lg hover:bg-[var(--jiagang-muted)] text-[var(--jiagang-muted-foreground)]" data-dom-id="detail-close" aria-label="关闭"><span data-lucide="x" class="w-5 h-5"></span></button>
+            </div>
+            <div id="detail-content" class="flex-1 overflow-y-auto p-6 space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]">
+                        <div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">称呼</div>
+                        <div id="detail-name" class="font-medium text-[var(--jiagang-foreground)]">--</div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]">
+                        <div class="flex items-center gap-1 text-xs text-[var(--jiagang-muted-foreground)] mb-1"><span data-lucide="building-2" class="w-3 h-3"></span>公司</div>
+                        <div id="detail-company" class="font-medium text-[var(--jiagang-foreground)]">--</div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]">
+                        <div class="flex items-center gap-1 text-xs text-[var(--jiagang-muted-foreground)] mb-1"><span data-lucide="phone" class="w-3 h-3"></span>电话</div>
+                        <div id="detail-phone" class="font-medium text-[var(--jiagang-foreground)]">--</div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]">
+                        <div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">需求类型</div>
+                        <div id="detail-type" class="font-medium text-[var(--jiagang-foreground)]">--</div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]">
+                        <div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">状态</div>
+                        <div id="detail-status">--</div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]">
+                        <div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">提交时间</div>
+                        <div id="detail-time" class="font-medium text-[var(--jiagang-foreground)]">--</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-xs text-[var(--jiagang-muted-foreground)] mb-2">留言内容</div>
+                    <div id="detail-message" class="p-4 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] leading-relaxed whitespace-pre-wrap">--</div>
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-[var(--jiagang-border)] flex gap-3">
+                <button id="detail-toggle-status" class="flex-1 px-4 py-2 rounded-lg text-sm font-medium" style="background:var(--jiagang-primary); color:var(--jiagang-primary-foreground);">标记已处理</button>
+                <button id="detail-close-bottom" class="px-4 py-2 rounded-lg text-sm border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)]">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast" data-dom-id="toast" role="status" aria-live="polite">
+        <span id="toast-icon" data-lucide="check-circle-2" class="w-5 h-5" style="color:var(--state-success);"></span>
+        <span id="toast-message" class="text-sm text-[var(--jiagang-foreground)]">操作成功</span>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const token = localStorage.getItem('jiagang_admin_token');
+        if (!token) window.location.href = 'admin-login.html';
+
+        const state = {
+            contacts: [],
+            filtered: [],
+            page: 1,
+            pageSize: 10,
+            sortKey: 'created_at',
+            sortDesc: true,
+            selectedId: null,
+            loading: false
+        };
+
+        const els = {
+            sidebarNav: document.getElementById('sidebar-nav'),
+            sidebarToggle: document.getElementById('sidebar-toggle'),
+            headerSidebarToggle: document.getElementById('header-sidebar-toggle'),
+            logoutBtn: document.getElementById('logout-btn'),
+            currentDate: document.getElementById('current-date'),
+            refreshContacts: document.getElementById('refresh-contacts'),
+            searchContacts: document.getElementById('search-contacts'),
+            filterStatus: document.getElementById('filter-status'),
+            filterType: document.getElementById('filter-type'),
+            contactsBody: document.getElementById('contacts-body'),
+            pageSize: document.getElementById('page-size'),
+            totalItems: document.getElementById('total-items'),
+            pageInfo: document.getElementById('page-info'),
+            pagePrev: document.getElementById('page-prev'),
+            pageNext: document.getElementById('page-next'),
+            detailDrawer: document.getElementById('detail-drawer'),
+            detailBackdrop: document.getElementById('detail-backdrop'),
+            detailClose: document.getElementById('detail-close'),
+            detailCloseBottom: document.getElementById('detail-close-bottom'),
+            detailToggleStatus: document.getElementById('detail-toggle-status'),
+            toast: document.getElementById('toast')
+        };
+
+        function formatDate(date) {
+            const d = new Date(date);
+            return isNaN(d.getTime()) ? '--' : d.toLocaleString('zh-CN');
+        }
+
+        function setCurrentDate() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
+            els.currentDate.textContent = `${y}年${m}月${d}日 ${weekdays[now.getDay()]}`;
+        }
+        setCurrentDate();
+
+        function toggleSidebar() {
+            els.sidebarNav.classList.toggle('hidden');
+        }
+        els.sidebarToggle.addEventListener('click', toggleSidebar);
+        els.headerSidebarToggle.addEventListener('click', toggleSidebar);
+
+        els.logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('jiagang_admin_token');
+            window.location.href = 'admin-login.html';
+        });
+
+        async function api(path, options = {}) {
+            options.headers = options.headers || {};
+            options.headers['Authorization'] = 'Bearer ' + token;
+            return fetch(path, options);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text == null ? '' : text;
+            return div.innerHTML;
+        }
+
+        function truncate(str, len = 40) {
+            if (!str) return '-';
+            return str.length > len ? str.slice(0, len) + '...' : str;
+        }
+
+        function showToast(message, type = 'success') {
+            const iconMap = {
+                success: 'check-circle-2',
+                error: 'x-circle',
+                info: 'info'
+            };
+            const colorMap = {
+                success: 'var(--state-success)',
+                error: 'var(--state-error)',
+                info: 'var(--state-info)'
+            };
+            const iconName = iconMap[type] || iconMap.success;
+            document.getElementById('toast-icon').setAttribute('data-lucide', iconName);
+            document.getElementById('toast-icon').style.color = colorMap[type] || colorMap.success;
+            document.getElementById('toast-message').textContent = message;
+            lucide.createIcons();
+            els.toast.classList.add('show');
+            setTimeout(() => els.toast.classList.remove('show'), 3000);
+        }
+
+        function applyFilters() {
+            const kw = els.searchContacts.value.trim().toLowerCase();
+            const status = els.filterStatus.value;
+            const type = els.filterType.value;
+
+            state.filtered = state.contacts.filter(c => {
+                const inKw = !kw ||
+                    (c.name || '').toLowerCase().includes(kw) ||
+                    (c.company || '').toLowerCase().includes(kw) ||
+                    (c.phone || '').toLowerCase().includes(kw) ||
+                    (c.message || '').toLowerCase().includes(kw);
+                const inStatus = !status || c.status === status;
+                const inType = !type || c.type === type;
+                return inKw && inStatus && inType;
+            });
+
+            state.filtered.sort((a, b) => {
+                let av = a[state.sortKey], bv = b[state.sortKey];
+                if (state.sortKey === 'created_at') {
+                    av = new Date(av).getTime() || 0;
+                    bv = new Date(bv).getTime() || 0;
+                } else {
+                    av = (av || '').toString().toLowerCase();
+                    bv = (bv || '').toString().toLowerCase();
+                }
+                if (av < bv) return state.sortDesc ? 1 : -1;
+                if (av > bv) return state.sortDesc ? -1 : 1;
+                return 0;
+            });
+
+            state.page = 1;
+            renderTable();
+        }
+
+        function renderTable() {
+            const total = state.filtered.length;
+            const start = (state.page - 1) * state.pageSize;
+            const pageItems = state.filtered.slice(start, start + state.pageSize);
+            const totalPages = Math.max(1, Math.ceil(total / state.pageSize));
+
+            els.totalItems.textContent = total;
+            els.pageInfo.textContent = `${state.page} / ${totalPages}`;
+            els.pagePrev.disabled = state.page <= 1;
+            els.pageNext.disabled = state.page >= totalPages;
+
+            if (state.loading) {
+                els.contactsBody.innerHTML = `<tr><td colspan="8" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr>`;
+                return;
+            }
+
+            if (!state.contacts.length) {
+                els.contactsBody.innerHTML = `<tr><td colspan="8" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">暂无留言</td></tr>`;
+                return;
+            }
+
+            if (!pageItems.length) {
+                els.contactsBody.innerHTML = `<tr><td colspan="8" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">没有匹配的留言</td></tr>`;
+                return;
+            }
+
+            els.contactsBody.innerHTML = pageItems.map(c => {
+                const isPending = c.status === 'pending';
+                const statusBg = isPending ? 'var(--jiagang-primary-100)' : 'var(--jiagang-primary-50)';
+                const statusColor = isPending ? 'var(--jiagang-primary-800)' : 'var(--state-success)';
+                const statusLabel = isPending ? '未处理' : '已处理';
+                return `
+                    <tr data-id="${c.id}" onclick="openDetail(${c.id})">
+                        <td class="whitespace-nowrap">${formatDate(c.created_at)}</td>
+                        <td>${escapeHtml(c.name)}</td>
+                        <td>${escapeHtml(c.company || '-')}</td>
+                        <td>${escapeHtml(c.phone)}</td>
+                        <td>${escapeHtml(c.type || '-')}</td>
+                        <td class="max-w-xs">${escapeHtml(truncate(c.message, 36))}</td>
+                        <td><span class="px-2 py-1 rounded text-xs font-medium" style="background:${statusBg}; color:${statusColor};">${statusLabel}</span></td>
+                        <td>
+                            <button onclick="event.stopPropagation(); openDetail(${c.id})" class="inline-flex items-center gap-1 text-sm font-medium" style="color:var(--jiagang-primary);"><span data-lucide="eye" class="w-4 h-4"></span>查看详情</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        window.openDetail = function(id) {
+            const c = state.contacts.find(x => x.id === id);
+            if (!c) return;
+            state.selectedId = id;
+            const isPending = c.status === 'pending';
+            document.getElementById('detail-name').textContent = c.name || '--';
+            document.getElementById('detail-company').textContent = c.company || '--';
+            document.getElementById('detail-phone').textContent = c.phone || '--';
+            document.getElementById('detail-type').textContent = c.type || '--';
+            document.getElementById('detail-time').textContent = formatDate(c.created_at);
+            document.getElementById('detail-message').textContent = c.message || '无留言内容';
+            const statusEl = document.getElementById('detail-status');
+            statusEl.innerHTML = `<span class="px-2 py-1 rounded text-xs font-medium" style="background:${isPending ? 'var(--jiagang-primary-100)' : 'var(--jiagang-primary-50)'}; color:${isPending ? 'var(--jiagang-primary-800)' : 'var(--state-success)'}">${isPending ? '未处理' : '已处理'}</span>`;
+            els.detailToggleStatus.textContent = isPending ? '标记已处理' : '标记未处理';
+            els.detailToggleStatus.style.background = isPending ? 'var(--jiagang-primary)' : 'var(--jiagang-muted)';
+            els.detailToggleStatus.style.color = isPending ? 'var(--jiagang-primary-foreground)' : 'var(--jiagang-foreground)';
+            els.detailDrawer.classList.add('open');
+            els.detailDrawer.setAttribute('aria-hidden', 'false');
+            lucide.createIcons();
+        };
+
+        function closeDetail() {
+            els.detailDrawer.classList.remove('open');
+            els.detailDrawer.setAttribute('aria-hidden', 'true');
+            state.selectedId = null;
+        }
+        els.detailClose.addEventListener('click', closeDetail);
+        els.detailCloseBottom.addEventListener('click', closeDetail);
+        els.detailBackdrop.addEventListener('click', closeDetail);
+
+        async function toggleStatus(id) {
+            const c = state.contacts.find(x => x.id === id);
+            if (!c) return;
+            const toDone = c.status === 'pending';
+            try {
+                const res = await api('/admin/api/contacts/' + id, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: toDone ? 'done' : 'pending' })
+                });
+                if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
+                if (res.ok) {
+                    showToast(`已${toDone ? '标记为已处理' : '标记为未处理'}`, 'success');
+                    await loadStats();
+                    await loadContacts();
+                    if (state.selectedId === id) {
+                        const updated = state.contacts.find(x => x.id === id);
+                        if (updated) openDetail(id);
+                    }
+                } else {
+                    const err = await res.json().catch(() => ({}));
+                    showToast(err.error || '状态更新失败', 'error');
+                }
+            } catch (e) {
+                showToast('网络异常：' + e.message, 'error');
+            }
+        }
+        window.markDone = toggleStatus;
+        els.detailToggleStatus.addEventListener('click', () => {
+            if (state.selectedId) toggleStatus(state.selectedId);
+        });
+
+        async function loadStats() {
+            try {
+                const res = await api('/admin/api/stats');
+                if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    const msg = err.error || err.detail || `HTTP ${res.status}`;
+                    ['stat-today','stat-pending','stat-total'].forEach(id => {
+                        const el = document.getElementById(id);
+                        el.textContent = '!';
+                        el.title = '加载失败：' + msg;
+                    });
+                    return;
+                }
+                const data = await res.json();
+                document.getElementById('stat-today').textContent = data.today || 0;
+                document.getElementById('stat-pending').textContent = data.pending || 0;
+                document.getElementById('stat-total').textContent = data.total || 0;
+                const trendToday = data.today - (data.yesterday || 0);
+                const trendEl = document.getElementById('trend-today');
+                trendEl.textContent = (trendToday >= 0 ? '+' : '') + trendToday;
+                trendEl.style.color = trendToday >= 0 ? 'var(--state-success)' : 'var(--state-error)';
+            } catch (e) { console.error(e); document.getElementById('stat-today').textContent = '!'; }
+        }
+
+        async function loadContacts() {
+            state.loading = true;
+            renderTable();
+            try {
+                const res = await api('/admin/api/contacts');
+                if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    const msg = err.error || err.detail || `HTTP ${res.status}`;
+                    state.contacts = [];
+                    state.filtered = [];
+                    state.loading = false;
+                    els.contactsBody.innerHTML = `<tr><td colspan="8" class="px-4 py-10 text-center" style="color:var(--state-error)">加载失败：${msg}</td></tr>`;
+                    return;
+                }
+                state.contacts = await res.json();
+                state.loading = false;
+                applyFilters();
+            } catch (e) {
+                console.error(e);
+                state.contacts = [];
+                state.filtered = [];
+                state.loading = false;
+                els.contactsBody.innerHTML = `<tr><td colspan="8" class="px-4 py-10 text-center" style="color:var(--state-error)">加载异常：${e.message}</td></tr>`;
+            }
+        }
+
+        els.refreshContacts.addEventListener('click', async () => {
+            els.refreshContacts.disabled = true;
+            await loadStats();
+            await loadContacts();
+            showToast('数据已刷新', 'success');
+            els.refreshContacts.disabled = false;
+        });
+
+        els.searchContacts.addEventListener('input', applyFilters);
+        els.filterStatus.addEventListener('change', applyFilters);
+        els.filterType.addEventListener('change', applyFilters);
+        els.pageSize.addEventListener('change', () => {
+            state.pageSize = parseInt(els.pageSize.value, 10);
+            state.page = 1;
+            renderTable();
+        });
+        els.pagePrev.addEventListener('click', () => {
+            if (state.page > 1) { state.page--; renderTable(); }
+        });
+        els.pageNext.addEventListener('click', () => {
+            const totalPages = Math.ceil(state.filtered.length / state.pageSize);
+            if (state.page < totalPages) { state.page++; renderTable(); }
+        });
+
+        document.querySelectorAll('.sortable').forEach(th => {
+            th.addEventListener('click', () => {
+                const key = th.dataset.sort;
+                if (state.sortKey === key) {
+                    state.sortDesc = !state.sortDesc;
+                } else {
+                    state.sortKey = key;
+                    state.sortDesc = true;
+                }
+                th.querySelector('[data-lucide]').setAttribute('data-lucide', state.sortDesc ? 'chevron-down' : 'chevron-up');
+                lucide.createIcons();
+                applyFilters();
+            });
+        });
+
+        loadStats();
+        loadContacts();
+    </script>
+
+    <style>
+        body { font-family: var(--font-body); background: var(--jiagang-background); color: var(--jiagang-foreground); }
+    </style>
+</body>
+</html>
