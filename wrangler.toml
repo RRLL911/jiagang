@@ -6,7 +6,7 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "jiagang-db"
-database_id = "YOUR_D1_DATABASE_ID_HERE"
+database_id = "33e8c78a-cf6f-46c2-a31f-0738023d5314"
 
 [vars]
 # 不建议在此处写敏感信息；JWT_SECRET 请使用 wrangler secret put JWT_SECRET 设置
