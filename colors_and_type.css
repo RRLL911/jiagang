@@ -1,0 +1,67 @@
+:root {
+  --jiagang-background: #ffffff;
+  --jiagang-foreground: #0f172a;
+  --jiagang-card: #ffffff;
+  --jiagang-card-foreground: #0f172a;
+  --jiagang-popover: #ffffff;
+  --jiagang-popover-foreground: #0f172a;
+  --jiagang-primary: #0d9488;
+  --jiagang-primary-foreground: #ffffff;
+  --jiagang-muted: #f1f5f9;
+  --jiagang-muted-foreground: #64748b;
+  --jiagang-border: #e2e8f0;
+  --jiagang-input: #e2e8f0;
+  --jiagang-ring: #0d9488;
+  --jiagang-radius-small: 4px;
+  --jiagang-radius-medium: 8px;
+  --jiagang-radius-large: 12px;
+
+  --jiagang-primary-50: #f0fdfa;
+  --jiagang-primary-100: #ccfbf1;
+  --jiagang-primary-200: #99f6e4;
+  --jiagang-primary-300: #5eead4;
+  --jiagang-primary-400: #2dd4bf;
+  --jiagang-primary-500: #14b8a6;
+  --jiagang-primary-600: #0d9488;
+  --jiagang-primary-700: #0f766e;
+  --jiagang-primary-800: #115e59;
+  --jiagang-primary-900: #134e4a;
+
+  --jiagang-neutral-50: #f8fafc;
+  --jiagang-neutral-100: #f1f5f9;
+  --jiagang-neutral-200: #e2e8f0;
+  --jiagang-neutral-300: #cbd5e1;
+  --jiagang-neutral-400: #94a3b8;
+  --jiagang-neutral-500: #64748b;
+  --jiagang-neutral-600: #475569;
+  --jiagang-neutral-700: #334155;
+  --jiagang-neutral-800: #1e293b;
+  --jiagang-neutral-900: #0f172a;
+
+  --state-success: #10b981;
+  --state-warning: #f59e0b;
+  --state-error: #ef4444;
+  --state-info: #3b82f6;
+
+  --font-title: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.dark {
+  --jiagang-background: #0f172a;
+  --jiagang-foreground: #f8fafc;
+  --jiagang-card: #1e293b;
+  --jiagang-card-foreground: #f8fafc;
+  --jiagang-popover: #1e293b;
+  --jiagang-popover-foreground: #f8fafc;
+  --jiagang-primary: #14b8a6;
+  --jiagang-primary-foreground: #0f172a;
+  --jiagang-muted: #1e293b;
+  --jiagang-muted-foreground: #94a3b8;
+  --jiagang-border: #334155;
+  --jiagang-input: #334155;
+  --jiagang-ring: #14b8a6;
+}
+
+.font-title { font-family: var(--font-title); }
+.font-body { font-family: var(--font-body); }

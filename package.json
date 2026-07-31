@@ -1,0 +1,16 @@
+{
+  "name": "jiagang-website",
+  "version": "1.0.0",
+  "description": "唐山嘉港环保科技有限公司官网 - Cloudflare Pages 部署",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev . --compatibility-date=2026-07-31",
+    "deploy": "wrangler pages deploy .",
+    "db:create": "wrangler d1 create jiagang-db",
+    "db:migrate": "wrangler d1 execute jiagang-db --file=./schema.sql",
+    "db:migrate:prod": "wrangler d1 execute jiagang-db --file=./schema.sql --remote"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+node_modules/
+.wrangler/
+.env
+.env.local
+.DS_Store
+*.log
+dist/
+.preflight/
+validation-report.json

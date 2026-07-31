@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理仪表盘 - 唐山嘉港环保科技有限公司</title>
+    <style id="theme-vars">
+:root {
+  --jiagang-background: #ffffff;
+  --jiagang-foreground: #0f172a;
+  --jiagang-card: #ffffff;
+  --jiagang-card-foreground: #0f172a;
+  --jiagang-popover: #ffffff;
+  --jiagang-popover-foreground: #0f172a;
+  --jiagang-primary: #0d9488;
+  --jiagang-primary-foreground: #ffffff;
+  --jiagang-muted: #f1f5f9;
+  --jiagang-muted-foreground: #64748b;
+  --jiagang-border: #e2e8f0;
+  --jiagang-input: #e2e8f0;
+  --jiagang-ring: #0d9488;
+  --jiagang-radius-small: 4px;
+  --jiagang-radius-medium: 8px;
+  --jiagang-radius-large: 12px;
+
+  --jiagang-primary-50: #f0fdfa;
+  --jiagang-primary-100: #ccfbf1;
+  --jiagang-primary-200: #99f6e4;
+  --jiagang-primary-300: #5eead4;
+  --jiagang-primary-400: #2dd4bf;
+  --jiagang-primary-500: #14b8a6;
+  --jiagang-primary-600: #0d9488;
+  --jiagang-primary-700: #0f766e;
+  --jiagang-primary-800: #115e59;
+  --jiagang-primary-900: #134e4a;
+
+  --jiagang-neutral-50: #f8fafc;
+  --jiagang-neutral-100: #f1f5f9;
+  --jiagang-neutral-200: #e2e8f0;
+  --jiagang-neutral-300: #cbd5e1;
+  --jiagang-neutral-400: #94a3b8;
+  --jiagang-neutral-500: #64748b;
+  --jiagang-neutral-600: #475569;
+  --jiagang-neutral-700: #334155;
+  --jiagang-neutral-800: #1e293b;
+  --jiagang-neutral-900: #0f172a;
+
+  --state-success: #10b981;
+  --state-warning: #f59e0b;
+  --state-error: #ef4444;
+  --state-info: #3b82f6;
+
+  --font-title: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.dark {
+  --jiagang-background: #0f172a;
+  --jiagang-foreground: #f8fafc;
+  --jiagang-card: #1e293b;
+  --jiagang-card-foreground: #f8fafc;
+  --jiagang-popover: #1e293b;
+  --jiagang-popover-foreground: #f8fafc;
+  --jiagang-primary: #14b8a6;
+  --jiagang-primary-foreground: #0f172a;
+  --jiagang-muted: #1e293b;
+  --jiagang-muted-foreground: #94a3b8;
+  --jiagang-border: #334155;
+  --jiagang-input: #334155;
+  --jiagang-ring: #14b8a6;
+}
+
+.font-title { font-family: var(--font-title); }
+.font-body { font-family: var(--font-body); }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--jiagang-background);
+    --color-foreground: var(--jiagang-foreground);
+    --color-card: var(--jiagang-card);
+    --color-card-foreground: var(--jiagang-card-foreground);
+    --color-popover: var(--jiagang-popover);
+    --color-popover-foreground: var(--jiagang-popover-foreground);
+    --color-primary: var(--jiagang-primary);
+    --color-primary-foreground: var(--jiagang-primary-foreground);
+    --color-muted: var(--jiagang-muted);
+    --color-muted-foreground: var(--jiagang-muted-foreground);
+    --color-border: var(--jiagang-border);
+    --color-input: var(--jiagang-input);
+    --color-ring: var(--jiagang-ring);
+    --radius-sm: var(--jiagang-radius-small);
+    --radius-md: var(--jiagang-radius-medium);
+    --radius-lg: var(--jiagang-radius-large);
+  }
+  @layer base {
+    body { background: var(--jiagang-background); color: var(--jiagang-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--jiagang-background); }
+      .text-background { color: var(--jiagang-background); }
+      .border-background { border-color: var(--jiagang-background); }
+      .ring-background { --tw-ring-color: var(--jiagang-background); }
+      .bg-foreground { background-color: var(--jiagang-foreground); }
+      .text-foreground { color: var(--jiagang-foreground); }
+      .border-foreground { border-color: var(--jiagang-foreground); }
+      .ring-foreground { --tw-ring-color: var(--jiagang-foreground); }
+      .bg-card { background-color: var(--jiagang-card); }
+      .text-card { color: var(--jiagang-card); }
+      .border-card { border-color: var(--jiagang-card); }
+      .ring-card { --tw-ring-color: var(--jiagang-card); }
+      .bg-card-foreground { background-color: var(--jiagang-card-foreground); }
+      .text-card-foreground { color: var(--jiagang-card-foreground); }
+      .border-card-foreground { border-color: var(--jiagang-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--jiagang-card-foreground); }
+      .bg-popover { background-color: var(--jiagang-popover); }
+      .text-popover { color: var(--jiagang-popover); }
+      .border-popover { border-color: var(--jiagang-popover); }
+      .ring-popover { --tw-ring-color: var(--jiagang-popover); }
+      .bg-popover-foreground { background-color: var(--jiagang-popover-foreground); }
+      .text-popover-foreground { color: var(--jiagang-popover-foreground); }
+      .border-popover-foreground { border-color: var(--jiagang-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--jiagang-popover-foreground); }
+      .bg-primary { background-color: var(--jiagang-primary); }
+      .text-primary { color: var(--jiagang-primary); }
+      .border-primary { border-color: var(--jiagang-primary); }
+      .ring-primary { --tw-ring-color: var(--jiagang-primary); }
+      .bg-primary-foreground { background-color: var(--jiagang-primary-foreground); }
+      .text-primary-foreground { color: var(--jiagang-primary-foreground); }
+      .border-primary-foreground { border-color: var(--jiagang-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--jiagang-primary-foreground); }
+      .bg-muted { background-color: var(--jiagang-muted); }
+      .text-muted { color: var(--jiagang-muted); }
+      .border-muted { border-color: var(--jiagang-muted); }
+      .ring-muted { --tw-ring-color: var(--jiagang-muted); }
+      .bg-muted-foreground { background-color: var(--jiagang-muted-foreground); }
+      .text-muted-foreground { color: var(--jiagang-muted-foreground); }
+      .border-muted-foreground { border-color: var(--jiagang-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--jiagang-muted-foreground); }
+      .bg-border { background-color: var(--jiagang-border); }
+      .text-border { color: var(--jiagang-border); }
+      .border-border { border-color: var(--jiagang-border); }
+      .ring-border { --tw-ring-color: var(--jiagang-border); }
+      .bg-input { background-color: var(--jiagang-input); }
+      .text-input { color: var(--jiagang-input); }
+      .border-input { border-color: var(--jiagang-input); }
+      .ring-input { --tw-ring-color: var(--jiagang-input); }
+      .bg-ring { background-color: var(--jiagang-ring); }
+      .text-ring { color: var(--jiagang-ring); }
+      .border-ring { border-color: var(--jiagang-ring); }
+      .ring-ring { --tw-ring-color: var(--jiagang-ring); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row">
+    <aside class="admin-sidebar text-white w-full md:w-64 md:min-h-screen shrink-0">
+        <div class="p-6 flex items-center justify-between md:block">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold">嘉</div>
+                <div class="font-bold">嘉港后台</div>
+            </div>
+            <button id="sidebar-toggle" class="md:hidden p-2 text-slate-400"><span data-lucide="menu" class="w-5 h-5"></span></button>
+        </div>
+        <nav id="sidebar-nav" class="hidden md:block px-4 pb-4 space-y-1">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-[var(--jiagang-primary)] text-white" data-dom-id="nav-dashboard"><span data-lucide="layout-dashboard" class="w-5 h-5"></span>仪表盘</a>
+            <a href="#contacts" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-dom-id="nav-contacts"><span data-lucide="message-square" class="w-5 h-5"></span>留言管理</a>
+            <a href="#products" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-dom-id="nav-products-admin"><span data-lucide="box" class="w-5 h-5"></span>产品管理</a>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-dom-id="nav-site"><span data-lucide="external-link" class="w-5 h-5"></span>访问官网</a>
+            <button id="logout-btn" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 text-left" data-dom-id="logout-btn"><span data-lucide="log-out" class="w-5 h-5"></span>退出登录</button>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-6 lg:p-10">
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-2xl font-bold text-[var(--jiagang-foreground)]">仪表盘</h1>
+            <div class="text-sm text-[var(--jiagang-muted-fg)]">欢迎，管理员</div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-1">今日留言</div>
+                <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-today">0</div>
+            </div>
+            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-1">未处理留言</div>
+                <div class="text-3xl font-bold text-[var(--jiagang-primary)]" id="stat-pending">0</div>
+            </div>
+            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-1">累计留言</div>
+                <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-total">0</div>
+            </div>
+            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-1">产品数量</div>
+                <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-products">6</div>
+            </div>
+        </div>
+
+        <section id="contacts" class="mb-10">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">留言管理</h2>
+                <button id="refresh-contacts" class="px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] transition-colors">刷新</button>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-[var(--jiagang-border)]">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-[var(--jiagang-muted)]">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold">时间</th>
+                            <th class="px-4 py-3 text-left font-semibold">称呼</th>
+                            <th class="px-4 py-3 text-left font-semibold">公司</th>
+                            <th class="px-4 py-3 text-left font-semibold">电话</th>
+                            <th class="px-4 py-3 text-left font-semibold">需求类型</th>
+                            <th class="px-4 py-3 text-left font-semibold">状态</th>
+                            <th class="px-4 py-3 text-left font-semibold">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contacts-body" class="divide-y divide-[var(--jiagang-border)]">
+                        <tr><td colspan="7" class="px-4 py-8 text-center text-[var(--jiagang-muted-fg)]">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="products">
+            <h2 class="text-xl font-bold text-[var(--jiagang-foreground)] mb-4">产品管理</h2>
+            <p class="text-sm text-[var(--jiagang-muted-fg)] mb-4">产品信息可通过编辑 pages/products.html 与 pages/product-detail.html 更新，或后续对接 CMS 数据表。</p>
+            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center justify-between py-2 border-b border-[var(--jiagang-border)]"><span>LL-A 立式刮刀卸料离心脱水机</span><a href="product-detail.html" class="text-[var(--jiagang-primary)]">查看</a></li>
+                    <li class="flex items-center justify-between py-2 border-b border-[var(--jiagang-border)]"><span>机械搅拌式浮选机</span><a href="products.html" class="text-[var(--jiagang-primary)]">查看</a></li>
+                    <li class="flex items-center justify-between py-2 border-b border-[var(--jiagang-border)]"><span>跳汰机及成套设备</span><a href="products.html" class="text-[var(--jiagang-primary)]">查看</a></li>
+                    <li class="flex items-center justify-between py-2"><span>旋流器 / 高频筛 / 弧形筛 / 配件</span><a href="products.html" class="text-[var(--jiagang-primary)]">查看</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        const token = localStorage.getItem('jiagang_admin_token');
+        if (!token) window.location.href = 'admin-login.html';
+
+        document.getElementById('sidebar-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar-nav').classList.toggle('hidden');
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('jiagang_admin_token');
+            window.location.href = 'admin-login.html';
+        });
+
+        async function api(path, options = {}) {
+            options.headers = options.headers || {};
+            options.headers['Authorization'] = 'Bearer ' + token;
+            return fetch(path, options);
+        }
+
+        async function loadStats() {
+            try {
+                const res = await api('/admin/api/stats');
+                if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
+                const data = await res.json();
+                document.getElementById('stat-today').textContent = data.today || 0;
+                document.getElementById('stat-pending').textContent = data.pending || 0;
+                document.getElementById('stat-total').textContent = data.total || 0;
+            } catch (e) { console.error(e); }
+        }
+
+        async function loadContacts() {
+            try {
+                const res = await api('/admin/api/contacts');
+                if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
+                const contacts = await res.json();
+                const tbody = document.getElementById('contacts-body');
+                if (!contacts.length) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-[var(--jiagang-muted-fg)]">暂无留言</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = contacts.map(c => `
+                    <tr>
+                        <td class="px-4 py-3 whitespace-nowrap">${new Date(c.created_at).toLocaleString('zh-CN')}</td>
+                        <td class="px-4 py-3">${escapeHtml(c.name)}</td>
+                        <td class="px-4 py-3">${escapeHtml(c.company || '-')}</td>
+                        <td class="px-4 py-3">${escapeHtml(c.phone)}</td>
+                        <td class="px-4 py-3">${escapeHtml(c.type)}</td>
+                        <td class="px-4 py-3"><span class="px-2 py-1 rounded text-xs ${c.status === 'pending' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}">${c.status === 'pending' ? '未处理' : '已处理'}</span></td>
+                        <td class="px-4 py-3">
+                            <button onclick="markDone(${c.id}, ${c.status !== 'pending'})" class="text-sm text-[var(--jiagang-primary)] hover:underline">${c.status === 'pending' ? '标记已处理' : '标记未处理'}</button>
+                        </td>
+                    </tr>
+                `).join('');
+                lucide.createIcons();
+            } catch (e) { console.error(e); }
+        }
+
+        window.markDone = async function(id, toDone) {
+            try {
+                const res = await api('/admin/api/contacts/' + id, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: toDone ? 'done' : 'pending' })
+                });
+                if (res.ok) { loadStats(); loadContacts(); }
+            } catch (e) { console.error(e); }
+        };
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        document.getElementById('refresh-contacts').addEventListener('click', () => { loadStats(); loadContacts(); });
+        loadStats();
+        loadContacts();
+    </script>
+
+    <style>
+        body { font-family: var(--font-body); background: var(--jiagang-background); color: var(--jiagang-foreground); }
+        .admin-sidebar { background: var(--jiagang-neutral-900); }
+    </style>
+</body>
+</html>

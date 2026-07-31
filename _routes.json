@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "include": ["/api/*", "/admin/api/*"],
+  "exclude": ["/assets/*", "/pages/*", "/colors_and_type.css", "/_routes.json", "/index.html"]
+}

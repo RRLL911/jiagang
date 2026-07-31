@@ -1,0 +1,283 @@
+{
+  "data": [
+    {
+      "id": "page-index",
+      "title": "首页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751302800000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1110,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-d5841af7",
+          "measuredAt": 1785508503786
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/index.html",
+        "interactions": [
+          {
+            "domId": "nav-about",
+            "targetPageId": "page-about",
+            "transitionLabel": "关于我们"
+          },
+          {
+            "domId": "nav-products",
+            "targetPageId": "page-products",
+            "transitionLabel": "产品中心"
+          },
+          {
+            "domId": "nav-news",
+            "targetPageId": "page-news",
+            "transitionLabel": "技术资讯"
+          },
+          {
+            "domId": "nav-contact",
+            "targetPageId": "page-contact",
+            "transitionLabel": "联系我们"
+          },
+          {
+            "domId": "nav-admin",
+            "targetPageId": "page-admin-login",
+            "hideEdge": true,
+            "transitionLabel": "管理后台"
+          },
+          {
+            "domId": "hero-products",
+            "targetPageId": "page-products",
+            "transitionLabel": "查看产品"
+          },
+          {
+            "domId": "hero-contact",
+            "targetPageId": "page-contact",
+            "transitionLabel": "立即咨询"
+          },
+          {
+            "domId": "card-product-detail",
+            "targetPageId": "page-product-detail",
+            "transitionLabel": "产品详情"
+          },
+          {
+            "domId": "home-about-more",
+            "targetPageId": "page-about",
+            "transitionLabel": "了解更多"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-about",
+      "title": "关于我们",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751302800000,
+      "canvasData": {
+        "x": 620,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/about.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-index",
+            "hideEdge": true,
+            "transitionLabel": "返回首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-products",
+      "title": "产品中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751302800000,
+      "canvasData": {
+        "x": 620,
+        "y": 781,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-27dc54fe",
+          "measuredAt": 1785508503786
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/products.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-index",
+            "hideEdge": true,
+            "transitionLabel": "返回首页"
+          },
+          {
+            "domId": "product-list-detail",
+            "targetPageId": "page-product-detail",
+            "transitionLabel": "产品详情"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-product-detail",
+      "title": "产品详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751302800000,
+      "canvasData": {
+        "x": 1240,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/product-detail.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-index",
+            "hideEdge": true,
+            "transitionLabel": "返回首页"
+          },
+          {
+            "domId": "detail-contact",
+            "targetPageId": "page-contact",
+            "transitionLabel": "获取报价"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-news",
+      "title": "技术资讯",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751302800000,
+      "canvasData": {
+        "x": 620,
+        "y": 1492,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 2356,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-0dd42dd3",
+          "measuredAt": 1785508503786
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/news.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-index",
+            "hideEdge": true,
+            "transitionLabel": "返回首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-contact",
+      "title": "联系我们",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751302800000,
+      "canvasData": {
+        "x": 1860,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1001,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-401d9627",
+          "measuredAt": 1785508503786
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/contact.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-index",
+            "hideEdge": true,
+            "transitionLabel": "返回首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-admin-login",
+      "title": "管理登录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751302800000,
+      "canvasData": {
+        "x": 0,
+        "y": 2106,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/admin-login.html",
+        "interactions": [
+          {
+            "domId": "login-submit",
+            "targetPageId": "page-admin-dashboard",
+            "transitionLabel": "登录成功"
+          },
+          {
+            "domId": "back-home",
+            "targetPageId": "page-index",
+            "hideEdge": true,
+            "transitionLabel": "返回官网首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-admin-dashboard",
+      "title": "管理仪表盘",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751302800000,
+      "canvasData": {
+        "x": 620,
+        "y": 2106,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/admin-dashboard.html",
+        "interactions": [
+          {
+            "domId": "nav-site",
+            "targetPageId": "page-index",
+            "hideEdge": true,
+            "transitionLabel": "访问官网"
+          },
+          {
+            "domId": "logout-btn",
+            "targetPageId": "page-admin-login",
+            "hideEdge": true,
+            "transitionLabel": "退出登录"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "desktop",
+    "projectName": "唐山嘉港环保科技有限公司官网",
+    "designLibrary": null
+  }
+}

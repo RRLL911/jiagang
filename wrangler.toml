@@ -1,0 +1,11 @@
+name = "jiagang-website"
+compatibility_date = "2026-07-31"
+
+# 替换为实际创建的 D1 database_id
+[[d1_databases]]
+binding = "DB"
+database_name = "jiagang-db"
+database_id = "YOUR_D1_DATABASE_ID_HERE"
+
+[vars]
+# 不建议在此处写敏感信息；JWT_SECRET 请使用 wrangler secret put JWT_SECRET 设置
