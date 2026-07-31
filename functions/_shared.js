@@ -50,6 +50,6 @@ function base64UrlEncode(str) {
 }
 
 function base64UrlDecode(str) {
-  str += new Array(5 - (str.length % 4)).join('=');
+  str += new Array((4 - (str.length % 4)) % 4 + 1).join('=');
   return atob(str.replace(/\-/g, '+').replace(/\_/g, '/'));
 }

@@ -81,7 +81,7 @@ async function createToken(payload, env) {
 async function hmacSha256(message, secret) {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(message));
-  return base64UrlEncode(String.fromCharCode(...new Uint8Array(sig)));
+  return bytesToBase64(new Uint8Array(sig)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 function base64UrlEncode(str) {
@@ -97,13 +97,13 @@ function bytesToBase64(bytes) {
   let i = 0;
   while (i < bytes.length) {
     const b1 = bytes[i++];
-    const b2 = i < bytes.length ? bytes[i++] : 0;
-    const b3 = i < bytes.length ? bytes[i++] : 0;
-    const bitmap = (b1 << 16) | (b2 << 8) | b3;
+    const b2 = i < bytes.length ? bytes[i++] : null;
+    const b3 = i < bytes.length ? bytes[i++] : null;
+    const bitmap = (b1 << 16) | ((b2 ?? 0) << 8) | (b3 ?? 0);
     result += chars.charAt((bitmap >> 18) & 63);
     result += chars.charAt((bitmap >> 12) & 63);
-    result += i - 2 < bytes.length ? chars.charAt((bitmap >> 6) & 63) : '=';
-    result += i - 1 < bytes.length ? chars.charAt(bitmap & 63) : '=';
+    result += b2 !== null ? chars.charAt((bitmap >> 6) & 63) : '=';
+    result += b3 !== null ? chars.charAt(bitmap & 63) : '=';
   }
   return result;
 }
