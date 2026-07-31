@@ -22,10 +22,8 @@ CREATE TABLE IF NOT EXISTS admins (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- 初始化默认管理员（密码：jiagang2026）
+-- 默认管理员由 login.js 在首次登录时自动创建（密码：jiagang2026）
 -- 生产环境请立即修改默认密码
-INSERT OR IGNORE INTO admins (username, password_hash)
-VALUES ('admin', '$2b$10$7EqJtq83hO4A0R1zJdW.LeiGqG5VQXxQpQrYlKjYvXyQqXqXqXqXq');
 
 -- 索引
 CREATE INDEX IF NOT EXISTS idx_contacts_status ON contacts(status);
