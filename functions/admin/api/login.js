@@ -27,6 +27,16 @@ export async function onRequestPost(context) {
   }
 
   try {
+    // 确保管理员表存在（首次部署时自动建表）
+    await env.DB.prepare(`
+      CREATE TABLE IF NOT EXISTS admins (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
+        password_hash TEXT NOT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+      )
+    `).run();
+
     // 如果没有管理员账户，自动创建默认账户
     let admin = await env.DB.prepare('SELECT * FROM admins WHERE username = ?').bind(username).first();
     if (!admin && username === DEFAULT_ADMIN_USERNAME) {
