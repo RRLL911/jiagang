@@ -278,19 +278,34 @@
             try {
                 const res = await api('/admin/api/stats');
                 if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    const msg = err.error || err.detail || `HTTP ${res.status}`;
+                    document.getElementById('stat-today').textContent = '!';
+                    document.getElementById('stat-pending').textContent = '!';
+                    document.getElementById('stat-total').textContent = '!';
+                    document.getElementById('stat-today').title = '加载失败：' + msg;
+                    return;
+                }
                 const data = await res.json();
                 document.getElementById('stat-today').textContent = data.today || 0;
                 document.getElementById('stat-pending').textContent = data.pending || 0;
                 document.getElementById('stat-total').textContent = data.total || 0;
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error(e); document.getElementById('stat-today').textContent = '!'; }
         }
 
         async function loadContacts() {
+            const tbody = document.getElementById('contacts-body');
             try {
                 const res = await api('/admin/api/contacts');
                 if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    const msg = err.error || err.detail || `HTTP ${res.status}`;
+                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-[var(--state-error)]">加载失败：${msg}</td></tr>`;
+                    return;
+                }
                 const contacts = await res.json();
-                const tbody = document.getElementById('contacts-body');
                 if (!contacts.length) {
                     tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-[var(--jiagang-muted-fg)]">暂无留言</td></tr>';
                     return;
@@ -309,7 +324,7 @@
                     </tr>
                 `).join('');
                 lucide.createIcons();
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error(e); tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-[var(--state-error)]">加载异常：${e.message}</td></tr>`; }
         }
 
         window.markDone = async function(id, toDone) {
