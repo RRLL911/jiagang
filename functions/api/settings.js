@@ -1,12 +1,44 @@
 // 公开 API：站点配置 GET /api/settings
 import { jsonResponse } from '../_shared.js';
 
+const CREATE_SETTINGS_TABLE = `
+  CREATE TABLE IF NOT EXISTS company_settings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    key TEXT NOT NULL UNIQUE,
+    value TEXT,
+    group_name TEXT,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+
+const CREATE_STATS_TABLE = `
+  CREATE TABLE IF NOT EXISTS company_stats (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    value TEXT,
+    unit TEXT,
+    description TEXT,
+    icon TEXT,
+    section TEXT NOT NULL,
+    sort_order INTEGER NOT NULL DEFAULT 0,
+    is_published INTEGER NOT NULL DEFAULT 1,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+
+async function ensureTables(env) {
+  await env.DB.prepare(CREATE_SETTINGS_TABLE).run();
+  await env.DB.prepare(CREATE_STATS_TABLE).run();
+}
+
 export async function onRequestGet(context) {
   const { env } = context;
   const url = new URL(context.request.url);
   const group = url.searchParams.get('group') || '';
 
   try {
+    await ensureTables(env);
     let sql = `SELECT key, value, group_name FROM company_settings`;
     const params = [];
     if (group) {

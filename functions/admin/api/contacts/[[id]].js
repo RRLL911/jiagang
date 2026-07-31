@@ -4,12 +4,31 @@
 // DELETE /admin/api/contacts/:id 删除
 import { requireAuth, jsonResponse } from '../../../_shared.js';
 
+const CREATE_CONTACTS_TABLE = `
+  CREATE TABLE IF NOT EXISTS contacts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    company TEXT,
+    type TEXT NOT NULL,
+    message TEXT,
+    status TEXT NOT NULL DEFAULT 'pending',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+
+async function ensureTable(env) {
+  await env.DB.prepare(CREATE_CONTACTS_TABLE).run();
+}
+
 export async function onRequestGet(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse) return errorResponse;
 
   const { env } = context;
   try {
+    await ensureTable(env);
     const { results } = await env.DB.prepare(
       `SELECT id, name, phone, company, type, message, status, created_at FROM contacts ORDER BY created_at DESC LIMIT 200`
     ).all();
@@ -28,6 +47,7 @@ export async function onRequestPatch(context) {
   if (!id) return jsonResponse({ error: '缺少留言 ID' }, 400);
 
   try {
+    await ensureTable(env);
     const body = await request.json();
     const status = body.status;
     if (!['pending', 'done'].includes(status)) {
