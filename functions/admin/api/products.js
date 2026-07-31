@@ -1,7 +1,7 @@
 // 管理后台 API：产品列表 / 创建
 // GET /admin/api/products
 // POST /admin/api/products
-import { requireAuth, jsonResponse } from '../../../_shared.js';
+import { requireAuth, jsonResponse } from '../../_shared.js';
 
 const CREATE_PRODUCTS_TABLE = `
   CREATE TABLE IF NOT EXISTS products (

@@ -1,5 +1,5 @@
 // 管理后台统计 GET /admin/api/stats
-import { requireAuth, jsonResponse } from '../../../_shared.js';
+import { requireAuth, jsonResponse } from '../../_shared.js';
 
 export async function onRequestGet(context) {
   const { user, errorResponse } = await requireAuth(context);

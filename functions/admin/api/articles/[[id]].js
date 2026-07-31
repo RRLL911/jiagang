@@ -2,7 +2,7 @@
 // GET /admin/api/articles/:id
 // PATCH /admin/api/articles/:id
 // DELETE /admin/api/articles/:id
-import { requireAuth, jsonResponse } from '../../../../_shared.js';
+import { requireAuth, jsonResponse } from '../../../_shared.js';
 
 export async function onRequestGet(context) {
   const { errorResponse } = await requireAuth(context);

@@ -1,7 +1,7 @@
 // 管理后台 API：站点配置
 // GET /admin/api/settings
 // PUT /admin/api/settings
-import { requireAuth, jsonResponse } from '../../../_shared.js';
+import { requireAuth, jsonResponse } from '../../_shared.js';
 
 const CREATE_SETTINGS_TABLE = `
   CREATE TABLE IF NOT EXISTS company_settings (
