@@ -12,10 +12,10 @@
         "group": 0,
         "layoutSnapshot": {
           "version": 1,
-          "contentHeight": 1110,
+          "contentHeight": 2989,
           "viewportWidth": 1440,
-          "sourceHash": "fnv1a-d5841af7",
-          "measuredAt": 1785508503786
+          "sourceHash": "fnv1a-7ecc7ad8",
+          "measuredAt": 1785513260095
         }
       },
       "devMetadata": {
@@ -79,7 +79,14 @@
       "canvasData": {
         "x": 620,
         "y": 0,
-        "group": 0
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 2286,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-487e8513",
+          "measuredAt": 1785513260095
+        }
       },
       "devMetadata": {
         "htmlSrc": "pages/about.html",
@@ -105,10 +112,10 @@
         "group": 0,
         "layoutSnapshot": {
           "version": 1,
-          "contentHeight": 900,
+          "contentHeight": 2048,
           "viewportWidth": 1440,
-          "sourceHash": "fnv1a-27dc54fe",
-          "measuredAt": 1785508503786
+          "sourceHash": "fnv1a-802fe0b3",
+          "measuredAt": 1785513260095
         }
       },
       "devMetadata": {
@@ -137,7 +144,14 @@
       "canvasData": {
         "x": 1240,
         "y": 0,
-        "group": 0
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 2267,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-ef7ddc18",
+          "measuredAt": 1785513260095
+        }
       },
       "devMetadata": {
         "htmlSrc": "pages/product-detail.html",
@@ -168,10 +182,10 @@
         "group": 0,
         "layoutSnapshot": {
           "version": 1,
-          "contentHeight": 2356,
+          "contentHeight": 1714,
           "viewportWidth": 1440,
-          "sourceHash": "fnv1a-0dd42dd3",
-          "measuredAt": 1785508503786
+          "sourceHash": "fnv1a-a75d3ac2",
+          "measuredAt": 1785513260095
         }
       },
       "devMetadata": {
@@ -198,10 +212,10 @@
         "group": 0,
         "layoutSnapshot": {
           "version": 1,
-          "contentHeight": 1001,
+          "contentHeight": 1663,
           "viewportWidth": 1440,
-          "sourceHash": "fnv1a-401d9627",
-          "measuredAt": 1785508503786
+          "sourceHash": "fnv1a-22e4a953",
+          "measuredAt": 1785513260095
         }
       },
       "devMetadata": {
@@ -225,7 +239,14 @@
       "canvasData": {
         "x": 0,
         "y": 2106,
-        "group": 1
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 718,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-8c77e7bb",
+          "measuredAt": 1785513260095
+        }
       },
       "devMetadata": {
         "htmlSrc": "pages/admin-login.html",
