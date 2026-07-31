@@ -179,8 +179,8 @@
                 <a href="index.html" class="flex items-center gap-3" data-dom-id="nav-home">
                     <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold text-lg">嘉</div>
                     <div class="hidden sm:block">
-                        <div class="font-bold text-lg leading-tight text-[var(--jiagang-foreground)]">唐山嘉港环保科技</div>
-                        <div class="text-xs text-[var(--jiagang-muted-fg)]">选煤选矿装备制造商</div>
+                        <div class="font-bold text-lg leading-tight text-[var(--jiagang-foreground)] site-name">唐山嘉港环保科技</div>
+                        <div class="text-xs text-[var(--jiagang-muted-fg)] site-slogan">选煤选矿装备制造商</div>
                     </div>
                 </a>
                 <nav class="hidden md:flex items-center gap-8">
@@ -191,7 +191,7 @@
                     <a href="contact.html" class="text-sm font-medium text-[var(--jiagang-muted-fg)] hover:text-[var(--jiagang-primary)] transition-colors" data-dom-id="nav-contact">联系我们</a>
                 </nav>
                 <div class="hidden md:flex items-center gap-3">
-                    <a href="tel:0315-0000000" class="text-sm font-medium text-[var(--jiagang-muted-fg)]"><span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>0315-0000000</a>
+                    <a href="tel:0315-0000000" class="text-sm font-medium text-[var(--jiagang-muted-fg)] site-phone"><span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>0315-0000000</a>
                 </div>
                 <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-[var(--jiagang-muted-fg)]" data-dom-id="mobile-menu-btn">
                     <span data-lucide="menu" class="w-6 h-6"></span>
@@ -215,12 +215,12 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="text-white space-y-6">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm">
+                        <div id="hero-tag" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm">
                             <span class="w-2 h-2 rounded-full bg-[var(--jiagang-primary-300)]"></span>
                             国家级高新技术企业
                         </div>
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">选煤选矿装备<br/>研发制造一体化服务商</h1>
-                        <p class="text-lg text-white/80 max-w-xl">立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备，服务山西、陕西、内蒙古、河北等产煤带。</p>
+                        <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">选煤选矿装备<br/>研发制造一体化服务商</h1>
+                        <p id="hero-subtitle" class="text-lg text-white/80 max-w-xl">立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备，服务山西、陕西、内蒙古、河北等产煤带。</p>
                         <div class="flex flex-wrap gap-4 pt-2">
                             <a href="products.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-[var(--jiagang-primary-700)] font-semibold hover:bg-[var(--jiagang-primary-50)] transition-colors" data-dom-id="hero-products">
                                 <span data-lucide="box" class="w-5 h-5"></span>浏览产品
@@ -237,10 +237,12 @@
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="w-64 h-64 rounded-2xl bg-white/10 backdrop-blur border border-white/20 p-6 flex flex-col justify-center items-center text-center">
                                     <span data-lucide="factory" class="w-16 h-16 text-white/90 mb-4"></span>
-                                    <div class="text-2xl font-bold text-white">30000㎡</div>
-                                    <div class="text-sm text-white/70">厂区占地面积</div>
-                                    <div class="mt-4 text-2xl font-bold text-white">120+</div>
-                                    <div class="text-sm text-white/70">员工规模</div>
+                                    <div id="hero-stats" class="w-full">
+                                        <div class="text-2xl font-bold text-white">30000㎡</div>
+                                        <div class="text-sm text-white/70">厂区占地面积</div>
+                                        <div class="mt-4 text-2xl font-bold text-white">120+</div>
+                                        <div class="text-sm text-white/70">员工规模</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -255,39 +257,8 @@
                     <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title">核心产品</h2>
                     <p class="mt-4 text-[var(--jiagang-muted-fg)]">覆盖选煤厂"分选+脱水"主工艺段</p>
                 </div>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="group rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 hover:shadow-sm transition-all hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-lg bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4 group-hover:bg-[var(--jiagang-primary)] group-hover:text-white transition-colors">
-                            <span data-lucide="refresh-cw" class="w-6 h-6"></span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">LL-A 立式刮刀卸料离心脱水机</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)] mb-4">末精煤、末中煤脱水主力机型，防堵、低耗、高稳定性。</p>
-                        <a href="product-detail.html" class="inline-flex items-center text-sm font-medium text-[var(--jiagang-primary)]" data-dom-id="card-product-detail">了解详情 <span data-lucide="arrow-right" class="w-4 h-4 ml-1"></span></a>
-                    </div>
-                    <div class="group rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 hover:shadow-sm transition-all hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-lg bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4 group-hover:bg-[var(--jiagang-primary)] group-hover:text-white transition-colors">
-                            <span data-lucide="droplets" class="w-6 h-6"></span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">机械搅拌式浮选机</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)] mb-4">-0.5mm 细粒煤泥分选，自吸矿浆与空气，适配老厂改造。</p>
-                        <a href="products.html" class="inline-flex items-center text-sm font-medium text-[var(--jiagang-primary)]">了解详情 <span data-lucide="arrow-right" class="w-4 h-4 ml-1"></span></a>
-                    </div>
-                    <div class="group rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 hover:shadow-sm transition-all hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-lg bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4 group-hover:bg-[var(--jiagang-primary)] group-hover:text-white transition-colors">
-                            <span data-lucide="arrow-up-down" class="w-6 h-6"></span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">跳汰机及成套设备</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)] mb-4">粗中粒煤排矸分选，可单机可成套，按煤质定制电控风阀。</p>
-                        <a href="products.html" class="inline-flex items-center text-sm font-medium text-[var(--jiagang-primary)]">了解详情 <span data-lucide="arrow-right" class="w-4 h-4 ml-1"></span></a>
-                    </div>
-                    <div class="group rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 hover:shadow-sm transition-all hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-lg bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4 group-hover:bg-[var(--jiagang-primary)] group-hover:text-white transition-colors">
-                            <span data-lucide="layers" class="w-6 h-6"></span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">旋流器 / 高频筛 / 弧形筛</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)] mb-4">分级、浓缩、脱水、脱介，耐磨衬里与开孔率按需定制。</p>
-                        <a href="products.html" class="inline-flex items-center text-sm font-medium text-[var(--jiagang-primary)]">了解详情 <span data-lucide="arrow-right" class="w-4 h-4 ml-1"></span></a>
-                    </div>
+                <div id="featured-products" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="col-span-full text-center py-12 text-[var(--jiagang-muted-fg)]">加载产品中...</div>
                 </div>
             </div>
         </section>
@@ -297,7 +268,7 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
                         <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title mb-6">关于嘉港环保</h2>
-                        <p class="text-[var(--jiagang-muted-fg)] mb-6 leading-relaxed">唐山嘉港环保科技有限公司成立于2018年，位于河北省遵化市新店子镇平东线北侧，注册资金100万元。厂区占地3万平方米、建筑面积1万平方米，现有员工120余人，其中技术人员40人、高级工程师8人。</p>
+                        <p id="about-intro" class="text-[var(--jiagang-muted-fg)] mb-6 leading-relaxed">唐山嘉港环保科技有限公司成立于2018年，位于河北省遵化市新店子镇平东线北侧，注册资金100万元。厂区占地3万平方米、建筑面积1万平方米，现有员工120余人，其中技术人员40人、高级工程师8人。</p>
                         <ul class="space-y-3 mb-8">
                             <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]">2024 年获评国家级高新技术企业</span></li>
                             <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]">2025 年获河北省创新型中小企业认定</span></li>
@@ -305,7 +276,7 @@
                         </ul>
                         <a href="about.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[var(--jiagang-primary)] text-[var(--jiagang-primary)] font-medium hover:bg-[var(--jiagang-primary-50)] transition-colors" data-dom-id="home-about-more">了解更多 <span data-lucide="arrow-right" class="w-4 h-4"></span></a>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div id="about-stats" class="grid grid-cols-2 gap-4">
                         <div class="rounded-xl bg-white p-6 text-center border border-[var(--jiagang-border)]">
                             <div class="text-3xl font-bold text-[var(--jiagang-primary)]">8</div>
                             <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1">高级工程师</div>
@@ -363,9 +334,9 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
                 <h2 class="text-3xl font-bold mb-4">需要选型或技改方案？</h2>
                 <p class="text-white/80 mb-8">留下您的需求，我们的技术团队将在 24 小时内与您联系。</p>
-                <form class="max-w-lg mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); alert('感谢您的留言，我们会尽快联系您。');">
-                    <input type="text" placeholder="您的称呼" required class="flex-1 px-4 py-3 rounded-lg text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-white/50">
-                    <input type="tel" placeholder="联系电话" required class="flex-1 px-4 py-3 rounded-lg text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-white/50">
+                <form id="cta-form" class="max-w-lg mx-auto flex flex-col sm:flex-row gap-3">
+                    <input type="text" name="name" placeholder="您的称呼" required class="flex-1 px-4 py-3 rounded-lg text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-white/50">
+                    <input type="tel" name="phone" placeholder="联系电话" required class="flex-1 px-4 py-3 rounded-lg text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-white/50">
                     <button type="submit" class="px-6 py-3 rounded-lg bg-white text-[var(--jiagang-primary-700)] font-semibold hover:bg-[var(--jiagang-primary-50)] transition-colors">提交</button>
                 </form>
             </div>
@@ -378,9 +349,9 @@
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold">嘉</div>
-                        <div class="font-bold text-xl">唐山嘉港环保科技有限公司</div>
+                        <div class="font-bold text-xl site-full-name">唐山嘉港环保科技有限公司</div>
                     </div>
-                    <p class="text-sm text-slate-400 max-w-sm">专注选煤选矿设备研发、设计、制造、销售及技术服务，服务煤炭、金属矿与非金属矿筛分脱水领域。</p>
+                    <p class="text-sm text-slate-400 max-w-sm site-footer-intro">专注选煤选矿设备研发、设计、制造、销售及技术服务，服务煤炭、金属矿与非金属矿筛分脱水领域。</p>
                 </div>
                 <div>
                     <h4 class="font-bold mb-4">快速链接</h4>
@@ -394,14 +365,14 @@
                 <div>
                     <h4 class="font-bold mb-4">联系方式</h4>
                     <ul class="space-y-2 text-sm text-slate-400">
-                        <li class="flex items-center gap-2"><span data-lucide="map-pin" class="w-4 h-4"></span>河北省遵化市新店子镇平东线北侧</li>
-                        <li class="flex items-center gap-2"><span data-lucide="phone" class="w-4 h-4"></span>0315-0000000</li>
-                        <li class="flex items-center gap-2"><span data-lucide="mail" class="w-4 h-4"></span>contact@jiagang.cn</li>
+                        <li class="flex items-center gap-2"><span data-lucide="map-pin" class="w-4 h-4"></span><span class="site-address">河北省遵化市新店子镇平东线北侧</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="phone" class="w-4 h-4"></span><span class="site-phone">0315-0000000</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="mail" class="w-4 h-4"></span><span class="site-email">contact@jiagang.cn</span></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-slate-700 pt-8 text-center text-sm text-slate-500">
-                <p>© 2026 唐山嘉港环保科技有限公司 版权所有</p>
+                <p>© <span class="site-copyright-year">2026</span> <span class="site-full-name">唐山嘉港环保科技有限公司</span> 版权所有</p>
             </div>
         </div>
     </footer>
@@ -411,6 +382,123 @@
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text == null ? '' : text;
+            return div.innerHTML;
+        }
+
+        async function loadSettings() {
+            try {
+                const res = await fetch('/api/settings');
+                if (!res.ok) return;
+                const { settings, stats } = await res.json();
+                if (settings.company_name) document.querySelectorAll('.site-name').forEach(el => el.textContent = settings.company_name.replace('科技有限公司', '科技'));
+                if (settings.company_slogan) document.querySelectorAll('.site-slogan').forEach(el => el.textContent = settings.company_slogan);
+                if (settings.company_name) document.querySelectorAll('.site-full-name').forEach(el => el.textContent = settings.company_name);
+                if (settings.phone) document.querySelectorAll('.site-phone').forEach(el => {
+                    const text = el.tagName === 'A' ? ('<span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>' + escapeHtml(settings.phone)) : escapeHtml(settings.phone);
+                    if (el.tagName === 'A') {
+                        el.href = 'tel:' + settings.phone;
+                        el.innerHTML = text;
+                    } else {
+                        el.textContent = settings.phone;
+                    }
+                });
+                if (settings.email) document.querySelectorAll('.site-email').forEach(el => {
+                    if (el.tagName === 'A') el.href = 'mailto:' + settings.email;
+                    el.textContent = settings.email;
+                });
+                if (settings.address) document.querySelectorAll('.site-address').forEach(el => el.textContent = settings.address);
+                if (settings.copyright_year) document.querySelectorAll('.site-copyright-year').forEach(el => el.textContent = settings.copyright_year);
+                if (settings.seo_description) document.querySelectorAll('.site-footer-intro').forEach(el => el.textContent = settings.seo_description);
+                if (settings.work_time) document.querySelectorAll('.site-work-time').forEach(el => el.textContent = settings.work_time);
+                if (settings.service_regions) document.querySelectorAll('.site-service-regions').forEach(el => el.textContent = settings.service_regions);
+
+                if (settings.hero_tag) document.getElementById('hero-tag').innerHTML = '<span class="w-2 h-2 rounded-full bg-[var(--jiagang-primary-300)]"></span>' + escapeHtml(settings.hero_tag);
+                if (settings.hero_title) document.getElementById('hero-title').innerHTML = settings.hero_title;
+                if (settings.hero_subtitle) document.getElementById('hero-subtitle').textContent = settings.hero_subtitle;
+                if (settings.about_intro) document.getElementById('about-intro').textContent = settings.about_intro;
+
+                const heroStats = document.getElementById('hero-stats');
+                if (heroStats && stats) {
+                    const items = stats.filter(s => s.section === 'home_hero').sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+                    if (items.length) {
+                        heroStats.innerHTML = items.map(s => `
+                            <div class="mt-4 first:mt-0">
+                                <div class="text-2xl font-bold text-white">${escapeHtml(s.value)}${escapeHtml(s.unit)}</div>
+                                <div class="text-sm text-white/70">${escapeHtml(s.title)}</div>
+                            </div>
+                        `).join('');
+                    }
+                }
+
+                const aboutStats = document.getElementById('about-stats');
+                if (aboutStats && stats) {
+                    const items = stats.filter(s => s.section === 'about_stats').sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+                    if (items.length) {
+                        aboutStats.innerHTML = items.map(s => `
+                            <div class="rounded-xl bg-white p-6 text-center border border-[var(--jiagang-border)]">
+                                <div class="text-3xl font-bold text-[var(--jiagang-primary)]">${escapeHtml(s.value)}${escapeHtml(s.unit)}</div>
+                                <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1">${escapeHtml(s.title)}</div>
+                            </div>
+                        `).join('');
+                    }
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function loadFeaturedProducts() {
+            const container = document.getElementById('featured-products');
+            try {
+                const res = await fetch('/api/products?featured=1');
+                if (!res.ok) throw new Error('加载失败');
+                const products = await res.json();
+                const list = products.slice(0, 4);
+                if (!list.length) {
+                    container.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--jiagang-muted-fg)]">暂无产品</div>';
+                    return;
+                }
+                container.innerHTML = list.map(p => `
+                    <div class="group rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 hover:shadow-sm transition-all hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-lg bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4 group-hover:bg-[var(--jiagang-primary)] group-hover:text-white transition-colors">
+                            <span data-lucide="${escapeHtml(p.icon || 'box')}" class="w-6 h-6"></span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">${escapeHtml(p.name)}</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)] mb-4">${escapeHtml(p.summary || '')}</p>
+                        <a href="product-detail.html?slug=${encodeURIComponent(p.slug)}" class="inline-flex items-center text-sm font-medium text-[var(--jiagang-primary)]">了解详情 <span data-lucide="arrow-right" class="w-4 h-4 ml-1"></span></a>
+                    </div>
+                `).join('');
+                lucide.createIcons();
+            } catch (e) {
+                container.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--state-error)]">产品加载失败，请刷新重试</div>';
+            }
+        }
+
+        document.getElementById('cta-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const data = Object.fromEntries(new FormData(form));
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    alert('感谢您的留言，我们会尽快联系您。');
+                    form.reset();
+                } else {
+                    alert('提交失败，请稍后重试或直接拨打电话。');
+                }
+            } catch (err) {
+                alert('提交失败，请稍后重试或直接拨打电话。');
+            }
+        });
+
+        loadSettings();
+        loadFeaturedProducts();
     </script>
 
     <style>

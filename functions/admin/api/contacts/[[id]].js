@@ -1,6 +1,7 @@
 // 管理后台留言接口
 // GET /admin/api/contacts      列表
 // PATCH /admin/api/contacts/:id 更新状态
+// DELETE /admin/api/contacts/:id 删除
 import { requireAuth, jsonResponse } from '../../../_shared.js';
 
 export async function onRequestGet(context) {
@@ -40,5 +41,21 @@ export async function onRequestPatch(context) {
     return jsonResponse({ success: true });
   } catch (err) {
     return jsonResponse({ error: '更新失败', detail: err.message }, 500);
+  }
+}
+
+export async function onRequestDelete(context) {
+  const { errorResponse } = await requireAuth(context);
+  if (errorResponse) return errorResponse;
+
+  const { env } = context;
+  const id = context.params.id;
+  if (!id) return jsonResponse({ error: '缺少留言 ID' }, 400);
+
+  try {
+    await env.DB.prepare(`DELETE FROM contacts WHERE id = ?`).bind(id).run();
+    return jsonResponse({ success: true });
+  } catch (err) {
+    return jsonResponse({ error: '删除失败', detail: err.message }, 500);
   }
 }

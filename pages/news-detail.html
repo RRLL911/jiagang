@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技术资讯 - 唐山嘉港环保科技有限公司</title>
+    <title>文章详情 - 唐山嘉港环保科技有限公司</title>
     <style id="theme-vars">
 :root {
   --jiagang-background: #ffffff;
@@ -170,6 +170,17 @@
         mask-position: center;
         background-color: currentColor;
       }
+      .article-content h2 { font-size: 1.5rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+      .article-content h3 { font-size: 1.25rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.5rem; }
+      .article-content p { margin-bottom: 1rem; line-height: 1.75; color: var(--jiagang-muted-foreground); }
+      .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; color: var(--jiagang-muted-foreground); }
+      .article-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; color: var(--jiagang-muted-foreground); }
+      .article-content li { margin-bottom: 0.25rem; }
+      .article-content a { color: var(--jiagang-primary); text-decoration: underline; }
+      .article-content img { max-width: 100%; height: auto; border-radius: var(--jiagang-radius-medium); }
+      .article-content table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+      .article-content th, .article-content td { border: 1px solid var(--jiagang-border); padding: 0.5rem 0.75rem; }
+      .article-content th { background-color: var(--jiagang-muted); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -210,19 +221,22 @@
     </header>
 
     <main class="flex-1">
-        <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]">
+        <section class="py-12 bg-[var(--jiagang-muted)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-3xl">
-                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6">技术资讯</h1>
-                    <p class="text-lg text-[var(--jiagang-muted-fg)]">选煤设备技术解析、维护经验与行业动态。</p>
+                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-4">
+                    <a href="index.html" class="hover:text-[var(--jiagang-primary)]">首页</a>
+                    <span class="mx-2">/</span>
+                    <a href="news.html" class="hover:text-[var(--jiagang-primary)]">技术资讯</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-[var(--jiagang-foreground)]">文章详情</span>
                 </div>
             </div>
         </section>
 
         <section class="py-16 lg:py-24 bg-[var(--jiagang-background)]">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div id="articles-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="col-span-full text-center py-12 text-[var(--jiagang-muted-fg)]">加载文章中...</div>
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="article-content">
+                    <div class="text-center py-12 text-[var(--jiagang-muted-fg)]">加载文章中...</div>
                 </div>
             </div>
         </section>
@@ -303,46 +317,61 @@
             } catch (e) { console.error(e); }
         }
 
-        async function loadArticles() {
-            const container = document.getElementById('articles-grid');
+        async function loadArticle() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const container = document.getElementById('article-content');
+            if (!id) {
+                container.innerHTML = '<div class="text-center py-12 text-[var(--jiagang-muted-fg)]">缺少文章标识</div>';
+                return;
+            }
             try {
-                const res = await fetch('/api/articles');
-                if (!res.ok) throw new Error('加载失败');
-                const articles = await res.json();
-                if (!articles.length) {
-                    container.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--jiagang-muted-fg)]">暂无文章</div>';
+                const res = await fetch('/api/articles/' + encodeURIComponent(id));
+                if (!res.ok) {
+                    container.innerHTML = '<div class="text-center py-12 text-[var(--jiagang-muted-fg)]">文章不存在或已删除</div>';
                     return;
                 }
-                container.innerHTML = articles.map(a => `
-                    <article class="rounded-2xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] overflow-hidden hover:shadow-sm transition-all">
-                        <div class="h-48 bg-[var(--jiagang-primary-50)] flex items-center justify-center">
-                            <span data-lucide="${escapeHtml(a.cover_icon || 'file-text')}" class="w-20 h-20 text-[var(--jiagang-primary-300)]"></span>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-2 text-xs text-[var(--jiagang-primary)] font-medium mb-2">
-                                <span>${escapeHtml(a.published_at || '')}</span>
-                                ${a.category ? `<span class="px-2 py-0.5 rounded-full bg-[var(--jiagang-primary-50)]">${escapeHtml(a.category)}</span>` : ''}
-                            </div>
-                            <h3 class="font-bold text-lg mb-2">${escapeHtml(a.title)}</h3>
-                            <p class="text-sm text-[var(--jiagang-muted-fg)] mb-4">${escapeHtml(a.summary || '')}</p>
-                            <a href="news-detail.html?id=${encodeURIComponent(a.id)}" class="inline-flex items-center text-sm font-medium text-[var(--jiagang-primary)]">阅读全文 <span data-lucide="arrow-right" class="w-4 h-4 ml-1"></span></a>
-                        </div>
-                    </article>
-                `).join('');
+                const article = await res.json();
+                if (!article || !article.id) {
+                    container.innerHTML = '<div class="text-center py-12 text-[var(--jiagang-muted-fg)]">文章不存在或已删除</div>';
+                    return;
+                }
+                document.title = escapeHtml(article.title) + ' - 唐山嘉港环保科技有限公司';
+                container.innerHTML = `
+                    <a href="news.html" class="inline-flex items-center text-sm text-[var(--jiagang-primary)] mb-6 hover:underline">
+                        <span data-lucide="arrow-left" class="w-4 h-4 mr-1"></span>返回技术资讯
+                    </a>
+                    <h1 class="text-3xl lg:text-4xl font-bold text-[var(--jiagang-foreground)] mb-6">${escapeHtml(article.title)}</h1>
+                    <div class="flex flex-wrap items-center gap-4 text-sm text-[var(--jiagang-muted-fg)] mb-8 pb-8 border-b border-[var(--jiagang-border)]">
+                        ${article.published_at ? `<span class="flex items-center gap-1"><span data-lucide="calendar" class="w-4 h-4"></span>${escapeHtml(article.published_at)}</span>` : ''}
+                        ${article.author ? `<span class="flex items-center gap-1"><span data-lucide="user" class="w-4 h-4"></span>${escapeHtml(article.author)}</span>` : ''}
+                        ${article.category ? `<span class="px-2 py-0.5 rounded-full bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)]">${escapeHtml(article.category)}</span>` : ''}
+                        ${article.view_count != null ? `<span class="flex items-center gap-1"><span data-lucide="eye" class="w-4 h-4"></span>${escapeHtml(String(article.view_count))}</span>` : ''}
+                    </div>
+                    ${article.cover_icon ? `
+                    <div class="h-64 bg-[var(--jiagang-primary-50)] rounded-2xl flex items-center justify-center mb-8">
+                        <span data-lucide="${escapeHtml(article.cover_icon)}" class="w-24 h-24 text-[var(--jiagang-primary-300)]"></span>
+                    </div>
+                    ` : ''}
+                    <div class="article-content text-[var(--jiagang-foreground)]">${article.content || ''}</div>
+                    <div class="mt-12 pt-8 border-t border-[var(--jiagang-border)]">
+                        <a href="news.html" class="inline-flex items-center text-sm text-[var(--jiagang-primary)] hover:underline">
+                            <span data-lucide="arrow-left" class="w-4 h-4 mr-1"></span>返回技术资讯
+                        </a>
+                    </div>
+                `;
                 lucide.createIcons();
             } catch (e) {
-                container.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--state-error)]">文章加载失败，请刷新重试</div>';
+                container.innerHTML = '<div class="text-center py-12 text-[var(--state-error)]">文章加载失败，请刷新重试</div>';
             }
         }
 
         loadSettings();
-        loadArticles();
+        loadArticle();
     </script>
 
     <style>
         body { font-family: var(--font-body); background: var(--jiagang-background); color: var(--jiagang-foreground); }
-        .section-title { position: relative; display: inline-block; }
-        .section-title::after { content: ''; position: absolute; left: 0; bottom: -8px; width: 48px; height: 4px; background: var(--jiagang-primary); border-radius: 2px; }
     </style>
 </body>
 </html>

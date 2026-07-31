@@ -179,8 +179,8 @@
                 <a href="index.html" class="flex items-center gap-3" data-dom-id="nav-home">
                     <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold text-lg">嘉</div>
                     <div class="hidden sm:block">
-                        <div class="font-bold text-lg leading-tight text-[var(--jiagang-foreground)]">唐山嘉港环保科技</div>
-                        <div class="text-xs text-[var(--jiagang-muted-fg)]">选煤选矿装备制造商</div>
+                        <div class="font-bold text-lg leading-tight text-[var(--jiagang-foreground)] site-name">唐山嘉港环保科技</div>
+                        <div class="text-xs text-[var(--jiagang-muted-fg)] site-slogan">选煤选矿装备制造商</div>
                     </div>
                 </a>
                 <nav class="hidden md:flex items-center gap-8">
@@ -191,8 +191,7 @@
                     <a href="contact.html" class="text-sm font-medium text-[var(--jiagang-primary)]">联系我们</a>
                 </nav>
                 <div class="hidden md:flex items-center gap-3">
-                    <a href="tel:0315-0000000" class="text-sm font-medium text-[var(--jiagang-muted-fg)]"><span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>0315-0000000</a>
-                    <a href="admin-login.html" class="px-4 py-2 text-sm font-medium rounded-md bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)] transition-colors">管理</a>
+                    <a href="tel:0315-0000000" class="text-sm font-medium text-[var(--jiagang-muted-fg)] site-phone"><span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>0315-0000000</a>
                 </div>
                 <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-[var(--jiagang-muted-fg)]">
                     <span data-lucide="menu" class="w-6 h-6"></span>
@@ -229,7 +228,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold mb-1">公司地址</h3>
-                            <p class="text-sm text-[var(--jiagang-muted-fg)]">河北省遵化市新店子镇平东线北侧</p>
+                            <p class="text-sm text-[var(--jiagang-muted-fg)] site-address">河北省遵化市新店子镇平东线北侧</p>
                         </div>
                     </div>
                     <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 flex items-start gap-4">
@@ -238,7 +237,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold mb-1">联系电话</h3>
-                            <p class="text-sm text-[var(--jiagang-muted-fg)]">0315-0000000</p>
+                            <p class="text-sm text-[var(--jiagang-muted-fg)]"><a href="tel:0315-0000000" class="site-phone hover:text-[var(--jiagang-primary)]">0315-0000000</a></p>
                         </div>
                     </div>
                     <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 flex items-start gap-4">
@@ -247,7 +246,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold mb-1">电子邮箱</h3>
-                            <p class="text-sm text-[var(--jiagang-muted-fg)]">contact@jiagang.cn</p>
+                            <p class="text-sm text-[var(--jiagang-muted-fg)]"><a href="mailto:contact@jiagang.cn" class="site-email hover:text-[var(--jiagang-primary)]">contact@jiagang.cn</a></p>
                         </div>
                     </div>
                 </div>
@@ -290,7 +289,7 @@
                     </div>
                     <div class="rounded-2xl bg-[var(--jiagang-muted)] border border-[var(--jiagang-border)] p-8">
                         <h3 class="font-bold text-xl mb-4">服务区域</h3>
-                        <p class="text-[var(--jiagang-muted-fg)] mb-6">嘉港环保设备主要销往山西、陕西、内蒙古、河北等产煤带，同时覆盖铁、金及非金属矿的筛分脱水领域。</p>
+                        <p class="site-service-regions text-[var(--jiagang-muted-fg)] mb-6">嘉港环保设备主要销往山西、陕西、内蒙古、河北等产煤带，同时覆盖铁、金及非金属矿的筛分脱水领域。</p>
                         <ul class="space-y-3 mb-8">
                             <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span>新建选煤厂成套主机供应</li>
                             <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span>老厂技改与设备换代</li>
@@ -302,7 +301,7 @@
                                 <span data-lucide="clock" class="w-5 h-5 text-[var(--jiagang-primary)]"></span>
                                 <span class="font-bold">工作时间</span>
                             </div>
-                            <p class="text-sm text-[var(--jiagang-muted-fg)]">周一至周六 08:00–17:30</p>
+                            <p class="site-work-time text-sm text-[var(--jiagang-muted-fg)]">周一至周六 08:00–17:30</p>
                         </div>
                     </div>
                 </div>
@@ -316,9 +315,9 @@
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold">嘉</div>
-                        <div class="font-bold text-xl">唐山嘉港环保科技有限公司</div>
+                        <div class="font-bold text-xl site-full-name">唐山嘉港环保科技有限公司</div>
                     </div>
-                    <p class="text-sm text-slate-400 max-w-sm">专注选煤选矿设备研发、设计、制造、销售及技术服务。</p>
+                    <p class="text-sm text-slate-400 max-w-sm site-footer-intro">专注选煤选矿设备研发、设计、制造、销售及技术服务。</p>
                 </div>
                 <div>
                     <h4 class="font-bold mb-4">快速链接</h4>
@@ -332,14 +331,14 @@
                 <div>
                     <h4 class="font-bold mb-4">联系方式</h4>
                     <ul class="space-y-2 text-sm text-slate-400">
-                        <li class="flex items-center gap-2"><span data-lucide="map-pin" class="w-4 h-4"></span>河北省遵化市新店子镇平东线北侧</li>
-                        <li class="flex items-center gap-2"><span data-lucide="phone" class="w-4 h-4"></span>0315-0000000</li>
-                        <li class="flex items-center gap-2"><span data-lucide="mail" class="w-4 h-4"></span>contact@jiagang.cn</li>
+                        <li class="flex items-center gap-2"><span data-lucide="map-pin" class="w-4 h-4"></span><span class="site-address">河北省遵化市新店子镇平东线北侧</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="phone" class="w-4 h-4"></span><span class="site-phone">0315-0000000</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="mail" class="w-4 h-4"></span><span class="site-email">contact@jiagang.cn</span></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-slate-700 pt-8 text-center text-sm text-slate-500">
-                <p>© 2026 唐山嘉港环保科技有限公司 版权所有</p>
+                <p>© <span class="site-copyright-year">2026</span> <span class="site-full-name">唐山嘉港环保科技有限公司</span> 版权所有</p>
             </div>
         </div>
     </footer>
@@ -349,6 +348,42 @@
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text == null ? '' : text;
+            return div.innerHTML;
+        }
+
+        async function loadSettings() {
+            try {
+                const res = await fetch('/api/settings');
+                if (!res.ok) return;
+                const { settings } = await res.json();
+                if (settings.company_name) document.querySelectorAll('.site-name').forEach(el => el.textContent = settings.company_name.replace('科技有限公司', '科技'));
+                if (settings.company_slogan) document.querySelectorAll('.site-slogan').forEach(el => el.textContent = settings.company_slogan);
+                if (settings.company_name) document.querySelectorAll('.site-full-name').forEach(el => el.textContent = settings.company_name);
+                if (settings.phone) document.querySelectorAll('.site-phone').forEach(el => {
+                    const text = el.tagName === 'A' ? ('<span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>' + escapeHtml(settings.phone)) : escapeHtml(settings.phone);
+                    if (el.tagName === 'A') {
+                        el.href = 'tel:' + settings.phone;
+                        el.innerHTML = text;
+                    } else {
+                        el.textContent = settings.phone;
+                    }
+                });
+                if (settings.email) document.querySelectorAll('.site-email').forEach(el => {
+                    if (el.tagName === 'A') el.href = 'mailto:' + settings.email;
+                    el.textContent = settings.email;
+                });
+                if (settings.address) document.querySelectorAll('.site-address').forEach(el => el.textContent = settings.address);
+                if (settings.copyright_year) document.querySelectorAll('.site-copyright-year').forEach(el => el.textContent = settings.copyright_year);
+                if (settings.seo_description) document.querySelectorAll('.site-footer-intro').forEach(el => el.textContent = settings.seo_description);
+                if (settings.work_time) document.querySelectorAll('.site-work-time').forEach(el => el.textContent = settings.work_time);
+                if (settings.service_regions) document.querySelectorAll('.site-service-regions').forEach(el => el.textContent = settings.service_regions);
+            } catch (e) { console.error(e); }
+        }
+
         document.getElementById('contact-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const form = e.target;
@@ -369,6 +404,8 @@
                 alert('提交失败，请稍后重试或直接拨打电话。');
             }
         });
+
+        loadSettings();
     </script>
 
     <style>

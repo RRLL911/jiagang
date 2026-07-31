@@ -179,8 +179,8 @@
                 <a href="index.html" class="flex items-center gap-3" data-dom-id="nav-home">
                     <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold text-lg">嘉</div>
                     <div class="hidden sm:block">
-                        <div class="font-bold text-lg leading-tight text-[var(--jiagang-foreground)]">唐山嘉港环保科技</div>
-                        <div class="text-xs text-[var(--jiagang-muted-fg)]">选煤选矿装备制造商</div>
+                        <div class="font-bold text-lg leading-tight text-[var(--jiagang-foreground)] site-name">唐山嘉港环保科技</div>
+                        <div class="text-xs text-[var(--jiagang-muted-fg)] site-slogan">选煤选矿装备制造商</div>
                     </div>
                 </a>
                 <nav class="hidden md:flex items-center gap-8">
@@ -191,8 +191,7 @@
                     <a href="contact.html" class="text-sm font-medium text-[var(--jiagang-muted-fg)] hover:text-[var(--jiagang-primary)] transition-colors">联系我们</a>
                 </nav>
                 <div class="hidden md:flex items-center gap-3">
-                    <a href="tel:0315-0000000" class="text-sm font-medium text-[var(--jiagang-muted-fg)]"><span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>0315-0000000</a>
-                    <a href="admin-login.html" class="px-4 py-2 text-sm font-medium rounded-md bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)] transition-colors">管理</a>
+                    <a href="tel:0315-0000000" class="text-sm font-medium text-[var(--jiagang-muted-fg)] site-phone"><span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>0315-0000000</a>
                 </div>
                 <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-[var(--jiagang-muted-fg)]">
                     <span data-lucide="menu" class="w-6 h-6"></span>
@@ -225,7 +224,7 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                     <div>
                         <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title mb-6">企业简介</h2>
-                        <div class="space-y-4 text-[var(--jiagang-muted-fg)] leading-relaxed">
+                        <div id="about-intro" class="space-y-4 text-[var(--jiagang-muted-fg)] leading-relaxed">
                             <p>唐山嘉港环保科技有限公司成立于2018年11月30日，位于河北省遵化市新店子镇平东线北侧，注册资金100万元。公司厂区占地3万平方米、建筑面积1万平方米，现有员工120余人，其中技术人员40人、高级工程师8人。</p>
                             <p>公司主营业务覆盖选煤、选矿设备的研发、设计、制造、销售，以及配套配件供应与工程技术服务。产品主要包括LL-A系列立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备、旋流器及旋流器组、高频筛与弧形筛等。</p>
                             <p>与纯组装型煤机厂最大的区别在于，嘉港环保的筛篮、不锈钢焊接筛网、筛板等易耗件实现自产，拥有两条专业筛网生产线，年产筛网约1万㎡，能够为客户提供更快的配件响应与更稳定的供货保障。</p>
@@ -233,14 +232,14 @@
                     </div>
                     <div class="rounded-2xl bg-[var(--jiagang-primary-50)] border border-[var(--jiagang-primary-200)] p-8">
                         <h3 class="font-bold text-xl mb-6 text-[var(--jiagang-foreground)]">企业信息</h3>
-                        <ul class="space-y-4 text-sm">
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">公司全称</span><span class="font-medium">唐山嘉港环保科技有限公司</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">成立时间</span><span class="font-medium">2018年11月30日</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">注册资本</span><span class="font-medium">100万元</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">注册地址</span><span class="font-medium">河北省遵化市新店子镇平东线北侧</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">法定代表人</span><span class="font-medium">杨巧娟</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">员工规模</span><span class="font-medium">120余人</span></li>
-                            <li class="flex justify-between"><span class="text-[var(--jiagang-muted-fg)]">厂区占地</span><span class="font-medium">3万平方米</span></li>
+                        <ul id="company-info" class="space-y-4 text-sm">
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">公司全称</span><span class="font-medium" data-key="company_name">唐山嘉港环保科技有限公司</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">成立时间</span><span class="font-medium" data-key="established_date">2018年11月30日</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">注册资本</span><span class="font-medium" data-key="registered_capital">100万元</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">注册地址</span><span class="font-medium" data-key="address">河北省遵化市新店子镇平东线北侧</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">法定代表人</span><span class="font-medium" data-key="legal_representative">杨巧娟</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]">员工规模</span><span class="font-medium" data-key="employee_scale">120余人</span></li>
+                            <li class="flex justify-between"><span class="text-[var(--jiagang-muted-fg)]">厂区占地</span><span class="font-medium" data-key="factory_area">3万平方米</span></li>
                         </ul>
                     </div>
                 </div>
@@ -252,7 +251,7 @@
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title">资质荣誉</h2>
                 </div>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div id="honors-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="rounded-xl bg-white p-6 border border-[var(--jiagang-border)] text-center">
                         <div class="w-14 h-14 mx-auto rounded-full bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4"><span data-lucide="award" class="w-7 h-7"></span></div>
                         <h3 class="font-bold text-lg mb-2">国家级高新技术企业</h3>
@@ -278,7 +277,7 @@
                     <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title">制造与质控</h2>
                     <p class="mt-4 text-[var(--jiagang-muted-fg)]">从毛坯到装配，闭环在厂里</p>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div id="process-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="rounded-xl border border-[var(--jiagang-border)] p-6">
                         <span data-lucide="cog" class="w-8 h-8 text-[var(--jiagang-primary)] mb-3"></span>
                         <h3 class="font-bold mb-2">机加工</h3>
@@ -310,9 +309,9 @@
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold">嘉</div>
-                        <div class="font-bold text-xl">唐山嘉港环保科技有限公司</div>
+                        <div class="font-bold text-xl site-full-name">唐山嘉港环保科技有限公司</div>
                     </div>
-                    <p class="text-sm text-slate-400 max-w-sm">专注选煤选矿设备研发、设计、制造、销售及技术服务。</p>
+                    <p class="text-sm text-slate-400 max-w-sm site-footer-intro">专注选煤选矿设备研发、设计、制造、销售及技术服务。</p>
                 </div>
                 <div>
                     <h4 class="font-bold mb-4">快速链接</h4>
@@ -326,14 +325,14 @@
                 <div>
                     <h4 class="font-bold mb-4">联系方式</h4>
                     <ul class="space-y-2 text-sm text-slate-400">
-                        <li class="flex items-center gap-2"><span data-lucide="map-pin" class="w-4 h-4"></span>河北省遵化市新店子镇平东线北侧</li>
-                        <li class="flex items-center gap-2"><span data-lucide="phone" class="w-4 h-4"></span>0315-0000000</li>
-                        <li class="flex items-center gap-2"><span data-lucide="mail" class="w-4 h-4"></span>contact@jiagang.cn</li>
+                        <li class="flex items-center gap-2"><span data-lucide="map-pin" class="w-4 h-4"></span><span class="site-address">河北省遵化市新店子镇平东线北侧</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="phone" class="w-4 h-4"></span><span class="site-phone">0315-0000000</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="mail" class="w-4 h-4"></span><span class="site-email">contact@jiagang.cn</span></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-slate-700 pt-8 text-center text-sm text-slate-500">
-                <p>© 2026 唐山嘉港环保科技有限公司 版权所有</p>
+                <p>© <span class="site-copyright-year">2026</span> <span class="site-full-name">唐山嘉港环保科技有限公司</span> 版权所有</p>
             </div>
         </div>
     </footer>
@@ -343,6 +342,83 @@
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text == null ? '' : text;
+            return div.innerHTML;
+        }
+
+        async function loadSettings() {
+            try {
+                const res = await fetch('/api/settings');
+                if (!res.ok) return;
+                const { settings, stats } = await res.json();
+                if (settings.company_name) document.querySelectorAll('.site-name').forEach(el => el.textContent = settings.company_name.replace('科技有限公司', '科技'));
+                if (settings.company_slogan) document.querySelectorAll('.site-slogan').forEach(el => el.textContent = settings.company_slogan);
+                if (settings.company_name) document.querySelectorAll('.site-full-name').forEach(el => el.textContent = settings.company_name);
+                if (settings.phone) document.querySelectorAll('.site-phone').forEach(el => {
+                    const text = el.tagName === 'A' ? ('<span data-lucide="phone" class="inline w-4 h-4 mr-1"></span>' + escapeHtml(settings.phone)) : escapeHtml(settings.phone);
+                    if (el.tagName === 'A') {
+                        el.href = 'tel:' + settings.phone;
+                        el.innerHTML = text;
+                    } else {
+                        el.textContent = settings.phone;
+                    }
+                });
+                if (settings.email) document.querySelectorAll('.site-email').forEach(el => {
+                    if (el.tagName === 'A') el.href = 'mailto:' + settings.email;
+                    el.textContent = settings.email;
+                });
+                if (settings.address) document.querySelectorAll('.site-address').forEach(el => el.textContent = settings.address);
+                if (settings.copyright_year) document.querySelectorAll('.site-copyright-year').forEach(el => el.textContent = settings.copyright_year);
+                if (settings.seo_description) document.querySelectorAll('.site-footer-intro').forEach(el => el.textContent = settings.seo_description);
+                if (settings.work_time) document.querySelectorAll('.site-work-time').forEach(el => el.textContent = settings.work_time);
+                if (settings.service_regions) document.querySelectorAll('.site-service-regions').forEach(el => el.textContent = settings.service_regions);
+
+                if (settings.about_intro) {
+                    const intro = document.getElementById('about-intro');
+                    intro.innerHTML = `<p>${escapeHtml(settings.about_intro).replace(/\n/g, '</p><p>')}</p>`;
+                }
+
+                document.querySelectorAll('#company-info [data-key]').forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if (settings[key]) el.textContent = settings[key];
+                });
+
+                const honorsGrid = document.getElementById('honors-grid');
+                if (honorsGrid && stats) {
+                    const items = stats.filter(s => s.section === 'about_honors').sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+                    if (items.length) {
+                        honorsGrid.innerHTML = items.map(s => `
+                            <div class="rounded-xl bg-white p-6 border border-[var(--jiagang-border)] text-center">
+                                <div class="w-14 h-14 mx-auto rounded-full bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4"><span data-lucide="${escapeHtml(s.icon || 'award')}" class="w-7 h-7"></span></div>
+                                <h3 class="font-bold text-lg mb-2">${escapeHtml(s.title)}</h3>
+                                <p class="text-sm text-[var(--jiagang-muted-fg)]">${escapeHtml(s.value)}${escapeHtml(s.unit)}</p>
+                            </div>
+                        `).join('');
+                    }
+                }
+
+                const processGrid = document.getElementById('process-grid');
+                if (processGrid && stats) {
+                    const items = stats.filter(s => s.section === 'about_process').sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+                    if (items.length) {
+                        processGrid.innerHTML = items.map(s => `
+                            <div class="rounded-xl border border-[var(--jiagang-border)] p-6">
+                                <span data-lucide="${escapeHtml(s.icon || 'cog')}" class="w-8 h-8 text-[var(--jiagang-primary)] mb-3"></span>
+                                <h3 class="font-bold mb-2">${escapeHtml(s.title)}</h3>
+                                <p class="text-sm text-[var(--jiagang-muted-fg)]">${escapeHtml(s.value)}${escapeHtml(s.unit)}</p>
+                            </div>
+                        `).join('');
+                    }
+                }
+
+                lucide.createIcons();
+            } catch (e) { console.error(e); }
+        }
+
+        loadSettings();
     </script>
 
     <style>

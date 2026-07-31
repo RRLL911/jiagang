@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理仪表盘 - 唐山嘉港环保科技有限公司</title>
+    <title>管理后台 - 唐山嘉港环保科技有限公司</title>
     <style id="theme-vars">
 :root {
   --jiagang-background: #ffffff;
@@ -72,7 +72,6 @@
 
 .font-title { font-family: var(--font-title); }
 .font-body { font-family: var(--font-body); }
-
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -158,17 +157,45 @@
     <style>
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      [data-icon] {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        -webkit-mask-size: contain;
-        mask-size: contain;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
-        background-color: currentColor;
+      [data-icon] { display: inline-flex; align-items: center; justify-content: center; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; background-color: currentColor; }
+
+      .admin-sidebar { background: var(--jiagang-neutral-900); }
+      .admin-sidebar a, .admin-sidebar button { transition: background-color .2s ease, color .2s ease; }
+      .admin-sidebar a:hover, .admin-sidebar button:hover { background: var(--jiagang-neutral-800); }
+      .admin-sidebar a.active { background: var(--jiagang-primary); color: var(--jiagang-primary-foreground); }
+
+      .stat-card { transition: transform .15s ease, box-shadow .15s ease; }
+      .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,.08); }
+
+      .data-table-wrap { overflow-x: auto; }
+      .data-table { width: 100%; border-collapse: collapse; }
+      .data-table th { background: var(--jiagang-muted); color: var(--jiagang-neutral-700); font-weight: 600; }
+      .data-table tbody tr { transition: background-color .15s ease; border-bottom: 1px solid var(--jiagang-border); }
+      .data-table tbody tr:hover { background: var(--jiagang-neutral-50); }
+      .data-table td, .data-table th { padding: .875rem 1rem; text-align: left; font-size: .875rem; }
+
+      .modal-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(15,23,42,.45); display: none; align-items: center; justify-content: center; padding: 1rem; }
+      .modal-overlay.open { display: flex; }
+      .modal-panel { background: var(--jiagang-card); border: 1px solid var(--jiagang-border); border-radius: var(--jiagang-radius-large); width: 100%; max-width: 720px; max-height: 90vh; display: flex; flex-direction: column; }
+      .modal-panel.wide { max-width: 900px; }
+      .modal-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--jiagang-border); display: flex; align-items: center; justify-content: space-between; }
+      .modal-body { padding: 1.25rem; overflow-y: auto; flex: 1; }
+      .modal-footer { padding: 1rem 1.25rem; border-top: 1px solid var(--jiagang-border); display: flex; justify-content: flex-end; gap: .75rem; }
+
+      .detail-drawer { position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0; transition: opacity .2s ease; }
+      .detail-drawer.open { pointer-events: auto; opacity: 1; }
+      .detail-backdrop { position: absolute; inset: 0; background: rgba(15,23,42,.45); }
+      .detail-panel { position: absolute; top: 0; right: 0; height: 100%; width: min(520px, 90vw); background: var(--jiagang-card); border-left: 1px solid var(--jiagang-border); transform: translateX(100%); transition: transform .25s ease; display: flex; flex-direction: column; }
+      .detail-drawer.open .detail-panel { transform: translateX(0); }
+
+      .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 60; transform: translateY(120%); opacity: 0; transition: transform .25s ease, opacity .25s ease; background: var(--jiagang-card); border: 1px solid var(--jiagang-border); box-shadow: 0 10px 30px rgba(15,23,42,.12); border-radius: var(--jiagang-radius-medium); padding: .875rem 1.125rem; display: flex; align-items: center; gap: .625rem; max-width: 24rem; }
+      .toast.show { transform: translateY(0); opacity: 1; }
+
+      .section-view { display: none; }
+      .section-view.active { display: block; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .detail-drawer, .detail-panel, .toast, .admin-sidebar a, .admin-sidebar button, .stat-card { transition: none !important; }
       }
     </style>
 </head>
@@ -179,94 +206,267 @@
                 <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold">嘉</div>
                 <div class="font-bold">嘉港后台</div>
             </div>
-            <button id="sidebar-toggle" class="md:hidden p-2 text-slate-400"><span data-lucide="menu" class="w-5 h-5"></span></button>
+            <button id="sidebar-toggle" class="md:hidden p-2 text-[var(--jiagang-neutral-400)]" aria-label="切换菜单"><span data-lucide="menu" class="w-5 h-5"></span></button>
         </div>
         <nav id="sidebar-nav" class="hidden md:block px-4 pb-4 space-y-1">
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-[var(--jiagang-primary)] text-white" data-dom-id="nav-dashboard"><span data-lucide="layout-dashboard" class="w-5 h-5"></span>仪表盘</a>
-            <a href="#contacts" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-dom-id="nav-contacts"><span data-lucide="message-square" class="w-5 h-5"></span>留言管理</a>
-            <a href="#products" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-dom-id="nav-products-admin"><span data-lucide="box" class="w-5 h-5"></span>产品管理</a>
-            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-dom-id="nav-site"><span data-lucide="external-link" class="w-5 h-5"></span>访问官网</a>
-            <button id="logout-btn" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 text-left" data-dom-id="logout-btn"><span data-lucide="log-out" class="w-5 h-5"></span>退出登录</button>
+            <a href="#dashboard" class="nav-link active flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="dashboard"><span data-lucide="layout-dashboard" class="w-5 h-5"></span>仪表盘</a>
+            <a href="#contacts" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="contacts"><span data-lucide="message-square" class="w-5 h-5"></span>留言管理</a>
+            <a href="#products" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="products"><span data-lucide="box" class="w-5 h-5"></span>产品管理</a>
+            <a href="#articles" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="articles"><span data-lucide="newspaper" class="w-5 h-5"></span>文章管理</a>
+            <a href="#settings" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="settings"><span data-lucide="settings" class="w-5 h-5"></span>站点配置</a>
+            <a href="index.html" target="_blank" class="flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]"><span data-lucide="external-link" class="w-5 h-5"></span>访问官网</a>
+            <button id="logout-btn" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)] text-left"><span data-lucide="log-out" class="w-5 h-5"></span>退出登录</button>
         </nav>
     </aside>
 
-    <main class="flex-1 p-6 lg:p-10">
-        <div class="flex items-center justify-between mb-8">
-            <h1 class="text-2xl font-bold text-[var(--jiagang-foreground)]">仪表盘</h1>
-            <div class="text-sm text-[var(--jiagang-muted-fg)]">欢迎，管理员</div>
+    <main class="flex-1 min-w-0 bg-[var(--jiagang-background)]">
+        <header class="sticky top-0 z-30 bg-[var(--jiagang-card)]/95 backdrop-blur border-b border-[var(--jiagang-border)] px-6 py-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <button id="header-sidebar-toggle" class="md:hidden p-2 rounded-lg hover:bg-[var(--jiagang-muted)] text-[var(--jiagang-muted-foreground)]" aria-label="切换菜单"><span data-lucide="menu" class="w-5 h-5"></span></button>
+                <h1 id="page-title" class="text-lg md:text-xl font-bold text-[var(--jiagang-foreground)]">仪表盘</h1>
+            </div>
+            <div class="flex items-center gap-4 md:gap-6 text-sm text-[var(--jiagang-muted-foreground)]">
+                <div class="hidden sm:flex items-center gap-2"><span data-lucide="calendar" class="w-4 h-4"></span><span id="current-date">--</span></div>
+                <div class="flex items-center gap-2"><span data-lucide="user" class="w-4 h-4"></span><span id="admin-name">管理员</span></div>
+            </div>
+        </header>
+
+        <div class="p-6 lg:p-10">
+            <!-- 仪表盘 -->
+            <section id="dashboard-view" class="section-view active">
+                <div class="stats-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
+                    <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="message-square" class="w-5 h-5"></span></div><div class="text-sm text-[var(--jiagang-muted-foreground)]">今日留言</div></div>
+                        <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-today">0</div>
+                        <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">较昨日 <span id="trend-today" class="font-medium" style="color:var(--state-success);">+0</span></div>
+                    </div>
+                    <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="clock" class="w-5 h-5"></span></div><div class="text-sm text-[var(--jiagang-muted-foreground)]">未处理留言</div></div>
+                        <div class="text-3xl font-bold text-[var(--jiagang-primary)]" id="stat-pending">0</div>
+                        <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">待跟进 <span class="font-medium" style="color:var(--state-warning);">请及时处理</span></div>
+                    </div>
+                    <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="check-circle-2" class="w-5 h-5"></span></div><div class="text-sm text-[var(--jiagang-muted-foreground)]">累计留言</div></div>
+                        <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-total">0</div>
+                        <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">总计收录</div>
+                    </div>
+                    <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="box" class="w-5 h-5"></span></div><div class="text-sm text-[var(--jiagang-muted-foreground)]">产品数量</div></div>
+                        <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-products">0</div>
+                        <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">在线展示</div>
+                    </div>
+                    <div class="stat-card rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--jiagang-primary-100); color:var(--jiagang-primary-700);"><span data-lucide="newspaper" class="w-5 h-5"></span></div><div class="text-sm text-[var(--jiagang-muted-foreground)]">文章数量</div></div>
+                        <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-articles">0</div>
+                        <div class="mt-2 text-xs text-[var(--jiagang-muted-foreground)]">技术资讯</div>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold text-lg mb-4">快捷入口</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button onclick="showSection('products')" class="p-4 rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] text-left"><span data-lucide="box" class="w-6 h-6 mb-2" style="color:var(--jiagang-primary)"></span><div class="font-medium">产品管理</div><div class="text-xs text-[var(--jiagang-muted-foreground)]">新增/编辑/删除产品</div></button>
+                            <button onclick="showSection('articles')" class="p-4 rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] text-left"><span data-lucide="newspaper" class="w-6 h-6 mb-2" style="color:var(--jiagang-primary)"></span><div class="font-medium">文章管理</div><div class="text-xs text-[var(--jiagang-muted-foreground)]">发布/编辑技术资讯</div></button>
+                            <button onclick="showSection('settings')" class="p-4 rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] text-left"><span data-lucide="settings" class="w-6 h-6 mb-2" style="color:var(--jiagang-primary)"></span><div class="font-medium">站点配置</div><div class="text-xs text-[var(--jiagang-muted-foreground)]">修改公司信息/数据</div></button>
+                            <button onclick="showSection('contacts')" class="p-4 rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] text-left"><span data-lucide="message-square" class="w-6 h-6 mb-2" style="color:var(--jiagang-primary)"></span><div class="font-medium">留言管理</div><div class="text-xs text-[var(--jiagang-muted-foreground)]">查看客户留言</div></button>
+                        </div>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold text-lg mb-4">最近未处理留言</h3>
+                        <div id="dashboard-latest-contacts" class="space-y-3"><div class="text-sm text-[var(--jiagang-muted-foreground)]">加载中...</div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 留言管理 -->
+            <section id="contacts-view" class="section-view">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">留言管理</h2>
+                    <button id="refresh-contacts" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="refresh-cw" class="w-4 h-4"></span>刷新</button>
+                </div>
+                <div class="filter-toolbar flex flex-col lg:flex-row gap-3 mb-4 p-4 rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)]">
+                    <div class="relative flex-1 min-w-[12rem]"><span data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--jiagang-muted-foreground)]"></span><input id="search-contacts" type="text" placeholder="搜索称呼、公司、电话或内容" class="w-full pl-9 pr-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] placeholder:text-[var(--jiagang-muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative"><span data-lucide="filter" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--jiagang-muted-foreground)]"></span><select id="filter-status" class="pl-9 pr-8 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"><option value="">全部状态</option><option value="pending">未处理</option><option value="done">已处理</option></select></div>
+                        <select id="filter-type" class="px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"><option value="">全部需求类型</option><option value="设备选型咨询">设备选型咨询</option><option value="技改方案">技改方案</option><option value="配件报价">配件报价</option><option value="技术服务">技术服务</option><option value="其他">其他</option></select>
+                    </div>
+                </div>
+                <div class="data-table-wrap rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)]">
+                    <table class="data-table min-w-full"><thead><tr><th>时间</th><th>称呼</th><th>公司</th><th>电话</th><th>需求类型</th><th>状态</th><th>操作</th></tr></thead><tbody id="contacts-body"><tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr></tbody></table>
+                </div>
+                <div id="pagination" class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 text-sm text-[var(--jiagang-muted-foreground)]">
+                    <div class="flex items-center gap-2"><span>每页</span><select id="page-size" class="px-2 py-1 rounded border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm"><option value="10">10</option><option value="20">20</option><option value="50">50</option></select><span>条，共 <span id="total-items">0</span> 条</span></div>
+                    <div class="flex items-center gap-2"><button id="page-prev" class="px-3 py-1.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] hover:bg-[var(--jiagang-muted)] disabled:opacity-50 disabled:cursor-not-allowed"><span data-lucide="chevron-left" class="w-4 h-4"></span></button><span id="page-info" class="px-2">1 / 1</span><button id="page-next" class="px-3 py-1.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] hover:bg-[var(--jiagang-muted)] disabled:opacity-50 disabled:cursor-not-allowed"><span data-lucide="chevron-right" class="w-4 h-4"></span></button></div>
+                </div>
+            </section>
+
+            <!-- 产品管理 -->
+            <section id="products-view" class="section-view">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">产品管理</h2>
+                    <div class="flex gap-2"><button onclick="openProductModal()" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)] transition-colors"><span data-lucide="plus" class="w-4 h-4"></span>新增产品</button><button id="refresh-products" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="refresh-cw" class="w-4 h-4"></span>刷新</button></div>
+                </div>
+                <div class="data-table-wrap rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)]">
+                    <table class="data-table min-w-full"><thead><tr><th>排序</th><th>名称</th><th>标识</th><th>分类</th><th>推荐</th><th>状态</th><th>操作</th></tr></thead><tbody id="products-body"><tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr></tbody></table>
+                </div>
+            </section>
+
+            <!-- 文章管理 -->
+            <section id="articles-view" class="section-view">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">文章管理</h2>
+                    <div class="flex gap-2"><button onclick="openArticleModal()" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)] transition-colors"><span data-lucide="plus" class="w-4 h-4"></span>新增文章</button><button id="refresh-articles" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="refresh-cw" class="w-4 h-4"></span>刷新</button></div>
+                </div>
+                <div class="data-table-wrap rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)]">
+                    <table class="data-table min-w-full"><thead><tr><th>发布时间</th><th>标题</th><th>分类</th><th>作者</th><th>状态</th><th>浏览量</th><th>操作</th></tr></thead><tbody id="articles-body"><tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr></tbody></table>
+                </div>
+            </section>
+
+            <!-- 站点配置 -->
+            <section id="settings-view" class="section-view">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">站点配置</h2>
+                    <button id="save-settings" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)] transition-colors"><span data-lucide="save" class="w-4 h-4"></span>保存配置</button>
+                </div>
+                <div class="space-y-6">
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold mb-4">公司联系信息</h3>
+                        <div class="grid md:grid-cols-2 gap-4" id="settings-contact"></div>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold mb-4">首页与 SEO</h3>
+                        <div class="grid md:grid-cols-2 gap-4" id="settings-seo"></div>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold mb-4">首页数据卡片（section=home_hero）</h3>
+                        <div id="stats-home_hero" class="space-y-3"></div>
+                        <button onclick="addStatRow('home_hero')" class="mt-3 inline-flex items-center gap-1 text-sm text-[var(--jiagang-primary)] hover:underline"><span data-lucide="plus" class="w-4 h-4"></span>添加数据</button>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold mb-4">关于页数据（section=about_stats）</h3>
+                        <div id="stats-about_stats" class="space-y-3"></div>
+                        <button onclick="addStatRow('about_stats')" class="mt-3 inline-flex items-center gap-1 text-sm text-[var(--jiagang-primary)] hover:underline"><span data-lucide="plus" class="w-4 h-4"></span>添加数据</button>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold mb-4">产品页配件产能（section=parts_capacity）</h3>
+                        <div id="stats-parts_capacity" class="space-y-3"></div>
+                        <button onclick="addStatRow('parts_capacity')" class="mt-3 inline-flex items-center gap-1 text-sm text-[var(--jiagang-primary)] hover:underline"><span data-lucide="plus" class="w-4 h-4"></span>添加数据</button>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold mb-4">关于页资质荣誉（section=about_honors）</h3>
+                        <div id="stats-about_honors" class="space-y-3"></div>
+                        <button onclick="addStatRow('about_honors')" class="mt-3 inline-flex items-center gap-1 text-sm text-[var(--jiagang-primary)] hover:underline"><span data-lucide="plus" class="w-4 h-4"></span>添加数据</button>
+                    </div>
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
+                        <h3 class="font-bold mb-4">关于页制造与质控（section=about_process）</h3>
+                        <div id="stats-about_process" class="space-y-3"></div>
+                        <button onclick="addStatRow('about_process')" class="mt-3 inline-flex items-center gap-1 text-sm text-[var(--jiagang-primary)] hover:underline"><span data-lucide="plus" class="w-4 h-4"></span>添加数据</button>
+                    </div>
+                </div>
+            </section>
         </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
-                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-1">今日留言</div>
-                <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-today">0</div>
-            </div>
-            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
-                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-1">未处理留言</div>
-                <div class="text-3xl font-bold text-[var(--jiagang-primary)]" id="stat-pending">0</div>
-            </div>
-            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
-                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-1">累计留言</div>
-                <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-total">0</div>
-            </div>
-            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
-                <div class="text-sm text-[var(--jiagang-muted-fg)] mb-1">产品数量</div>
-                <div class="text-3xl font-bold text-[var(--jiagang-foreground)]" id="stat-products">6</div>
-            </div>
-        </div>
-
-        <section id="contacts" class="mb-10">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">留言管理</h2>
-                <button id="refresh-contacts" class="px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] transition-colors">刷新</button>
-            </div>
-            <div class="overflow-x-auto rounded-xl border border-[var(--jiagang-border)]">
-                <table class="min-w-full text-sm">
-                    <thead class="bg-[var(--jiagang-muted)]">
-                        <tr>
-                            <th class="px-4 py-3 text-left font-semibold">时间</th>
-                            <th class="px-4 py-3 text-left font-semibold">称呼</th>
-                            <th class="px-4 py-3 text-left font-semibold">公司</th>
-                            <th class="px-4 py-3 text-left font-semibold">电话</th>
-                            <th class="px-4 py-3 text-left font-semibold">需求类型</th>
-                            <th class="px-4 py-3 text-left font-semibold">状态</th>
-                            <th class="px-4 py-3 text-left font-semibold">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="contacts-body" class="divide-y divide-[var(--jiagang-border)]">
-                        <tr><td colspan="7" class="px-4 py-8 text-center text-[var(--jiagang-muted-fg)]">加载中...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="products">
-            <h2 class="text-xl font-bold text-[var(--jiagang-foreground)] mb-4">产品管理</h2>
-            <p class="text-sm text-[var(--jiagang-muted-fg)] mb-4">产品信息可通过编辑 pages/products.html 与 pages/product-detail.html 更新，或后续对接 CMS 数据表。</p>
-            <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
-                <ul class="space-y-2 text-sm">
-                    <li class="flex items-center justify-between py-2 border-b border-[var(--jiagang-border)]"><span>LL-A 立式刮刀卸料离心脱水机</span><a href="product-detail.html" class="text-[var(--jiagang-primary)]">查看</a></li>
-                    <li class="flex items-center justify-between py-2 border-b border-[var(--jiagang-border)]"><span>机械搅拌式浮选机</span><a href="products.html" class="text-[var(--jiagang-primary)]">查看</a></li>
-                    <li class="flex items-center justify-between py-2 border-b border-[var(--jiagang-border)]"><span>跳汰机及成套设备</span><a href="products.html" class="text-[var(--jiagang-primary)]">查看</a></li>
-                    <li class="flex items-center justify-between py-2"><span>旋流器 / 高频筛 / 弧形筛 / 配件</span><a href="products.html" class="text-[var(--jiagang-primary)]">查看</a></li>
-                </ul>
-            </div>
-        </section>
     </main>
+
+    <!-- 产品编辑模态框 -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-panel wide">
+            <div class="modal-header"><h3 id="product-modal-title" class="text-lg font-bold text-[var(--jiagang-foreground)]">新增产品</h3><button onclick="closeModal('product-modal')" class="p-2 rounded-lg hover:bg-[var(--jiagang-muted)] text-[var(--jiagang-muted-foreground)]"><span data-lucide="x" class="w-5 h-5"></span></button></div>
+            <div class="modal-body space-y-4">
+                <input type="hidden" id="product-id">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium mb-1">产品名称 <span class="text-[var(--state-error)]">*</span></label><input type="text" id="product-name" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                    <div><label class="block text-sm font-medium mb-1">URL 标识 <span class="text-[var(--state-error)]">*</span></label><input type="text" id="product-slug" placeholder="如 ll-a-centrifuge" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium mb-1">分类</label><input type="text" id="product-category" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                    <div><label class="block text-sm font-medium mb-1">图标（Lucide 名称）</label><input type="text" id="product-icon" placeholder="如 refresh-cw" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium mb-1">排序</label><input type="number" id="product-sort" value="0" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                    <div class="flex items-center gap-4 pt-6"><label class="flex items-center gap-2 text-sm"><input type="checkbox" id="product-featured" class="w-4 h-4 rounded border-[var(--jiagang-input)]"> 推荐到首页</label><label class="flex items-center gap-2 text-sm"><input type="checkbox" id="product-published" checked class="w-4 h-4 rounded border-[var(--jiagang-input)]"> 发布</label></div>
+                </div>
+                <div><label class="block text-sm font-medium mb-1">图片 URL</label><input type="text" id="product-image" placeholder="可选，留空使用图标" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                <div><label class="block text-sm font-medium mb-1">摘要</label><textarea id="product-summary" rows="2" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></textarea></div>
+                <div><label class="block text-sm font-medium mb-1">详细介绍（支持 HTML）</label><textarea id="product-description" rows="4" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></textarea></div>
+                <div>
+                    <div class="flex items-center justify-between mb-2"><label class="block text-sm font-medium">结构特点</label><button onclick="addFeatureRow()" class="text-sm text-[var(--jiagang-primary)] hover:underline">+ 添加</button></div>
+                    <div id="product-features" class="space-y-2"></div>
+                </div>
+                <div>
+                    <div class="flex items-center justify-between mb-2"><label class="block text-sm font-medium">技术参数</label><button onclick="addParameterRow()" class="text-sm text-[var(--jiagang-primary)] hover:underline">+ 添加</button></div>
+                    <div id="product-parameters" class="space-y-2"></div>
+                </div>
+            </div>
+            <div class="modal-footer"><button onclick="closeModal('product-modal')" class="px-4 py-2 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)]">取消</button><button id="save-product" class="px-4 py-2 rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)]">保存</button></div>
+        </div>
+    </div>
+
+    <!-- 文章编辑模态框 -->
+    <div id="article-modal" class="modal-overlay">
+        <div class="modal-panel wide">
+            <div class="modal-header"><h3 id="article-modal-title" class="text-lg font-bold text-[var(--jiagang-foreground)]">新增文章</h3><button onclick="closeModal('article-modal')" class="p-2 rounded-lg hover:bg-[var(--jiagang-muted)] text-[var(--jiagang-muted-foreground)]"><span data-lucide="x" class="w-5 h-5"></span></button></div>
+            <div class="modal-body space-y-4">
+                <input type="hidden" id="article-id">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium mb-1">标题 <span class="text-[var(--state-error)]">*</span></label><input type="text" id="article-title" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                    <div><label class="block text-sm font-medium mb-1">分类</label><input type="text" id="article-category" placeholder="如 技术解析" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium mb-1">作者</label><input type="text" id="article-author" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                    <div><label class="block text-sm font-medium mb-1">发布时间</label><input type="datetime-local" id="article-published-at" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium mb-1">封面图标</label><input type="text" id="article-cover-icon" placeholder="Lucide 图标名称" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                    <div><label class="block text-sm font-medium mb-1">封面图片 URL</label><input type="text" id="article-cover-image" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                </div>
+                <div><label class="block text-sm font-medium mb-1">摘要</label><textarea id="article-summary" rows="2" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></textarea></div>
+                <div><label class="block text-sm font-medium mb-1">正文内容（支持 HTML）</label><textarea id="article-content" rows="8" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></textarea></div>
+                <div class="flex items-center gap-4"><label class="flex items-center gap-2 text-sm"><input type="checkbox" id="article-published" checked class="w-4 h-4 rounded border-[var(--jiagang-input)]"> 发布</label></div>
+            </div>
+            <div class="modal-footer"><button onclick="closeModal('article-modal')" class="px-4 py-2 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)]">取消</button><button id="save-article" class="px-4 py-2 rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)]">保存</button></div>
+        </div>
+    </div>
+
+    <!-- 留言详情抽屉 -->
+    <div id="detail-drawer" class="detail-drawer" aria-hidden="true">
+        <div id="detail-backdrop" class="detail-backdrop"></div>
+        <div class="detail-panel">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-[var(--jiagang-border)]"><h3 class="text-lg font-bold text-[var(--jiagang-foreground)]">留言详情</h3><button id="detail-close" class="p-2 rounded-lg hover:bg-[var(--jiagang-muted)] text-[var(--jiagang-muted-foreground)]"><span data-lucide="x" class="w-5 h-5"></span></button></div>
+            <div id="detail-content" class="flex-1 overflow-y-auto p-6 space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]"><div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">称呼</div><div id="detail-name" class="font-medium text-[var(--jiagang-foreground)]">--</div></div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]"><div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">公司</div><div id="detail-company" class="font-medium text-[var(--jiagang-foreground)]">--</div></div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]"><div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">电话</div><div id="detail-phone" class="font-medium text-[var(--jiagang-foreground)]">--</div></div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]"><div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">需求类型</div><div id="detail-type" class="font-medium text-[var(--jiagang-foreground)]">--</div></div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]"><div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">状态</div><div id="detail-status">--</div></div>
+                    <div class="p-3 rounded-lg bg-[var(--jiagang-muted)]"><div class="text-xs text-[var(--jiagang-muted-foreground)] mb-1">提交时间</div><div id="detail-time" class="font-medium text-[var(--jiagang-foreground)]">--</div></div>
+                </div>
+                <div><div class="text-xs text-[var(--jiagang-muted-foreground)] mb-2">留言内容</div><div id="detail-message" class="p-4 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] leading-relaxed whitespace-pre-wrap">--</div></div>
+            </div>
+            <div class="px-6 py-4 border-t border-[var(--jiagang-border)] flex gap-3">
+                <button id="detail-toggle-status" class="flex-1 px-4 py-2 rounded-lg text-sm font-medium" style="background:var(--jiagang-primary); color:var(--jiagang-primary-foreground);">标记已处理</button>
+                <button id="detail-delete" class="px-4 py-2 rounded-lg text-sm border border-[var(--state-error)] text-[var(--state-error)] bg-white hover:bg-red-50">删除</button>
+                <button id="detail-close-bottom" class="px-4 py-2 rounded-lg text-sm border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)]">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast" role="status" aria-live="polite"><span id="toast-icon" data-lucide="check-circle-2" class="w-5 h-5" style="color:var(--state-success);"></span><span id="toast-message" class="text-sm text-[var(--jiagang-foreground)]">操作成功</span></div>
 
     <script>
         lucide.createIcons();
         const token = localStorage.getItem('jiagang_admin_token');
         if (!token) window.location.href = 'admin-login.html';
 
-        document.getElementById('sidebar-toggle').addEventListener('click', () => {
-            document.getElementById('sidebar-nav').classList.toggle('hidden');
-        });
-
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            localStorage.removeItem('jiagang_admin_token');
-            window.location.href = 'admin-login.html';
-        });
+        const SECTION_TITLES = { dashboard: '仪表盘', contacts: '留言管理', products: '产品管理', articles: '文章管理', settings: '站点配置' };
+        const state = {
+            contacts: [], filteredContacts: [], products: [], articles: [],
+            contactPage: 1, contactPageSize: 10, contactSortDesc: true,
+            selectedContactId: null,
+            settings: {}, stats: []
+        };
 
         async function api(path, options = {}) {
             options.headers = options.headers || {};
@@ -274,84 +474,497 @@
             return fetch(path, options);
         }
 
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text == null ? '' : text;
+            return div.innerHTML;
+        }
+
+        function formatDate(date) {
+            const d = new Date(date);
+            return isNaN(d.getTime()) ? '--' : d.toLocaleString('zh-CN');
+        }
+
+        function showToast(message, type = 'success') {
+            const iconMap = { success: 'check-circle-2', error: 'x-circle', info: 'info' };
+            const colorMap = { success: 'var(--state-success)', error: 'var(--state-error)', info: 'var(--state-info)' };
+            const iconName = iconMap[type] || iconMap.success;
+            document.getElementById('toast-icon').setAttribute('data-lucide', iconName);
+            document.getElementById('toast-icon').style.color = colorMap[type] || colorMap.success;
+            document.getElementById('toast-message').textContent = message;
+            lucide.createIcons();
+            document.getElementById('toast').classList.add('show');
+            setTimeout(() => document.getElementById('toast').classList.remove('show'), 3000);
+        }
+
+        function handleUnauthorized(res) {
+            if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return true; }
+            return false;
+        }
+
+        // 路由
+        function showSection(section) {
+            document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            document.getElementById(section + '-view').classList.add('active');
+            const nav = document.querySelector('.nav-link[data-section="' + section + '"]');
+            if (nav) nav.classList.add('active');
+            document.getElementById('page-title').textContent = SECTION_TITLES[section] || '管理后台';
+            window.location.hash = section;
+            if (section === 'contacts') loadContacts();
+            if (section === 'products') loadProducts();
+            if (section === 'articles') loadArticles();
+            if (section === 'settings') loadSettings();
+        }
+
+        document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', e => { e.preventDefault(); showSection(a.dataset.section); }));
+        document.getElementById('sidebar-toggle').addEventListener('click', () => document.getElementById('sidebar-nav').classList.toggle('hidden'));
+        document.getElementById('header-sidebar-toggle').addEventListener('click', () => document.getElementById('sidebar-nav').classList.toggle('hidden'));
+        document.getElementById('logout-btn').addEventListener('click', () => { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; });
+
+        const initialSection = window.location.hash.replace('#', '') || 'dashboard';
+        showSection(initialSection);
+
+        // 日期显示
+        const now = new Date();
+        document.getElementById('current-date').textContent = `${now.getFullYear()}年${String(now.getMonth()+1).padStart(2,'0')}月${String(now.getDate()).padStart(2,'0')}日`;
+
+        // 统计
         async function loadStats() {
             try {
                 const res = await api('/admin/api/stats');
-                if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
-                if (!res.ok) {
-                    const err = await res.json().catch(() => ({}));
-                    const msg = err.error || err.detail || `HTTP ${res.status}`;
-                    document.getElementById('stat-today').textContent = '!';
-                    document.getElementById('stat-pending').textContent = '!';
-                    document.getElementById('stat-total').textContent = '!';
-                    document.getElementById('stat-today').title = '加载失败：' + msg;
-                    return;
-                }
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error('加载失败');
                 const data = await res.json();
                 document.getElementById('stat-today').textContent = data.today || 0;
                 document.getElementById('stat-pending').textContent = data.pending || 0;
                 document.getElementById('stat-total').textContent = data.total || 0;
-            } catch (e) { console.error(e); document.getElementById('stat-today').textContent = '!'; }
+                document.getElementById('stat-products').textContent = data.products || 0;
+                document.getElementById('stat-articles').textContent = data.articles || 0;
+                const trend = (data.today || 0) - (data.yesterday || 0);
+                const trendEl = document.getElementById('trend-today');
+                trendEl.textContent = (trend >= 0 ? '+' : '') + trend;
+                trendEl.style.color = trend >= 0 ? 'var(--state-success)' : 'var(--state-error)';
+            } catch (e) { console.error(e); }
         }
+        loadStats();
 
+        // 留言管理
         async function loadContacts() {
             const tbody = document.getElementById('contacts-body');
+            tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr>';
             try {
                 const res = await api('/admin/api/contacts');
-                if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return; }
-                if (!res.ok) {
-                    const err = await res.json().catch(() => ({}));
-                    const msg = err.error || err.detail || `HTTP ${res.status}`;
-                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-[var(--state-error)]">加载失败：${msg}</td></tr>`;
-                    return;
-                }
-                const contacts = await res.json();
-                if (!contacts.length) {
-                    tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-[var(--jiagang-muted-fg)]">暂无留言</td></tr>';
-                    return;
-                }
-                tbody.innerHTML = contacts.map(c => `
-                    <tr>
-                        <td class="px-4 py-3 whitespace-nowrap">${new Date(c.created_at).toLocaleString('zh-CN')}</td>
-                        <td class="px-4 py-3">${escapeHtml(c.name)}</td>
-                        <td class="px-4 py-3">${escapeHtml(c.company || '-')}</td>
-                        <td class="px-4 py-3">${escapeHtml(c.phone)}</td>
-                        <td class="px-4 py-3">${escapeHtml(c.type)}</td>
-                        <td class="px-4 py-3"><span class="px-2 py-1 rounded text-xs ${c.status === 'pending' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}">${c.status === 'pending' ? '未处理' : '已处理'}</span></td>
-                        <td class="px-4 py-3">
-                            <button onclick="markDone(${c.id}, ${c.status !== 'pending'})" class="text-sm text-[var(--jiagang-primary)] hover:underline">${c.status === 'pending' ? '标记已处理' : '标记未处理'}</button>
-                        </td>
-                    </tr>
-                `).join('');
-                lucide.createIcons();
-            } catch (e) { console.error(e); tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-[var(--state-error)]">加载异常：${e.message}</td></tr>`; }
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error('加载失败');
+                state.contacts = await res.json();
+                applyContactFilters();
+                // 仪表盘最近未处理
+                const latest = state.contacts.filter(c => c.status === 'pending').slice(0, 5);
+                const latestEl = document.getElementById('dashboard-latest-contacts');
+                if (!latest.length) latestEl.innerHTML = '<div class="text-sm text-[var(--jiagang-muted-foreground)]">暂无未处理留言</div>';
+                else latestEl.innerHTML = latest.map(c => `<div class="p-3 rounded-lg border border-[var(--jiagang-border)]"><div class="flex items-center justify-between"><span class="font-medium">${escapeHtml(c.name)}</span><span class="text-xs text-[var(--jiagang-muted-foreground)]">${formatDate(c.created_at)}</span></div><div class="text-sm text-[var(--jiagang-muted-foreground)] truncate">${escapeHtml(c.message || '-')}</div></div>`).join('');
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-10 text-center" style="color:var(--state-error)">加载失败：${e.message}</td></tr>`;
+            }
         }
 
-        window.markDone = async function(id, toDone) {
-            try {
-                const res = await api('/admin/api/contacts/' + id, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: toDone ? 'done' : 'pending' })
-                });
-                if (res.ok) { loadStats(); loadContacts(); }
-            } catch (e) { console.error(e); }
+        function applyContactFilters() {
+            const kw = document.getElementById('search-contacts').value.trim().toLowerCase();
+            const status = document.getElementById('filter-status').value;
+            const type = document.getElementById('filter-type').value;
+            state.filteredContacts = state.contacts.filter(c => {
+                const inKw = !kw || ((c.name||'')+(c.company||'')+(c.phone||'')+(c.message||'')).toLowerCase().includes(kw);
+                const inStatus = !status || c.status === status;
+                const inType = !type || c.type === type;
+                return inKw && inStatus && inType;
+            }).sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            state.contactPage = 1;
+            renderContacts();
+        }
+
+        function renderContacts() {
+            const tbody = document.getElementById('contacts-body');
+            const total = state.filteredContacts.length;
+            const start = (state.contactPage - 1) * state.contactPageSize;
+            const items = state.filteredContacts.slice(start, start + state.contactPageSize);
+            const totalPages = Math.max(1, Math.ceil(total / state.contactPageSize));
+            document.getElementById('total-items').textContent = total;
+            document.getElementById('page-info').textContent = `${state.contactPage} / ${totalPages}`;
+            document.getElementById('page-prev').disabled = state.contactPage <= 1;
+            document.getElementById('page-next').disabled = state.contactPage >= totalPages;
+            if (!items.length) { tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">暂无留言</td></tr>`; return; }
+            tbody.innerHTML = items.map(c => {
+                const isPending = c.status === 'pending';
+                return `<tr>
+                    <td class="whitespace-nowrap">${formatDate(c.created_at)}</td>
+                    <td>${escapeHtml(c.name)}</td>
+                    <td>${escapeHtml(c.company || '-')}</td>
+                    <td>${escapeHtml(c.phone)}</td>
+                    <td>${escapeHtml(c.type || '-')}</td>
+                    <td><span class="px-2 py-1 rounded text-xs font-medium" style="background:${isPending ? 'var(--jiagang-primary-100)' : 'var(--jiagang-primary-50)'}; color:${isPending ? 'var(--jiagang-primary-800)' : 'var(--state-success)'}">${isPending ? '未处理' : '已处理'}</span></td>
+                    <td><button onclick="openContactDetail(${c.id})" class="text-sm font-medium" style="color:var(--jiagang-primary)">查看</button></td>
+                </tr>`;
+            }).join('');
+        }
+
+        window.openContactDetail = function(id) {
+            const c = state.contacts.find(x => x.id === id); if (!c) return;
+            state.selectedContactId = id;
+            const isPending = c.status === 'pending';
+            document.getElementById('detail-name').textContent = c.name || '--';
+            document.getElementById('detail-company').textContent = c.company || '--';
+            document.getElementById('detail-phone').textContent = c.phone || '--';
+            document.getElementById('detail-type').textContent = c.type || '--';
+            document.getElementById('detail-time').textContent = formatDate(c.created_at);
+            document.getElementById('detail-message').textContent = c.message || '无留言内容';
+            document.getElementById('detail-status').innerHTML = `<span class="px-2 py-1 rounded text-xs font-medium" style="background:${isPending ? 'var(--jiagang-primary-100)' : 'var(--jiagang-primary-50)'}; color:${isPending ? 'var(--jiagang-primary-800)' : 'var(--state-success)'}">${isPending ? '未处理' : '已处理'}</span>`;
+            document.getElementById('detail-toggle-status').textContent = isPending ? '标记已处理' : '标记未处理';
+            document.getElementById('detail-drawer').classList.add('open');
+            document.getElementById('detail-drawer').setAttribute('aria-hidden', 'false');
         };
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        function closeContactDetail() {
+            document.getElementById('detail-drawer').classList.remove('open');
+            document.getElementById('detail-drawer').setAttribute('aria-hidden', 'true');
+            state.selectedContactId = null;
+        }
+        document.getElementById('detail-close').addEventListener('click', closeContactDetail);
+        document.getElementById('detail-close-bottom').addEventListener('click', closeContactDetail);
+        document.getElementById('detail-backdrop').addEventListener('click', closeContactDetail);
+
+        document.getElementById('detail-toggle-status').addEventListener('click', async () => {
+            const id = state.selectedContactId; if (!id) return;
+            const c = state.contacts.find(x => x.id === id);
+            try {
+                const res = await api('/admin/api/contacts/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: c.status === 'pending' ? 'done' : 'pending' }) });
+                if (handleUnauthorized(res)) return;
+                if (res.ok) { showToast('状态已更新'); await loadStats(); await loadContacts(); closeContactDetail(); }
+                else showToast('更新失败', 'error');
+            } catch (e) { showToast('网络异常', 'error'); }
+        });
+
+        document.getElementById('detail-delete').addEventListener('click', async () => {
+            const id = state.selectedContactId; if (!id) return;
+            if (!confirm('确定删除这条留言吗？')) return;
+            try {
+                const res = await api('/admin/api/contacts/' + id, { method: 'DELETE' });
+                if (handleUnauthorized(res)) return;
+                if (res.ok) { showToast('已删除'); await loadStats(); await loadContacts(); closeContactDetail(); }
+                else showToast('删除失败', 'error');
+            } catch (e) { showToast('网络异常', 'error'); }
+        });
+
+        document.getElementById('refresh-contacts').addEventListener('click', loadContacts);
+        document.getElementById('search-contacts').addEventListener('input', applyContactFilters);
+        document.getElementById('filter-status').addEventListener('change', applyContactFilters);
+        document.getElementById('filter-type').addEventListener('change', applyContactFilters);
+        document.getElementById('page-size').addEventListener('change', () => { state.contactPageSize = parseInt(document.getElementById('page-size').value); state.contactPage = 1; renderContacts(); });
+        document.getElementById('page-prev').addEventListener('click', () => { if (state.contactPage > 1) { state.contactPage--; renderContacts(); } });
+        document.getElementById('page-next').addEventListener('click', () => { const totalPages = Math.ceil(state.filteredContacts.length / state.contactPageSize); if (state.contactPage < totalPages) { state.contactPage++; renderContacts(); } });
+
+        // 产品管理
+        async function loadProducts() {
+            const tbody = document.getElementById('products-body');
+            tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr>';
+            try {
+                const res = await api('/admin/api/products');
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error('加载失败');
+                state.products = await res.json();
+                renderProducts();
+            } catch (e) { tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-10 text-center" style="color:var(--state-error)">加载失败：${e.message}</td></tr>`; }
         }
 
-        document.getElementById('refresh-contacts').addEventListener('click', () => { loadStats(); loadContacts(); });
-        loadStats();
-        loadContacts();
+        function renderProducts() {
+            const tbody = document.getElementById('products-body');
+            if (!state.products.length) { tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">暂无产品</td></tr>'; return; }
+            tbody.innerHTML = state.products.map(p => `<tr>
+                <td>${p.sort_order}</td>
+                <td class="font-medium">${escapeHtml(p.name)}</td>
+                <td>${escapeHtml(p.slug)}</td>
+                <td>${escapeHtml(p.category || '-')}</td>
+                <td>${p.is_featured ? '<span class="px-2 py-1 rounded text-xs bg-amber-100 text-amber-700">推荐</span>' : '-'}</td>
+                <td>${p.is_published ? '<span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700">发布</span>' : '<span class="px-2 py-1 rounded text-xs bg-slate-100 text-slate-600">草稿</span>'}</td>
+                <td class="space-x-3"><button onclick="editProduct(${p.id})" class="text-sm font-medium" style="color:var(--jiagang-primary)">编辑</button><a href="product-detail.html?slug=${encodeURIComponent(p.slug)}" target="_blank" class="text-sm font-medium" style="color:var(--state-info)">预览</a><button onclick="deleteProduct(${p.id})" class="text-sm font-medium" style="color:var(--state-error)">删除</button></td>
+            </tr>`).join('');
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+        function openModal(id) { document.getElementById(id).classList.add('open'); lucide.createIcons(); }
+
+        window.openProductModal = function(product = null) {
+            document.getElementById('product-modal-title').textContent = product ? '编辑产品' : '新增产品';
+            document.getElementById('product-id').value = product ? product.id : '';
+            document.getElementById('product-name').value = product ? product.name : '';
+            document.getElementById('product-slug').value = product ? product.slug : '';
+            document.getElementById('product-summary').value = product ? (product.summary || '') : '';
+            document.getElementById('product-description').value = product ? (product.description || '') : '';
+            document.getElementById('product-icon').value = product ? (product.icon || '') : '';
+            document.getElementById('product-image').value = product ? (product.image_url || '') : '';
+            document.getElementById('product-category').value = product ? (product.category || '') : '';
+            document.getElementById('product-sort').value = product ? product.sort_order : 0;
+            document.getElementById('product-featured').checked = product ? product.is_featured : false;
+            document.getElementById('product-published').checked = product ? product.is_published : true;
+            const featuresContainer = document.getElementById('product-features');
+            featuresContainer.innerHTML = '';
+            if (product && product.features) product.features.forEach(f => addFeatureRow(f));
+            if (!product) addFeatureRow();
+            const paramsContainer = document.getElementById('product-parameters');
+            paramsContainer.innerHTML = '';
+            if (product && product.parameters) product.parameters.forEach(p => addParameterRow(p));
+            if (!product) addParameterRow();
+            openModal('product-modal');
+        };
+
+        window.editProduct = async function(id) {
+            try {
+                const res = await api('/admin/api/products/' + id);
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error('加载失败');
+                const product = await res.json();
+                openProductModal(product);
+            } catch (e) { showToast('加载失败', 'error'); }
+        };
+
+        window.deleteProduct = async function(id) {
+            if (!confirm('确定删除该产品吗？相关特点和参数也会一并删除。')) return;
+            try {
+                const res = await api('/admin/api/products/' + id, { method: 'DELETE' });
+                if (handleUnauthorized(res)) return;
+                if (res.ok) { showToast('已删除'); await loadStats(); await loadProducts(); }
+                else showToast('删除失败', 'error');
+            } catch (e) { showToast('网络异常', 'error'); }
+        };
+
+        window.addFeatureRow = function(f = null) {
+            const div = document.createElement('div');
+            div.className = 'grid grid-cols-12 gap-2';
+            div.innerHTML = `<div class="col-span-3"><input type="text" placeholder="标题" class="feature-title w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(f ? f.title : '')}"></div><div class="col-span-2"><input type="text" placeholder="图标" class="feature-icon w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(f ? (f.icon || '') : '')}"></div><div class="col-span-6"><input type="text" placeholder="描述" class="feature-desc w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(f ? (f.description || '') : '')}"></div><div class="col-span-1"><button onclick="this.parentElement.remove()" class="w-full h-full rounded border border-[var(--state-error)] text-[var(--state-error)] text-xs hover:bg-red-50">删除</button></div>`;
+            document.getElementById('product-features').appendChild(div);
+        };
+
+        window.addParameterRow = function(p = null) {
+            const div = document.createElement('div');
+            div.className = 'grid grid-cols-12 gap-2';
+            div.innerHTML = `<div class="col-span-5"><input type="text" placeholder="参数名" class="param-label w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(p ? p.label : '')}"></div><div class="col-span-6"><input type="text" placeholder="参数值" class="param-value w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(p ? p.value : '')}"></div><div class="col-span-1"><button onclick="this.parentElement.remove()" class="w-full h-full rounded border border-[var(--state-error)] text-[var(--state-error)] text-xs hover:bg-red-50">删除</button></div>`;
+            document.getElementById('product-parameters').appendChild(div);
+        };
+
+        document.getElementById('save-product').addEventListener('click', async () => {
+            const id = document.getElementById('product-id').value;
+            const body = {
+                name: document.getElementById('product-name').value.trim(),
+                slug: document.getElementById('product-slug').value.trim(),
+                summary: document.getElementById('product-summary').value.trim(),
+                description: document.getElementById('product-description').value.trim(),
+                icon: document.getElementById('product-icon').value.trim(),
+                image_url: document.getElementById('product-image').value.trim(),
+                category: document.getElementById('product-category').value.trim(),
+                sort_order: parseInt(document.getElementById('product-sort').value) || 0,
+                is_featured: document.getElementById('product-featured').checked ? 1 : 0,
+                is_published: document.getElementById('product-published').checked ? 1 : 0,
+                features: Array.from(document.querySelectorAll('#product-features > div')).map(div => ({
+                    title: div.querySelector('.feature-title').value.trim(),
+                    icon: div.querySelector('.feature-icon').value.trim(),
+                    description: div.querySelector('.feature-desc').value.trim()
+                })).filter(f => f.title),
+                parameters: Array.from(document.querySelectorAll('#product-parameters > div')).map(div => ({
+                    label: div.querySelector('.param-label').value.trim(),
+                    value: div.querySelector('.param-value').value.trim()
+                })).filter(p => p.label && p.value !== '')
+            };
+            if (!body.name || !body.slug) { showToast('名称和标识不能为空', 'error'); return; }
+            try {
+                const res = await api(id ? '/admin/api/products/' + id : '/admin/api/products', {
+                    method: id ? 'PATCH' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                if (handleUnauthorized(res)) return;
+                if (res.ok) { showToast(id ? '产品已更新' : '产品已创建'); closeModal('product-modal'); await loadStats(); await loadProducts(); }
+                else { const err = await res.json().catch(() => ({})); showToast(err.error || '保存失败', 'error'); }
+            } catch (e) { showToast('网络异常', 'error'); }
+        });
+        document.getElementById('refresh-products').addEventListener('click', loadProducts);
+
+        // 文章管理
+        async function loadArticles() {
+            const tbody = document.getElementById('articles-body');
+            tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr>';
+            try {
+                const res = await api('/admin/api/articles');
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error('加载失败');
+                state.articles = await res.json();
+                renderArticles();
+            } catch (e) { tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-10 text-center" style="color:var(--state-error)">加载失败：${e.message}</td></tr>`; }
+        }
+
+        function renderArticles() {
+            const tbody = document.getElementById('articles-body');
+            if (!state.articles.length) { tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">暂无文章</td></tr>'; return; }
+            tbody.innerHTML = state.articles.map(a => `<tr>
+                <td class="whitespace-nowrap">${formatDate(a.published_at)}</td>
+                <td class="font-medium">${escapeHtml(a.title)}</td>
+                <td>${escapeHtml(a.category || '-')}</td>
+                <td>${escapeHtml(a.author || '-')}</td>
+                <td>${a.is_published ? '<span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700">发布</span>' : '<span class="px-2 py-1 rounded text-xs bg-slate-100 text-slate-600">草稿</span>'}</td>
+                <td>${a.view_count || 0}</td>
+                <td class="space-x-3"><button onclick="editArticle(${a.id})" class="text-sm font-medium" style="color:var(--jiagang-primary)">编辑</button><a href="news-detail.html?id=${a.id}" target="_blank" class="text-sm font-medium" style="color:var(--state-info)">预览</a><button onclick="deleteArticle(${a.id})" class="text-sm font-medium" style="color:var(--state-error)">删除</button></td>
+            </tr>`).join('');
+        }
+
+        window.openArticleModal = function(article = null) {
+            document.getElementById('article-modal-title').textContent = article ? '编辑文章' : '新增文章';
+            document.getElementById('article-id').value = article ? article.id : '';
+            document.getElementById('article-title').value = article ? article.title : '';
+            document.getElementById('article-summary').value = article ? (article.summary || '') : '';
+            document.getElementById('article-content').value = article ? (article.content || '') : '';
+            document.getElementById('article-cover-icon').value = article ? (article.cover_icon || '') : '';
+            document.getElementById('article-cover-image').value = article ? (article.cover_image_url || '') : '';
+            document.getElementById('article-category').value = article ? (article.category || '') : '';
+            document.getElementById('article-author').value = article ? (article.author || '') : '';
+            document.getElementById('article-published').checked = article ? article.is_published : true;
+            if (article && article.published_at) {
+                const d = new Date(article.published_at);
+                document.getElementById('article-published-at').value = isNaN(d.getTime()) ? '' : new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+            } else { document.getElementById('article-published-at').value = ''; }
+            openModal('article-modal');
+        };
+
+        window.editArticle = async function(id) {
+            try {
+                const res = await api('/admin/api/articles/' + id);
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error('加载失败');
+                const article = await res.json();
+                openArticleModal(article);
+            } catch (e) { showToast('加载失败', 'error'); }
+        };
+
+        window.deleteArticle = async function(id) {
+            if (!confirm('确定删除该文章吗？')) return;
+            try {
+                const res = await api('/admin/api/articles/' + id, { method: 'DELETE' });
+                if (handleUnauthorized(res)) return;
+                if (res.ok) { showToast('已删除'); await loadStats(); await loadArticles(); }
+                else showToast('删除失败', 'error');
+            } catch (e) { showToast('网络异常', 'error'); }
+        };
+
+        document.getElementById('save-article').addEventListener('click', async () => {
+            const id = document.getElementById('article-id').value;
+            const body = {
+                title: document.getElementById('article-title').value.trim(),
+                summary: document.getElementById('article-summary').value.trim(),
+                content: document.getElementById('article-content').value.trim(),
+                cover_icon: document.getElementById('article-cover-icon').value.trim(),
+                cover_image_url: document.getElementById('article-cover-image').value.trim(),
+                category: document.getElementById('article-category').value.trim(),
+                author: document.getElementById('article-author').value.trim(),
+                published_at: document.getElementById('article-published-at').value || new Date().toISOString(),
+                is_published: document.getElementById('article-published').checked ? 1 : 0
+            };
+            if (!body.title) { showToast('标题不能为空', 'error'); return; }
+            try {
+                const res = await api(id ? '/admin/api/articles/' + id : '/admin/api/articles', {
+                    method: id ? 'PATCH' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                if (handleUnauthorized(res)) return;
+                if (res.ok) { showToast(id ? '文章已更新' : '文章已创建'); closeModal('article-modal'); await loadStats(); await loadArticles(); }
+                else { const err = await res.json().catch(() => ({})); showToast(err.error || '保存失败', 'error'); }
+            } catch (e) { showToast('网络异常', 'error'); }
+        });
+        document.getElementById('refresh-articles').addEventListener('click', loadArticles);
+
+        // 站点配置
+        const SETTINGS_CONTACT_KEYS = ['company_name','company_slogan','address','phone','email','work_time','service_regions','copyright_year'];
+        const SETTINGS_SEO_KEYS = ['seo_title','seo_description','hero_title','hero_subtitle','hero_tag','about_intro'];
+        const STAT_SECTIONS = ['home_hero','about_stats','parts_capacity','about_honors','about_process'];
+
+        async function loadSettings() {
+            try {
+                const res = await api('/admin/api/settings');
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error('加载失败');
+                const data = await res.json();
+                state.settings = data.settings || {};
+                state.stats = data.stats || [];
+                renderSettingsForm();
+                STAT_SECTIONS.forEach(section => renderStatsSection(section));
+            } catch (e) { showToast('配置加载失败', 'error'); }
+        }
+
+        function renderSettingsForm() {
+            const contactEl = document.getElementById('settings-contact');
+            const labels = { company_name: '公司名称', company_slogan: '公司口号', address: '公司地址', phone: '联系电话', email: '电子邮箱', work_time: '工作时间', service_regions: '服务区域', copyright_year: '版权年份' };
+            contactEl.innerHTML = SETTINGS_CONTACT_KEYS.map(k => `<div><label class="block text-sm font-medium mb-1">${labels[k]}</label><input type="text" data-settings-key="${k}" value="${escapeHtml(state.settings[k] || '')}" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>`).join('');
+            const seoEl = document.getElementById('settings-seo');
+            const seoLabels = { seo_title: 'SEO 标题', seo_description: 'SEO 描述', hero_title: '首页大标题', hero_subtitle: '首页副标题', hero_tag: '首页标签', about_intro: '公司简介' };
+            seoEl.innerHTML = SETTINGS_SEO_KEYS.map(k => {
+                if (k === 'about_intro' || k === 'seo_description' || k === 'hero_subtitle') {
+                    return `<div class="md:col-span-2"><label class="block text-sm font-medium mb-1">${seoLabels[k]}</label><textarea data-settings-key="${k}" rows="3" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]">${escapeHtml(state.settings[k] || '')}</textarea></div>`;
+                }
+                return `<div><label class="block text-sm font-medium mb-1">${seoLabels[k]}</label><input type="text" data-settings-key="${k}" value="${escapeHtml(state.settings[k] || '')}" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>`;
+            }).join('');
+        }
+
+        function renderStatsSection(section) {
+            const container = document.getElementById('stats-' + section);
+            const items = state.stats.filter(s => s.section === section).sort((a,b) => (a.sort_order||0) - (b.sort_order||0));
+            container.innerHTML = items.map(s => statRowHtml(s, section)).join('');
+        }
+
+        function statRowHtml(s, section) {
+            return `<div class="stat-row grid grid-cols-12 gap-2" data-stat-id="${s.id || ''}" data-stat-section="${section}">
+                <div class="col-span-2"><input type="text" class="stat-title w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" placeholder="标题" value="${escapeHtml(s.title || '')}"></div>
+                <div class="col-span-2"><input type="text" class="stat-value w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" placeholder="数值" value="${escapeHtml(s.value || '')}"></div>
+                <div class="col-span-1"><input type="text" class="stat-unit w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" placeholder="单位" value="${escapeHtml(s.unit || '')}"></div>
+                <div class="col-span-2"><input type="text" class="stat-icon w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" placeholder="图标" value="${escapeHtml(s.icon || '')}"></div>
+                <div class="col-span-2"><input type="number" class="stat-order w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" placeholder="排序" value="${s.sort_order || 0}"></div>
+                <div class="col-span-2 flex items-center gap-2"><label class="text-xs flex items-center gap-1"><input type="checkbox" class="stat-published" ${s.is_published ? 'checked' : ''}> 显示</label></div>
+                <div class="col-span-1"><button onclick="this.closest('.stat-row').remove()" class="w-full h-full rounded border border-[var(--state-error)] text-[var(--state-error)] text-xs hover:bg-red-50">删除</button></div>
+            </div>`;
+        }
+
+        window.addStatRow = function(section) {
+            const container = document.getElementById('stats-' + section);
+            const temp = document.createElement('div');
+            temp.innerHTML = statRowHtml({ section }, section);
+            container.appendChild(temp.firstElementChild);
+        };
+
+        document.getElementById('save-settings').addEventListener('click', async () => {
+            const settings = {};
+            document.querySelectorAll('[data-settings-key]').forEach(el => { settings[el.dataset.settingsKey] = el.value; });
+            const stats = [];
+            document.querySelectorAll('.stat-row').forEach(row => {
+                stats.push({
+                    id: row.dataset.statId ? parseInt(row.dataset.statId) : undefined,
+                    title: row.querySelector('.stat-title').value.trim(),
+                    value: row.querySelector('.stat-value').value.trim(),
+                    unit: row.querySelector('.stat-unit').value.trim(),
+                    icon: row.querySelector('.stat-icon').value.trim(),
+                    section: row.dataset.statSection,
+                    sort_order: parseInt(row.querySelector('.stat-order').value) || 0,
+                    is_published: row.querySelector('.stat-published').checked ? 1 : 0
+                });
+            });
+            if (!confirm('确定保存当前配置吗？')) return;
+            try {
+                const res = await api('/admin/api/settings', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ settings, stats }) });
+                if (handleUnauthorized(res)) return;
+                if (res.ok) { showToast('配置已保存'); await loadSettings(); }
+                else { const err = await res.json().catch(() => ({})); showToast(err.error || '保存失败', 'error'); }
+            } catch (e) { showToast('网络异常', 'error'); }
+        });
     </script>
 
     <style>
         body { font-family: var(--font-body); background: var(--jiagang-background); color: var(--jiagang-foreground); }
-        .admin-sidebar { background: var(--jiagang-neutral-900); }
     </style>
 </body>
 </html>
