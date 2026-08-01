@@ -1,4 +1,5 @@
-// 公开 API：页面内容块 GET /api/page-blocks?page=index
+// 公开 API：页面内容块 GET /api/page-blocks?page=...
+// 只返回已发布的内容块，供前端页面自动填充。
 import { jsonResponse } from '../_shared.js';
 
 const CREATE_PAGE_BLOCKS_TABLE = `
@@ -26,19 +27,14 @@ export async function onRequestGet(context) {
   const { env } = context;
   const url = new URL(context.request.url);
   const page = url.searchParams.get('page') || '';
-  const section = url.searchParams.get('section') || '';
 
   try {
     await ensureTable(env);
-    let sql = `SELECT id, page, section, key, type, value, label, sort_order FROM page_blocks WHERE is_published = 1`;
+    let sql = `SELECT page, section, key, type, value, label, sort_order FROM page_blocks WHERE is_published = 1`;
     const params = [];
     if (page) {
       sql += ` AND page = ?`;
       params.push(page);
-    }
-    if (section) {
-      sql += ` AND section = ?`;
-      params.push(section);
     }
     sql += ` ORDER BY page, section, sort_order, key`;
 

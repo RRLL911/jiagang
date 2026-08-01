@@ -1,9 +1,9 @@
-------formdata-undici-010958425636
+------formdata-undici-082392544359
 Content-Disposition: form-data; name="metadata"
 
-{"main_module":"functionsWorker-0.6679426285907716.js"}
-------formdata-undici-010958425636
-Content-Disposition: form-data; name="functionsWorker-0.6679426285907716.js"; filename="functionsWorker-0.6679426285907716.js"
+{"main_module":"functionsWorker-0.4589312380308468.js"}
+------formdata-undici-082392544359
+Content-Disposition: form-data; name="functionsWorker-0.4589312380308468.js"; filename="functionsWorker-0.4589312380308468.js"
 Content-Type: application/javascript+module
 
 var __defProp = Object.defineProperty;
@@ -1250,18 +1250,13 @@ async function onRequestGet13(context) {
   const { env } = context;
   const url = new URL(context.request.url);
   const page = url.searchParams.get("page") || "";
-  const section = url.searchParams.get("section") || "";
   try {
     await ensureTable6(env);
-    let sql = `SELECT id, page, section, key, type, value, label, sort_order FROM page_blocks WHERE is_published = 1`;
+    let sql = `SELECT page, section, key, type, value, label, sort_order FROM page_blocks WHERE is_published = 1`;
     const params = [];
     if (page) {
       sql += ` AND page = ?`;
       params.push(page);
-    }
-    if (section) {
-      sql += ` AND section = ?`;
-      params.push(section);
     }
     sql += ` ORDER BY page, section, sort_order, key`;
     const { results } = await env.DB.prepare(sql).bind(...params).all();
@@ -1329,7 +1324,7 @@ async function onRequestGet14(context) {
 }
 __name(onRequestGet14, "onRequestGet");
 
-// ../.wrangler/tmp/pages-CVA7ZN/functionsRoutes-0.6971184225991791.mjs
+// ../.wrangler/tmp/pages-a5B4Uo/functionsRoutes-0.4251222901188231.mjs
 var routes = [
   {
     routePath: "/admin/api/articles/:id*",
@@ -1978,4 +1973,4 @@ export {
   pages_template_worker_default as default
 };
 
-------formdata-undici-010958425636--
+------formdata-undici-082392544359--
