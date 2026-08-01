@@ -1,15 +1,16 @@
-// 管理后台 API：文章详情 / 更新 / 删除
+// 管理后台 API：文章详情 / 更新 / 删除（同时兜底处理 /admin/api/articles 根路径）
 // GET /admin/api/articles/:id
 // PATCH /admin/api/articles/:id
 // DELETE /admin/api/articles/:id
 import { requireAuth, jsonResponse } from '../../../_shared.js';
+import { onRequestGet as onRequestGetList } from './index.js';
 
 export async function onRequestGet(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse) return errorResponse;
   const { env } = context;
   const id = context.params.id;
-  if (!id) return jsonResponse({ error: '缺少文章 ID' }, 400);
+  if (!id) return onRequestGetList(context);
 
   try {
     const article = await env.DB.prepare(`SELECT * FROM articles WHERE id = ?`).bind(id).first();

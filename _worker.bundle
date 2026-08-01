@@ -1,9 +1,9 @@
-------formdata-undici-094609356290
+------formdata-undici-007976817338
 Content-Disposition: form-data; name="metadata"
 
-{"main_module":"functionsWorker-0.455706708397545.js"}
-------formdata-undici-094609356290
-Content-Disposition: form-data; name="functionsWorker-0.455706708397545.js"; filename="functionsWorker-0.455706708397545.js"
+{"main_module":"functionsWorker-0.23937305097527495.js"}
+------formdata-undici-007976817338
+Content-Disposition: form-data; name="functionsWorker-0.23937305097527495.js"; filename="functionsWorker-0.23937305097527495.js"
 Content-Type: application/javascript+module
 
 var __defProp = Object.defineProperty;
@@ -66,15 +66,97 @@ function base64UrlDecode(str) {
 }
 __name(base64UrlDecode, "base64UrlDecode");
 
-// admin/api/articles/[[id]].js
+// admin/api/articles/index.js
+var CREATE_ARTICLES_TABLE = `
+  CREATE TABLE IF NOT EXISTS articles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    summary TEXT,
+    content TEXT,
+    cover_icon TEXT,
+    cover_image_url TEXT,
+    category TEXT,
+    author TEXT,
+    published_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_published INTEGER NOT NULL DEFAULT 1,
+    view_count INTEGER NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+async function ensureTable(env) {
+  await env.DB.prepare(CREATE_ARTICLES_TABLE).run();
+}
+__name(ensureTable, "ensureTable");
 async function onRequestGet(context) {
+  const { errorResponse } = await requireAuth(context);
+  if (errorResponse)
+    return errorResponse;
+  const { env } = context;
+  try {
+    await ensureTable(env);
+    const { results } = await env.DB.prepare(
+      `SELECT id, title, summary, cover_icon, cover_image_url, category, author, published_at, is_published, view_count, created_at, updated_at
+       FROM articles ORDER BY published_at DESC LIMIT 200`
+    ).all();
+    return jsonResponse(results || []);
+  } catch (err) {
+    return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
+  }
+}
+__name(onRequestGet, "onRequestGet");
+async function onRequestPost(context) {
+  const { errorResponse } = await requireAuth(context);
+  if (errorResponse)
+    return errorResponse;
+  const { request, env } = context;
+  try {
+    await ensureTable(env);
+    const body = await request.json();
+    const {
+      title,
+      summary,
+      content,
+      cover_icon,
+      cover_image_url,
+      category,
+      author,
+      published_at,
+      is_published = 1
+    } = body;
+    if (!title) {
+      return jsonResponse({ error: "\u6587\u7AE0\u6807\u9898\u4E0D\u80FD\u4E3A\u7A7A" }, 400);
+    }
+    const result = await env.DB.prepare(
+      `INSERT INTO articles (title, summary, content, cover_icon, cover_image_url, category, author, published_at, is_published)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    ).bind(
+      title,
+      summary || "",
+      content || "",
+      cover_icon || "",
+      cover_image_url || "",
+      category || "",
+      author || "",
+      published_at || (/* @__PURE__ */ new Date()).toISOString(),
+      is_published ? 1 : 0
+    ).run();
+    return jsonResponse({ success: true, id: result.meta?.last_row_id });
+  } catch (err) {
+    return jsonResponse({ error: "\u521B\u5EFA\u5931\u8D25", detail: err.message }, 500);
+  }
+}
+__name(onRequestPost, "onRequestPost");
+
+// admin/api/articles/[[id]].js
+async function onRequestGet2(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse)
     return errorResponse;
   const { env } = context;
   const id = context.params.id;
   if (!id)
-    return jsonResponse({ error: "\u7F3A\u5C11\u6587\u7AE0 ID" }, 400);
+    return onRequestGet(context);
   try {
     const article = await env.DB.prepare(`SELECT * FROM articles WHERE id = ?`).bind(id).first();
     if (!article)
@@ -84,7 +166,7 @@ async function onRequestGet(context) {
     return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
   }
 }
-__name(onRequestGet, "onRequestGet");
+__name(onRequestGet2, "onRequestGet");
 async function onRequestPatch(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse)
@@ -170,17 +252,17 @@ var CREATE_CONTACTS_TABLE = `
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
   )
 `;
-async function ensureTable(env) {
+async function ensureTable2(env) {
   await env.DB.prepare(CREATE_CONTACTS_TABLE).run();
 }
-__name(ensureTable, "ensureTable");
-async function onRequestGet2(context) {
+__name(ensureTable2, "ensureTable");
+async function onRequestGet3(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse)
     return errorResponse;
   const { env } = context;
   try {
-    await ensureTable(env);
+    await ensureTable2(env);
     const { results } = await env.DB.prepare(
       `SELECT id, name, phone, company, type, message, status, created_at FROM contacts ORDER BY created_at DESC LIMIT 200`
     ).all();
@@ -189,7 +271,7 @@ async function onRequestGet2(context) {
     return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
   }
 }
-__name(onRequestGet2, "onRequestGet");
+__name(onRequestGet3, "onRequestGet");
 async function onRequestPatch2(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse)
@@ -199,7 +281,7 @@ async function onRequestPatch2(context) {
   if (!id)
     return jsonResponse({ error: "\u7F3A\u5C11\u7559\u8A00 ID" }, 400);
   try {
-    await ensureTable(env);
+    await ensureTable2(env);
     const body = await request.json();
     const status = body.status;
     if (!["pending", "done"].includes(status)) {
@@ -284,15 +366,131 @@ async function onRequestDelete3(context) {
 }
 __name(onRequestDelete3, "onRequestDelete");
 
+// admin/api/products/index.js
+var CREATE_PRODUCTS_TABLE = `
+  CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    slug TEXT NOT NULL UNIQUE,
+    summary TEXT,
+    description TEXT,
+    icon TEXT,
+    image_url TEXT,
+    category TEXT,
+    sort_order INTEGER NOT NULL DEFAULT 0,
+    is_featured INTEGER NOT NULL DEFAULT 0,
+    is_published INTEGER NOT NULL DEFAULT 1,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+var CREATE_FEATURES_TABLE = `
+  CREATE TABLE IF NOT EXISTS product_features (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT,
+    icon TEXT,
+    sort_order INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+  )
+`;
+var CREATE_PARAMETERS_TABLE = `
+  CREATE TABLE IF NOT EXISTS product_parameters (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    label TEXT NOT NULL,
+    value TEXT NOT NULL,
+    sort_order INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+  )
+`;
+async function ensureTables(env) {
+  await env.DB.prepare(CREATE_PRODUCTS_TABLE).run();
+  await env.DB.prepare(CREATE_FEATURES_TABLE).run();
+  await env.DB.prepare(CREATE_PARAMETERS_TABLE).run();
+}
+__name(ensureTables, "ensureTables");
+async function onRequestGet4(context) {
+  const { errorResponse } = await requireAuth(context);
+  if (errorResponse)
+    return errorResponse;
+  const { env } = context;
+  try {
+    await ensureTables(env);
+    const { results } = await env.DB.prepare(
+      `SELECT id, name, slug, summary, icon, image_url, category, sort_order, is_featured, is_published, created_at, updated_at
+       FROM products ORDER BY sort_order ASC, created_at DESC LIMIT 200`
+    ).all();
+    return jsonResponse(results || []);
+  } catch (err) {
+    return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
+  }
+}
+__name(onRequestGet4, "onRequestGet");
+async function onRequestPost2(context) {
+  const { errorResponse } = await requireAuth(context);
+  if (errorResponse)
+    return errorResponse;
+  const { request, env } = context;
+  try {
+    await ensureTables(env);
+    const body = await request.json();
+    const {
+      name,
+      slug,
+      summary,
+      description,
+      icon,
+      image_url,
+      category,
+      sort_order = 0,
+      is_featured = 0,
+      is_published = 1,
+      features = [],
+      parameters = []
+    } = body;
+    if (!name || !slug) {
+      return jsonResponse({ error: "\u4EA7\u54C1\u540D\u79F0\u548C\u6807\u8BC6\u4E0D\u80FD\u4E3A\u7A7A" }, 400);
+    }
+    if (!/^[a-z0-9_-]+$/i.test(slug)) {
+      return jsonResponse({ error: "\u4EA7\u54C1\u6807\u8BC6\u53EA\u80FD\u5305\u542B\u5B57\u6BCD\u3001\u6570\u5B57\u3001\u4E0B\u5212\u7EBF\u548C\u6A2A\u7EBF" }, 400);
+    }
+    const result = await env.DB.prepare(
+      `INSERT INTO products (name, slug, summary, description, icon, image_url, category, sort_order, is_featured, is_published)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    ).bind(name, slug, summary || "", description || "", icon || "", image_url || "", category || "", sort_order, is_featured ? 1 : 0, is_published ? 1 : 0).run();
+    const productId = result.meta?.last_row_id;
+    if (productId && features.length) {
+      for (const f of features) {
+        await env.DB.prepare(
+          `INSERT INTO product_features (product_id, title, description, icon, sort_order) VALUES (?, ?, ?, ?, ?)`
+        ).bind(productId, f.title, f.description || "", f.icon || "", f.sort_order || 0).run();
+      }
+    }
+    if (productId && parameters.length) {
+      for (const p of parameters) {
+        await env.DB.prepare(
+          `INSERT INTO product_parameters (product_id, label, value, sort_order) VALUES (?, ?, ?, ?)`
+        ).bind(productId, p.label, p.value, p.sort_order || 0).run();
+      }
+    }
+    return jsonResponse({ success: true, id: productId });
+  } catch (err) {
+    return jsonResponse({ error: "\u521B\u5EFA\u5931\u8D25", detail: err.message }, 500);
+  }
+}
+__name(onRequestPost2, "onRequestPost");
+
 // admin/api/products/[[id]].js
-async function onRequestGet3(context) {
+async function onRequestGet5(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse)
     return errorResponse;
   const { env } = context;
   const id = context.params.id;
   if (!id)
-    return jsonResponse({ error: "\u7F3A\u5C11\u4EA7\u54C1 ID" }, 400);
+    return onRequestGet4(context);
   try {
     const product = await env.DB.prepare(`SELECT * FROM products WHERE id = ?`).bind(id).first();
     if (!product)
@@ -308,7 +506,7 @@ async function onRequestGet3(context) {
     return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
   }
 }
-__name(onRequestGet3, "onRequestGet");
+__name(onRequestGet5, "onRequestGet");
 async function onRequestPatch4(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse)
@@ -406,92 +604,10 @@ async function onRequestDelete4(context) {
 }
 __name(onRequestDelete4, "onRequestDelete");
 
-// admin/api/articles/index.js
-var CREATE_ARTICLES_TABLE = `
-  CREATE TABLE IF NOT EXISTS articles (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    summary TEXT,
-    content TEXT,
-    cover_icon TEXT,
-    cover_image_url TEXT,
-    category TEXT,
-    author TEXT,
-    published_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    is_published INTEGER NOT NULL DEFAULT 1,
-    view_count INTEGER NOT NULL DEFAULT 0,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-  )
-`;
-async function ensureTable2(env) {
-  await env.DB.prepare(CREATE_ARTICLES_TABLE).run();
-}
-__name(ensureTable2, "ensureTable");
-async function onRequestGet4(context) {
-  const { errorResponse } = await requireAuth(context);
-  if (errorResponse)
-    return errorResponse;
-  const { env } = context;
-  try {
-    await ensureTable2(env);
-    const { results } = await env.DB.prepare(
-      `SELECT id, title, summary, cover_icon, cover_image_url, category, author, published_at, is_published, view_count, created_at, updated_at
-       FROM articles ORDER BY published_at DESC LIMIT 200`
-    ).all();
-    return jsonResponse(results || []);
-  } catch (err) {
-    return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
-  }
-}
-__name(onRequestGet4, "onRequestGet");
-async function onRequestPost(context) {
-  const { errorResponse } = await requireAuth(context);
-  if (errorResponse)
-    return errorResponse;
-  const { request, env } = context;
-  try {
-    await ensureTable2(env);
-    const body = await request.json();
-    const {
-      title,
-      summary,
-      content,
-      cover_icon,
-      cover_image_url,
-      category,
-      author,
-      published_at,
-      is_published = 1
-    } = body;
-    if (!title) {
-      return jsonResponse({ error: "\u6587\u7AE0\u6807\u9898\u4E0D\u80FD\u4E3A\u7A7A" }, 400);
-    }
-    const result = await env.DB.prepare(
-      `INSERT INTO articles (title, summary, content, cover_icon, cover_image_url, category, author, published_at, is_published)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    ).bind(
-      title,
-      summary || "",
-      content || "",
-      cover_icon || "",
-      cover_image_url || "",
-      category || "",
-      author || "",
-      published_at || (/* @__PURE__ */ new Date()).toISOString(),
-      is_published ? 1 : 0
-    ).run();
-    return jsonResponse({ success: true, id: result.meta?.last_row_id });
-  } catch (err) {
-    return jsonResponse({ error: "\u521B\u5EFA\u5931\u8D25", detail: err.message }, 500);
-  }
-}
-__name(onRequestPost, "onRequestPost");
-
 // admin/api/login.js
 var DEFAULT_ADMIN_USERNAME = "admin";
 var SALT = new TextEncoder().encode("jiagang-salt-2026");
-async function onRequestPost2(context) {
+async function onRequestPost3(context) {
   const { request, env } = context;
   if (!env.DB) {
     return jsonResponse2(
@@ -537,7 +653,7 @@ async function onRequestPost2(context) {
     return jsonResponse2({ error: "\u767B\u5F55\u5931\u8D25", detail: err.message }, 500);
   }
 }
-__name(onRequestPost2, "onRequestPost");
+__name(onRequestPost3, "onRequestPost");
 async function hashPassword(password) {
   const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), { name: "PBKDF2" }, false, ["deriveBits"]);
   const bits = await crypto.subtle.deriveBits(
@@ -621,7 +737,7 @@ async function ensureTable3(env) {
   await env.DB.prepare(CREATE_PAGE_BLOCKS_TABLE).run();
 }
 __name(ensureTable3, "ensureTable");
-async function onRequestGet5(context) {
+async function onRequestGet6(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse)
     return errorResponse;
@@ -648,8 +764,8 @@ async function onRequestGet5(context) {
     return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
   }
 }
-__name(onRequestGet5, "onRequestGet");
-async function onRequestPost3(context) {
+__name(onRequestGet6, "onRequestGet");
+async function onRequestPost4(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse)
     return errorResponse;
@@ -666,122 +782,6 @@ async function onRequestPost3(context) {
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
     ).bind(page, section, key, type, value, label, sort_order, is_published ? 1 : 0).run();
     return jsonResponse({ success: true, id: result.meta?.last_row_id });
-  } catch (err) {
-    return jsonResponse({ error: "\u521B\u5EFA\u5931\u8D25", detail: err.message }, 500);
-  }
-}
-__name(onRequestPost3, "onRequestPost");
-
-// admin/api/products/index.js
-var CREATE_PRODUCTS_TABLE = `
-  CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    slug TEXT NOT NULL UNIQUE,
-    summary TEXT,
-    description TEXT,
-    icon TEXT,
-    image_url TEXT,
-    category TEXT,
-    sort_order INTEGER NOT NULL DEFAULT 0,
-    is_featured INTEGER NOT NULL DEFAULT 0,
-    is_published INTEGER NOT NULL DEFAULT 1,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-  )
-`;
-var CREATE_FEATURES_TABLE = `
-  CREATE TABLE IF NOT EXISTS product_features (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    product_id INTEGER NOT NULL,
-    title TEXT NOT NULL,
-    description TEXT,
-    icon TEXT,
-    sort_order INTEGER NOT NULL DEFAULT 0,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-  )
-`;
-var CREATE_PARAMETERS_TABLE = `
-  CREATE TABLE IF NOT EXISTS product_parameters (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    product_id INTEGER NOT NULL,
-    label TEXT NOT NULL,
-    value TEXT NOT NULL,
-    sort_order INTEGER NOT NULL DEFAULT 0,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-  )
-`;
-async function ensureTables(env) {
-  await env.DB.prepare(CREATE_PRODUCTS_TABLE).run();
-  await env.DB.prepare(CREATE_FEATURES_TABLE).run();
-  await env.DB.prepare(CREATE_PARAMETERS_TABLE).run();
-}
-__name(ensureTables, "ensureTables");
-async function onRequestGet6(context) {
-  const { errorResponse } = await requireAuth(context);
-  if (errorResponse)
-    return errorResponse;
-  const { env } = context;
-  try {
-    await ensureTables(env);
-    const { results } = await env.DB.prepare(
-      `SELECT id, name, slug, summary, icon, image_url, category, sort_order, is_featured, is_published, created_at, updated_at
-       FROM products ORDER BY sort_order ASC, created_at DESC LIMIT 200`
-    ).all();
-    return jsonResponse(results || []);
-  } catch (err) {
-    return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
-  }
-}
-__name(onRequestGet6, "onRequestGet");
-async function onRequestPost4(context) {
-  const { errorResponse } = await requireAuth(context);
-  if (errorResponse)
-    return errorResponse;
-  const { request, env } = context;
-  try {
-    await ensureTables(env);
-    const body = await request.json();
-    const {
-      name,
-      slug,
-      summary,
-      description,
-      icon,
-      image_url,
-      category,
-      sort_order = 0,
-      is_featured = 0,
-      is_published = 1,
-      features = [],
-      parameters = []
-    } = body;
-    if (!name || !slug) {
-      return jsonResponse({ error: "\u4EA7\u54C1\u540D\u79F0\u548C\u6807\u8BC6\u4E0D\u80FD\u4E3A\u7A7A" }, 400);
-    }
-    if (!/^[a-z0-9_-]+$/i.test(slug)) {
-      return jsonResponse({ error: "\u4EA7\u54C1\u6807\u8BC6\u53EA\u80FD\u5305\u542B\u5B57\u6BCD\u3001\u6570\u5B57\u3001\u4E0B\u5212\u7EBF\u548C\u6A2A\u7EBF" }, 400);
-    }
-    const result = await env.DB.prepare(
-      `INSERT INTO products (name, slug, summary, description, icon, image_url, category, sort_order, is_featured, is_published)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    ).bind(name, slug, summary || "", description || "", icon || "", image_url || "", category || "", sort_order, is_featured ? 1 : 0, is_published ? 1 : 0).run();
-    const productId = result.meta?.last_row_id;
-    if (productId && features.length) {
-      for (const f of features) {
-        await env.DB.prepare(
-          `INSERT INTO product_features (product_id, title, description, icon, sort_order) VALUES (?, ?, ?, ?, ?)`
-        ).bind(productId, f.title, f.description || "", f.icon || "", f.sort_order || 0).run();
-      }
-    }
-    if (productId && parameters.length) {
-      for (const p of parameters) {
-        await env.DB.prepare(
-          `INSERT INTO product_parameters (product_id, label, value, sort_order) VALUES (?, ?, ?, ?)`
-        ).bind(productId, p.label, p.value, p.sort_order || 0).run();
-      }
-    }
-    return jsonResponse({ success: true, id: productId });
   } catch (err) {
     return jsonResponse({ error: "\u521B\u5EFA\u5931\u8D25", detail: err.message }, 500);
   }
@@ -1329,7 +1329,7 @@ async function onRequestGet14(context) {
 }
 __name(onRequestGet14, "onRequestGet");
 
-// ../.wrangler/tmp/pages-9FFm6e/functionsRoutes-0.24516953169199207.mjs
+// ../.wrangler/tmp/pages-GqJ0I7/functionsRoutes-0.32053903163631947.mjs
 var routes = [
   {
     routePath: "/admin/api/articles/:id*",
@@ -1343,7 +1343,7 @@ var routes = [
     mountPath: "/admin/api/articles",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet]
+    modules: [onRequestGet2]
   },
   {
     routePath: "/admin/api/articles/:id*",
@@ -1364,7 +1364,7 @@ var routes = [
     mountPath: "/admin/api/contacts",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet2]
+    modules: [onRequestGet3]
   },
   {
     routePath: "/admin/api/contacts/:id*",
@@ -1399,7 +1399,7 @@ var routes = [
     mountPath: "/admin/api/products",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet3]
+    modules: [onRequestGet5]
   },
   {
     routePath: "/admin/api/products/:id*",
@@ -1413,7 +1413,7 @@ var routes = [
     mountPath: "/admin/api/articles",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet4]
+    modules: [onRequestGet]
   },
   {
     routePath: "/admin/api/articles",
@@ -1427,35 +1427,35 @@ var routes = [
     mountPath: "/admin/api",
     method: "POST",
     middlewares: [],
-    modules: [onRequestPost2]
-  },
-  {
-    routePath: "/admin/api/page-blocks",
-    mountPath: "/admin/api",
-    method: "GET",
-    middlewares: [],
-    modules: [onRequestGet5]
-  },
-  {
-    routePath: "/admin/api/page-blocks",
-    mountPath: "/admin/api",
-    method: "POST",
-    middlewares: [],
     modules: [onRequestPost3]
   },
   {
-    routePath: "/admin/api/products",
-    mountPath: "/admin/api/products",
+    routePath: "/admin/api/page-blocks",
+    mountPath: "/admin/api",
     method: "GET",
     middlewares: [],
     modules: [onRequestGet6]
   },
   {
+    routePath: "/admin/api/page-blocks",
+    mountPath: "/admin/api",
+    method: "POST",
+    middlewares: [],
+    modules: [onRequestPost4]
+  },
+  {
+    routePath: "/admin/api/products",
+    mountPath: "/admin/api/products",
+    method: "GET",
+    middlewares: [],
+    modules: [onRequestGet4]
+  },
+  {
     routePath: "/admin/api/products",
     mountPath: "/admin/api/products",
     method: "POST",
     middlewares: [],
-    modules: [onRequestPost4]
+    modules: [onRequestPost2]
   },
   {
     routePath: "/admin/api/settings",
@@ -1978,4 +1978,4 @@ export {
   pages_template_worker_default as default
 };
 
-------formdata-undici-094609356290--
+------formdata-undici-007976817338--

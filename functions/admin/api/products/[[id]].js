@@ -1,15 +1,16 @@
-// 管理后台 API：产品详情 / 更新 / 删除
+// 管理后台 API：产品详情 / 更新 / 删除（同时兜底处理 /admin/api/products 根路径）
 // GET /admin/api/products/:id
 // PATCH /admin/api/products/:id
 // DELETE /admin/api/products/:id
 import { requireAuth, jsonResponse } from '../../../_shared.js';
+import { onRequestGet as onRequestGetList } from './index.js';
 
 export async function onRequestGet(context) {
   const { errorResponse } = await requireAuth(context);
   if (errorResponse) return errorResponse;
   const { env } = context;
   const id = context.params.id;
-  if (!id) return jsonResponse({ error: '缺少产品 ID' }, 400);
+  if (!id) return onRequestGetList(context);
 
   try {
     const product = await env.DB.prepare(`SELECT * FROM products WHERE id = ?`).bind(id).first();
