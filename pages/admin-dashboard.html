@@ -368,41 +368,43 @@
                 </div>
             </section>
 
-            <!-- 页面内容 -->
+                        <!-- 页面内容 -->
             <section id="page-blocks-view" class="section-view">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">页面内容</h2>
-                        <p class="text-sm text-[var(--jiagang-muted-foreground)] mt-1">左侧是页面结构，右侧是每项内容。每一项都唯一对应前端的一个标题、文字或图片。</p>
+                        <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">页面内容管理</h2>
+                        <p class="text-sm text-[var(--jiagang-muted-foreground)] mt-1">左侧选择页面与区域，右侧逐项编辑前端每个标题、文字、图片与按钮。</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <a id="preview-page-link" href="../index.html" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="external-link" class="w-4 h-4"></span>预览页面</a>
+                        <a id="preview-page-link" href="../index.html" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="external-link" class="w-4 h-4"></span>预览当前页面</a>
+                        <button id="save-all-page-blocks" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--state-success)] text-white hover:opacity-90 transition-colors"><span data-lucide="save" class="w-4 h-4"></span>保存全部修改</button>
                         <button id="add-page-block" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)] transition-colors"><span data-lucide="plus" class="w-4 h-4"></span>新增内容块</button>
                         <button id="refresh-page-blocks" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="refresh-cw" class="w-4 h-4"></span>刷新</button>
                     </div>
                 </div>
 
-                <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-4 mb-6 flex flex-col md:flex-row md:items-center gap-4">
-                    <label class="text-sm font-medium shrink-0">选择要编辑的页面</label>
-                    <select id="page-blocks-selector" class="w-full md:w-64 px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]">
-                        <option value="">请选择</option>
-                        <option value="global">全局站点（导航、页脚等）</option>
-                        <option value="index">首页</option>
-                        <option value="products">产品中心</option>
-                        <option value="about">关于我们</option>
-                        <option value="news">技术资讯</option>
-                        <option value="contact">联系我们</option>
-                        <option value="product-detail">产品详情</option>
-                        <option value="news-detail">文章详情</option>
-                    </select>
-                    <p id="page-blocks-page-desc" class="text-xs text-[var(--jiagang-muted-foreground)]"></p>
+                <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-4 mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center gap-4">
+                        <label class="text-sm font-medium shrink-0">选择要编辑的页面</label>
+                        <select id="page-blocks-selector" class="w-full md:w-64 px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]">
+                            <option value="global">全局站点（导航、页脚等共用文案）</option>
+                            <option value="index" selected>首页</option>
+                            <option value="products">产品中心</option>
+                            <option value="about">关于我们</option>
+                            <option value="news">技术资讯</option>
+                            <option value="contact">联系我们</option>
+                            <option value="product-detail">产品详情</option>
+                            <option value="news-detail">文章详情</option>
+                        </select>
+                        <p id="page-blocks-page-desc" class="text-xs text-[var(--jiagang-muted-foreground)]"></p>
+                    </div>
                 </div>
 
-                <div class="grid lg:grid-cols-3 gap-6 items-start">
+                <div class="grid lg:grid-cols-4 gap-6 items-start">
                     <aside class="lg:col-span-1 lg:sticky lg:top-24 space-y-4" id="page-blocks-nav">
                         <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 text-sm text-[var(--jiagang-muted-foreground)]">选择页面后，这里会显示页面结构导航。</div>
                     </aside>
-                    <div class="lg:col-span-2 space-y-6" id="page-blocks-form">
+                    <div class="lg:col-span-3 space-y-6" id="page-blocks-form">
                         <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 text-sm text-[var(--jiagang-muted-foreground)]">选择页面后，这里会显示可编辑内容。</div>
                     </div>
                 </div>
@@ -533,7 +535,9 @@
 
         const SECTION_TITLES = { dashboard: '仪表盘', contacts: '留言管理', products: '产品管理', articles: '文章管理', settings: '站点配置', 'page-blocks': '页面内容' };
 
-        // 页面内容块：页面 / 区域 / 元素的中文映射，让后台与前端一一对应
+                // 页面内容
+        const PAGE_BLOCK_PAGE_URLS = { global: '../index.html', index: '../index.html', products: '../products.html', about: '../about.html', news: '../news.html', contact: '../contact.html', 'product-detail': '../product-detail.html', 'news-detail': '../news-detail.html' };
+
         const PAGE_BLOCK_PAGE_LABELS = {
             global: '全局站点（导航、页脚等共用文案）',
             index: '首页',
@@ -549,25 +553,47 @@
             header: '顶部导航',
             footer: '页脚',
             hero: '顶部横幅区',
-            products: '产品展示区',
-            stats: '数据/简介区',
+            products: '核心产品展示区',
+            stats: '关于嘉港环保区',
             features: '服务优势区',
-            cta: '底部行动号召区',
+            cta: '底部留言行动区',
             parts: '配件产能区',
             intro: '企业简介区',
-            company: '企业信息区',
+            company: '企业信息表',
             mission: '资质荣誉区',
-            honors: '荣誉列表区',
-            vision: '制造质控区',
+            honors: '荣誉列表',
+            vision: '制造与质控区',
             process: '制造流程区',
-            info: '联系信息区',
-            form: '表单选项区',
+            info: '联系信息与留言表单',
+            form: '表单下拉选项',
             overview: '产品概述区',
             parameters: '技术参数区',
-            common: '通用元素',
+            common: '通用按钮与提示',
             breadcrumbs: '面包屑导航'
         };
-        // 每个页面在前端的区域出现顺序，决定后台导航和编辑区的排列顺序
+        const SECTION_DESCRIPTIONS = {
+            meta: '页面标题、浏览器标签页标题等元信息',
+            header: '顶部导航栏：公司名称、口号、五个导航链接',
+            footer: '页脚：公司名、简介、快速链接、联系方式、版权',
+            hero: '页面顶部横幅：主标题、副标题、标签、按钮、背景图',
+            products: '首页核心产品展示区：区域标题、副标题、卡片按钮文字',
+            stats: '首页“关于嘉港环保”区：标题、简介、亮点、数据卡片',
+            features: '首页服务优势区：3 个服务项的图标、标题、描述',
+            cta: '首页底部留言行动区：标题、说明、输入框占位符、提交按钮',
+            parts: '产品中心页配件产能区：标题与 3 个数据卡片',
+            intro: '关于我们页企业简介：标题、正文内容、配图',
+            company: '关于我们页右侧企业信息表：7 行标签与对应值',
+            mission: '关于我们页资质荣誉区标题',
+            honors: '关于我们页 3 项资质荣誉：标题与描述',
+            vision: '关于我们页制造与质控区：标题、副标题',
+            process: '关于我们页制造流程区：4 个流程的标题与描述',
+            info: '联系我们页：地址/电话/邮箱、留言表单、服务区域、工作时间、地图',
+            form: '联系我们页需求类型下拉框的 5 个选项',
+            overview: '产品详情页产品概述区标题',
+            parameters: '产品详情页技术参数区：标题、表头、底部说明',
+            common: '产品详情/文章详情页通用按钮与加载提示',
+            breadcrumbs: '面包屑导航文字'
+        };
         const PAGE_SECTION_ORDER = {
             global: ['header', 'footer'],
             index: ['meta', 'hero', 'products', 'stats', 'features', 'cta'],
@@ -578,44 +604,56 @@
             'product-detail': ['meta', 'overview', 'features', 'parameters', 'common'],
             'news-detail': ['meta', 'hero', 'common']
         };
+        const BLOCK_TYPE_LABELS = { text: '文字', html: '富文本/HTML', image: '图片 URL' };
         const BLOCK_LOCATION_HINTS = {
-            'global.header.nav_home': '顶部导航栏第 1 个链接“首页”',
-            'global.header.nav_about': '顶部导航栏第 2 个链接“关于我们”',
-            'global.header.nav_products': '顶部导航栏第 3 个链接“产品中心”',
-            'global.header.nav_news': '顶部导航栏第 4 个链接“技术资讯”',
-            'global.header.nav_contact': '顶部导航栏第 5 个链接“联系我们”',
+            // global header
+            'global.header.company_name_short': '顶部导航 Logo 旁短名称“唐山嘉港环保科技”',
+            'global.header.company_slogan': '顶部导航 Logo 旁副标题“选煤选矿装备制造商”',
+            'global.header.nav_home': '顶部导航第 1 项“首页”',
+            'global.header.nav_about': '顶部导航第 2 项“关于我们”',
+            'global.header.nav_products': '顶部导航第 3 项“产品中心”',
+            'global.header.nav_news': '顶部导航第 4 项“技术资讯”',
+            'global.header.nav_contact': '顶部导航第 5 项“联系我们”',
+            // global footer
+            'global.footer.company_name': '页脚公司全称',
+            'global.footer.intro': '页脚公司简介段落',
             'global.footer.links_title': '页脚左栏标题“快速链接”',
+            'global.footer.link_home': '页脚左栏链接“首页”',
+            'global.footer.link_about': '页脚左栏链接“关于我们”',
+            'global.footer.link_products': '页脚左栏链接“产品中心”',
+            'global.footer.link_contact': '页脚左栏链接“联系我们”',
             'global.footer.contact_title': '页脚右栏标题“联系方式”',
-            'global.footer.link_home': '页脚左栏第 1 个链接“首页”',
-            'global.footer.link_about': '页脚左栏第 2 个链接“关于我们”',
-            'global.footer.link_products': '页脚左栏第 3 个链接“产品中心”',
-            'global.footer.link_contact': '页脚左栏第 4 个链接“联系我们”',
-            'global.footer.copyright_suffix': '页脚版权行后缀“版权所有”',
+            'global.footer.address': '页脚联系地址',
+            'global.footer.phone': '页脚联系电话',
+            'global.footer.email': '页脚联系邮箱',
+            'global.footer.copyright_year': '页脚版权年份',
+            'global.footer.copyright_suffix': '页脚版权后缀“版权所有”',
+            // index
             'index.meta.title': '首页浏览器标签页标题',
-            'index.hero.title': '首页首屏大标题',
-            'index.hero.subtitle': '首页首屏副标题',
-            'index.hero.tag': '首页首屏左上角标签',
-            'index.hero.cta_primary': '首页首屏主按钮文字',
-            'index.hero.cta_secondary': '首页首屏次按钮文字',
-            'index.hero.background_image': '首页首屏背景图（为空使用默认渐变）',
-            'index.products.title': '首页产品展示区标题',
-            'index.products.subtitle': '首页产品展示区副标题',
-            'index.products.view_detail': '产品卡片按钮文字“了解详情”',
-            'index.stats.title': '首页数据区标题“关于嘉港环保”',
-            'index.stats.intro': '首页数据区公司简介段落',
-            'index.stats.highlight_1': '首页数据区亮点 1',
-            'index.stats.highlight_2': '首页数据区亮点 2',
-            'index.stats.highlight_3': '首页数据区亮点 3',
-            'index.stats.more_text': '首页数据区“了解更多”按钮',
-            'index.stats.stat_1_value': '首页数据卡片 1 数值',
-            'index.stats.stat_1_label': '首页数据卡片 1 标签',
-            'index.stats.stat_2_value': '首页数据卡片 2 数值',
-            'index.stats.stat_2_label': '首页数据卡片 2 标签',
-            'index.stats.stat_3_value': '首页数据卡片 3 数值',
-            'index.stats.stat_3_label': '首页数据卡片 3 标签',
-            'index.stats.stat_4_value': '首页数据卡片 4 数值',
-            'index.stats.stat_4_label': '首页数据卡片 4 标签',
-            'index.features.title': '首页服务优势区标题',
+            'index.hero.title': '首页 Banner 主标题',
+            'index.hero.subtitle': '首页 Banner 副标题',
+            'index.hero.tag': '首页 Banner 左上角标签“国家级高新技术企业”',
+            'index.hero.cta_primary': '首页 Banner 主按钮“浏览产品”',
+            'index.hero.cta_secondary': '首页 Banner 次按钮“技术咨询”',
+            'index.hero.background_image': '首页 Banner 背景图 URL（为空使用默认渐变）',
+            'index.products.title': '首页核心产品展示区主标题“核心产品”',
+            'index.products.subtitle': '首页核心产品展示区副标题',
+            'index.products.view_detail': '首页产品卡片按钮文字“了解详情”',
+            'index.stats.title': '首页“关于嘉港环保”区标题',
+            'index.stats.intro': '首页“关于嘉港环保”区公司简介段落',
+            'index.stats.highlight_1': '首页关于区亮点 1',
+            'index.stats.highlight_2': '首页关于区亮点 2',
+            'index.stats.highlight_3': '首页关于区亮点 3',
+            'index.stats.more_text': '首页关于区“了解更多”按钮',
+            'index.stats.stat_1_value': '首页数据卡片 1 数值“8”',
+            'index.stats.stat_1_label': '首页数据卡片 1 标签“高级工程师”',
+            'index.stats.stat_2_value': '首页数据卡片 2 数值“40”',
+            'index.stats.stat_2_label': '首页数据卡片 2 标签“技术人员”',
+            'index.stats.stat_3_value': '首页数据卡片 3 数值“3万㎡”',
+            'index.stats.stat_3_label': '首页数据卡片 3 标签“厂区占地”',
+            'index.stats.stat_4_value': '首页数据卡片 4 数值“1万㎡”',
+            'index.stats.stat_4_label': '首页数据卡片 4 标签“建筑面积”',
+            'index.features.title': '首页服务优势区主标题“服务优势”',
             'index.features.subtitle': '首页服务优势区副标题',
             'index.features.feature_1_title': '首页服务优势 1 标题“研发设计”',
             'index.features.feature_1_desc': '首页服务优势 1 描述',
@@ -623,52 +661,54 @@
             'index.features.feature_2_desc': '首页服务优势 2 描述',
             'index.features.feature_3_title': '首页服务优势 3 标题“技改服务”',
             'index.features.feature_3_desc': '首页服务优势 3 描述',
-            'index.cta.title': '首页底部 CTA 标题',
-            'index.cta.subtitle': '首页底部 CTA 副标题',
-            'index.cta.button_text': '首页底部 CTA 提交按钮',
-            'index.cta.placeholder_name': '首页底部 CTA 姓名输入框占位文字',
-            'index.cta.placeholder_phone': '首页底部 CTA 电话输入框占位文字',
-            'products.meta.title': '产品中心页浏览器标题',
-            'products.hero.title': '产品中心页顶部标题',
-            'products.hero.subtitle': '产品中心页顶部副标题',
-            'products.hero.background_image': '产品中心页顶部背景图',
-            'products.parts.title': '配件产能区标题',
-            'products.parts.stat_1_value': '配件产能卡片 1 数值',
-            'products.parts.stat_1_label': '配件产能卡片 1 标签',
-            'products.parts.stat_2_value': '配件产能卡片 2 数值',
-            'products.parts.stat_2_label': '配件产能卡片 2 标签',
-            'products.parts.stat_3_value': '配件产能卡片 3 数值',
-            'products.parts.stat_3_label': '配件产能卡片 3 标签',
-            'about.meta.title': '关于我们页浏览器标题',
-            'about.hero.title': '关于我们页顶部标题',
-            'about.hero.subtitle': '关于我们页顶部副标题',
-            'about.intro.title': '企业简介区标题',
-            'about.intro.content': '企业简介区正文内容（支持 HTML）',
-            'about.intro.image': '企业简介区图片',
-            'about.company.title': '企业信息区标题',
-            'about.company.label_1': '企业信息第 1 行标签“公司全称”',
-            'about.company.value_1': '企业信息第 1 行值',
-            'about.company.label_2': '企业信息第 2 行标签“成立时间”',
-            'about.company.value_2': '企业信息第 2 行值',
-            'about.company.label_3': '企业信息第 3 行标签“注册资本”',
-            'about.company.value_3': '企业信息第 3 行值',
-            'about.company.label_4': '企业信息第 4 行标签“注册地址”',
-            'about.company.value_4': '企业信息第 4 行值',
-            'about.company.label_5': '企业信息第 5 行标签“法定代表人”',
-            'about.company.value_5': '企业信息第 5 行值',
-            'about.company.label_6': '企业信息第 6 行标签“员工规模”',
-            'about.company.value_6': '企业信息第 6 行值',
-            'about.company.label_7': '企业信息第 7 行标签“厂区占地”',
-            'about.company.value_7': '企业信息第 7 行值',
-            'about.mission.title': '资质荣誉区标题',
-            'about.honors.honor_1_title': '荣誉 1 标题',
-            'about.honors.honor_1_desc': '荣誉 1 描述',
-            'about.honors.honor_2_title': '荣誉 2 标题',
-            'about.honors.honor_2_desc': '荣誉 2 描述',
-            'about.honors.honor_3_title': '荣誉 3 标题',
-            'about.honors.honor_3_desc': '荣誉 3 描述',
-            'about.vision.title': '制造质控区标题',
-            'about.vision.content': '制造质控区副标题',
+            'index.cta.title': '首页底部留言区标题“需要选型或技改方案？”',
+            'index.cta.subtitle': '首页底部留言区说明文字',
+            'index.cta.placeholder_name': '首页底部留言区姓名输入框占位符',
+            'index.cta.placeholder_phone': '首页底部留言区电话输入框占位符',
+            'index.cta.button_text': '首页底部留言区提交按钮文字',
+            // products
+            'products.meta.title': '产品中心页浏览器标签页标题',
+            'products.hero.title': '产品中心页 Banner 标题“产品中心”',
+            'products.hero.subtitle': '产品中心页 Banner 副标题',
+            'products.hero.background_image': '产品中心页 Banner 背景图 URL',
+            'products.parts.title': '产品中心页配件产能区标题',
+            'products.parts.stat_1_value': '产品中心页配件产能卡片 1 数值“1200件”',
+            'products.parts.stat_1_label': '产品中心页配件产能卡片 1 标签“筛篮年产能”',
+            'products.parts.stat_2_value': '产品中心页配件产能卡片 2 数值“1万㎡”',
+            'products.parts.stat_2_label': '产品中心页配件产能卡片 2 标签“不锈钢焊接筛网年产能”',
+            'products.parts.stat_3_value': '产品中心页配件产能卡片 3 数值“4000㎡”',
+            'products.parts.stat_3_label': '产品中心页配件产能卡片 3 标签“筛板年产能”',
+            // about
+            'about.meta.title': '关于我们页浏览器标签页标题',
+            'about.hero.title': '关于我们页 Banner 标题“关于嘉港环保”',
+            'about.hero.subtitle': '关于我们页 Banner 副标题',
+            'about.intro.title': '关于我们页企业简介区标题“企业简介”',
+            'about.intro.content': '关于我们页企业简介正文（支持 HTML）',
+            'about.intro.image': '关于我们页企业简介配图 URL',
+            'about.company.title': '关于我们页右侧企业信息表标题“企业信息”',
+            'about.company.label_1': '企业信息表第 1 行标签“公司全称”',
+            'about.company.value_1': '企业信息表第 1 行值',
+            'about.company.label_2': '企业信息表第 2 行标签“成立时间”',
+            'about.company.value_2': '企业信息表第 2 行值',
+            'about.company.label_3': '企业信息表第 3 行标签“注册资本”',
+            'about.company.value_3': '企业信息表第 3 行值',
+            'about.company.label_4': '企业信息表第 4 行标签“注册地址”',
+            'about.company.value_4': '企业信息表第 4 行值',
+            'about.company.label_5': '企业信息表第 5 行标签“法定代表人”',
+            'about.company.value_5': '企业信息表第 5 行值',
+            'about.company.label_6': '企业信息表第 6 行标签“员工规模”',
+            'about.company.value_6': '企业信息表第 6 行值',
+            'about.company.label_7': '企业信息表第 7 行标签“厂区占地”',
+            'about.company.value_7': '企业信息表第 7 行值',
+            'about.mission.title': '关于我们页资质荣誉区标题“资质荣誉”',
+            'about.honors.honor_1_title': '资质荣誉 1 标题',
+            'about.honors.honor_1_desc': '资质荣誉 1 描述',
+            'about.honors.honor_2_title': '资质荣誉 2 标题',
+            'about.honors.honor_2_desc': '资质荣誉 2 描述',
+            'about.honors.honor_3_title': '资质荣誉 3 标题',
+            'about.honors.honor_3_desc': '资质荣誉 3 描述',
+            'about.vision.title': '关于我们页制造与质控区标题“制造与质控”',
+            'about.vision.content': '关于我们页制造与质控区副标题',
             'about.process.process_1_title': '制造流程 1 标题“机加工”',
             'about.process.process_1_desc': '制造流程 1 描述',
             'about.process.process_2_title': '制造流程 2 标题“铆焊”',
@@ -677,498 +717,71 @@
             'about.process.process_3_desc': '制造流程 3 描述',
             'about.process.process_4_title': '制造流程 4 标题“质控链路”',
             'about.process.process_4_desc': '制造流程 4 描述',
-            'news.meta.title': '技术资讯页浏览器标题',
-            'news.hero.title': '技术资讯页顶部标题',
-            'news.hero.subtitle': '技术资讯页顶部副标题',
-            'news.hero.background_image': '技术资讯页顶部背景图',
-            'contact.meta.title': '联系我们页浏览器标题',
-            'contact.hero.title': '联系我们页顶部标题',
-            'contact.hero.subtitle': '联系我们页顶部副标题',
-            'contact.hero.background_image': '联系我们页顶部背景图',
-            'contact.info.title': '联系信息区左侧标题“在线留言”',
-            'contact.info.form_intro': '联系表单说明文字',
-            'contact.info.label_name': '表单姓名标签',
-            'contact.info.label_phone': '表单电话标签',
-            'contact.info.label_company': '表单公司标签',
-            'contact.info.label_type': '表单需求类型标签',
-            'contact.info.label_message': '表单需求描述标签',
-            'contact.info.submit_text': '表单提交按钮',
-            'contact.info.address_title': '联系信息地址标题',
-            'contact.info.address_value': '联系信息地址内容',
-            'contact.info.phone_title': '联系信息电话标题',
-            'contact.info.phone_value': '联系信息电话内容',
-            'contact.info.email_title': '联系信息邮箱标题',
-            'contact.info.email_value': '联系信息邮箱内容',
-            'contact.info.service_title': '服务区域标题',
-            'contact.info.service_content': '服务区域说明',
-            'contact.info.service_item_1': '服务项目 1',
-            'contact.info.service_item_2': '服务项目 2',
-            'contact.info.service_item_3': '服务项目 3',
-            'contact.info.service_item_4': '服务项目 4',
-            'contact.info.work_time_title': '工作时间标题',
-            'contact.info.work_time': '工作时间内容',
-            'contact.info.map_embed': '地图嵌入代码（支持 HTML）',
-            'contact.form.option_1': '需求类型下拉选项 1',
-            'contact.form.option_2': '需求类型下拉选项 2',
-            'contact.form.option_3': '需求类型下拉选项 3',
-            'contact.form.option_4': '需求类型下拉选项 4',
-            'contact.form.option_5': '需求类型下拉选项 5',
-            'product-detail.meta.title': '产品详情页浏览器标题',
-            'product-detail.overview.title': '产品详情页“产品概述”标题',
-            'product-detail.features.title': '产品详情页“结构特点”标题',
-            'product-detail.parameters.title': '产品详情页“技术参数”标题',
-            'product-detail.parameters.header_item': '参数表表头“项目”',
-            'product-detail.parameters.header_value': '参数表表头“参数”',
-            'product-detail.parameters.disclaimer': '参数表底部说明',
+            // news
+            'news.meta.title': '技术资讯页浏览器标签页标题',
+            'news.hero.title': '技术资讯页 Banner 标题“技术资讯”',
+            'news.hero.subtitle': '技术资讯页 Banner 副标题',
+            'news.hero.background_image': '技术资讯页 Banner 背景图 URL',
+            // contact
+            'contact.meta.title': '联系我们页浏览器标签页标题',
+            'contact.hero.title': '联系我们页 Banner 标题“联系我们”',
+            'contact.hero.subtitle': '联系我们页 Banner 副标题',
+            'contact.hero.background_image': '联系我们页 Banner 背景图 URL',
+            'contact.info.address_title': '联系信息区地址标题“公司地址”',
+            'contact.info.address_value': '联系信息区地址内容',
+            'contact.info.phone_title': '联系信息区电话标题“联系电话”',
+            'contact.info.phone_value': '联系信息区电话内容',
+            'contact.info.email_title': '联系信息区邮箱标题“电子邮箱”',
+            'contact.info.email_value': '联系信息区邮箱内容',
+            'contact.info.title': '在线留言表单标题“在线留言”',
+            'contact.info.form_intro': '在线留言表单说明文字',
+            'contact.info.label_name': '在线留言表单“您的称呼”标签',
+            'contact.info.label_phone': '在线留言表单“联系电话”标签',
+            'contact.info.label_company': '在线留言表单“公司名称”标签',
+            'contact.info.label_type': '在线留言表单“需求类型”标签',
+            'contact.info.label_message': '在线留言表单“需求描述”标签',
+            'contact.info.submit_text': '在线留言表单提交按钮文字“提交留言”',
+            'contact.info.service_title': '联系页服务区域标题“服务区域”',
+            'contact.info.service_content': '联系页服务区域说明',
+            'contact.info.service_item_1': '联系页服务项目 1',
+            'contact.info.service_item_2': '联系页服务项目 2',
+            'contact.info.service_item_3': '联系页服务项目 3',
+            'contact.info.service_item_4': '联系页服务项目 4',
+            'contact.info.work_time_title': '联系页工作时间标题“工作时间”',
+            'contact.info.work_time': '联系页工作时间内容',
+            'contact.info.map_embed': '联系页地图嵌入代码（HTML）',
+            'contact.form.option_1': '需求类型下拉选项 1“设备选型咨询”',
+            'contact.form.option_2': '需求类型下拉选项 2“技改方案”',
+            'contact.form.option_3': '需求类型下拉选项 3“配件报价”',
+            'contact.form.option_4': '需求类型下拉选项 4“技术服务”',
+            'contact.form.option_5': '需求类型下拉选项 5“其他”',
+            // product-detail
+            'product-detail.meta.title': '产品详情页浏览器标签页标题',
+            'product-detail.overview.title': '产品详情页产品概述区标题',
             'product-detail.common.contact_btn': '产品详情页“获取报价”按钮',
+            'product-detail.features.title': '产品详情页结构特点区标题',
+            'product-detail.parameters.title': '产品详情页技术参数区标题',
+            'product-detail.parameters.header_item': '产品详情页参数表头“项目”',
+            'product-detail.parameters.header_value': '产品详情页参数表头“参数”',
+            'product-detail.parameters.disclaimer': '产品详情页参数底部说明',
             'product-detail.common.back_btn': '产品详情页“返回产品中心”按钮',
-            'news-detail.meta.title': '文章详情页浏览器标题',
-            'news-detail.hero.title': '文章详情页顶部标题',
-            'news-detail.common.loading_text': '文章加载中提示文字',
-            'global.header.company_name_short': '顶部导航栏左侧公司简称',
-            'global.header.company_slogan': '顶部导航栏左侧公司口号',
-            'global.footer.company_name': '页脚左栏公司全称',
-            'global.footer.intro': '页脚左栏公司简介',
-            'global.footer.address': '页脚右栏地址',
-            'global.footer.phone': '页脚右栏电话',
-            'global.footer.email': '页脚右栏邮箱',
-            'global.footer.copyright_year': '页脚版权行年份',
-            'contact.info.map_embed': '联系我们页底部地图嵌入代码'
+            // news-detail
+            'news-detail.meta.title': '文章详情页浏览器标签页标题',
+            'news-detail.hero.title': '文章详情页 Banner 标题“文章详情”',
+            'news-detail.common.loading_text': '文章详情页加载提示文字'
         };
-        const state = {
-            contacts: [], filteredContacts: [], products: [], articles: [],
-            contactPage: 1, contactPageSize: 10, contactSortDesc: true,
-            selectedContactId: null,
-            settings: {}, stats: []
-        };
-
-        async function api(path, options = {}) {
-            options.headers = options.headers || {};
-            options.headers['Authorization'] = 'Bearer ' + token;
-            return fetch(path, options);
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text == null ? '' : text;
-            return div.innerHTML;
-        }
-
-        function formatDate(date) {
-            const d = new Date(date);
-            return isNaN(d.getTime()) ? '--' : d.toLocaleString('zh-CN');
-        }
-
-        function showToast(message, type = 'success') {
-            const iconMap = { success: 'check-circle-2', error: 'x-circle', info: 'info' };
-            const colorMap = { success: 'var(--state-success)', error: 'var(--state-error)', info: 'var(--state-info)' };
-            const iconName = iconMap[type] || iconMap.success;
-            document.getElementById('toast-icon').setAttribute('data-lucide', iconName);
-            document.getElementById('toast-icon').style.color = colorMap[type] || colorMap.success;
-            document.getElementById('toast-message').textContent = message;
-            lucide.createIcons();
-            document.getElementById('toast').classList.add('show');
-            setTimeout(() => document.getElementById('toast').classList.remove('show'), 3000);
-        }
-
-        function handleUnauthorized(res) {
-            if (res.status === 401) { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; return true; }
-            return false;
-        }
-
-        // 路由
-        function showSection(section) {
-            document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-            document.getElementById(section + '-view').classList.add('active');
-            const nav = document.querySelector('.nav-link[data-section="' + section + '"]');
-            if (nav) nav.classList.add('active');
-            document.getElementById('page-title').textContent = SECTION_TITLES[section] || '管理后台';
-            window.location.hash = section;
-            if (section === 'contacts') loadContacts();
-            if (section === 'products') loadProducts();
-            if (section === 'articles') loadArticles();
-            if (section === 'settings') loadSettings();
-            if (section === 'page-blocks') loadPageBlocks();
-        }
-
-        document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', e => { e.preventDefault(); showSection(a.dataset.section); }));
-        document.getElementById('sidebar-toggle').addEventListener('click', () => document.getElementById('sidebar-nav').classList.toggle('hidden'));
-        document.getElementById('header-sidebar-toggle').addEventListener('click', () => document.getElementById('sidebar-nav').classList.toggle('hidden'));
-        document.getElementById('logout-btn').addEventListener('click', () => { localStorage.removeItem('jiagang_admin_token'); window.location.href = 'admin-login.html'; });
-
-        const initialSection = window.location.hash.replace('#', '') || 'dashboard';
-        showSection(initialSection);
-
-        // 日期显示
-        const now = new Date();
-        document.getElementById('current-date').textContent = `${now.getFullYear()}年${String(now.getMonth()+1).padStart(2,'0')}月${String(now.getDate()).padStart(2,'0')}日`;
-
-        // 统计
-        async function loadStats() {
-            try {
-                const res = await api('/admin/api/stats');
-                if (handleUnauthorized(res)) return;
-                if (!res.ok) throw new Error('加载失败');
-                const data = await res.json();
-                document.getElementById('stat-today').textContent = data.today || 0;
-                document.getElementById('stat-pending').textContent = data.pending || 0;
-                document.getElementById('stat-total').textContent = data.total || 0;
-                document.getElementById('stat-products').textContent = data.products || 0;
-                document.getElementById('stat-articles').textContent = data.articles || 0;
-                const trend = (data.today || 0) - (data.yesterday || 0);
-                const trendEl = document.getElementById('trend-today');
-                trendEl.textContent = (trend >= 0 ? '+' : '') + trend;
-                trendEl.style.color = trend >= 0 ? 'var(--state-success)' : 'var(--state-error)';
-            } catch (e) { console.error(e); }
-        }
-        loadStats();
-
-        // 留言管理
-        async function loadContacts() {
-            const tbody = document.getElementById('contacts-body');
-            tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr>';
-            try {
-                const res = await api('/admin/api/contacts');
-                if (handleUnauthorized(res)) return;
-                if (!res.ok) throw new Error('加载失败');
-                state.contacts = await res.json();
-                applyContactFilters();
-                // 仪表盘最近未处理
-                const latest = state.contacts.filter(c => c.status === 'pending').slice(0, 5);
-                const latestEl = document.getElementById('dashboard-latest-contacts');
-                if (!latest.length) latestEl.innerHTML = '<div class="text-sm text-[var(--jiagang-muted-foreground)]">暂无未处理留言</div>';
-                else latestEl.innerHTML = latest.map(c => `<div class="p-3 rounded-lg border border-[var(--jiagang-border)]"><div class="flex items-center justify-between"><span class="font-medium">${escapeHtml(c.name)}</span><span class="text-xs text-[var(--jiagang-muted-foreground)]">${formatDate(c.created_at)}</span></div><div class="text-sm text-[var(--jiagang-muted-foreground)] truncate">${escapeHtml(c.message || '-')}</div></div>`).join('');
-            } catch (e) {
-                tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-10 text-center" style="color:var(--state-error)">加载失败：${e.message}</td></tr>`;
-            }
-        }
-
-        function applyContactFilters() {
-            const kw = document.getElementById('search-contacts').value.trim().toLowerCase();
-            const status = document.getElementById('filter-status').value;
-            const type = document.getElementById('filter-type').value;
-            state.filteredContacts = state.contacts.filter(c => {
-                const inKw = !kw || ((c.name||'')+(c.company||'')+(c.phone||'')+(c.message||'')).toLowerCase().includes(kw);
-                const inStatus = !status || c.status === status;
-                const inType = !type || c.type === type;
-                return inKw && inStatus && inType;
-            }).sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-            state.contactPage = 1;
-            renderContacts();
-        }
-
-        function renderContacts() {
-            const tbody = document.getElementById('contacts-body');
-            const total = state.filteredContacts.length;
-            const start = (state.contactPage - 1) * state.contactPageSize;
-            const items = state.filteredContacts.slice(start, start + state.contactPageSize);
-            const totalPages = Math.max(1, Math.ceil(total / state.contactPageSize));
-            document.getElementById('total-items').textContent = total;
-            document.getElementById('page-info').textContent = `${state.contactPage} / ${totalPages}`;
-            document.getElementById('page-prev').disabled = state.contactPage <= 1;
-            document.getElementById('page-next').disabled = state.contactPage >= totalPages;
-            if (!items.length) { tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">暂无留言</td></tr>`; return; }
-            tbody.innerHTML = items.map(c => {
-                const isPending = c.status === 'pending';
-                return `<tr>
-                    <td class="whitespace-nowrap">${formatDate(c.created_at)}</td>
-                    <td>${escapeHtml(c.name)}</td>
-                    <td>${escapeHtml(c.company || '-')}</td>
-                    <td>${escapeHtml(c.phone)}</td>
-                    <td>${escapeHtml(c.type || '-')}</td>
-                    <td><span class="px-2 py-1 rounded text-xs font-medium" style="background:${isPending ? 'var(--jiagang-primary-100)' : 'var(--jiagang-primary-50)'}; color:${isPending ? 'var(--jiagang-primary-800)' : 'var(--state-success)'}">${isPending ? '未处理' : '已处理'}</span></td>
-                    <td><button onclick="openContactDetail(${c.id})" class="text-sm font-medium" style="color:var(--jiagang-primary)">查看</button></td>
-                </tr>`;
-            }).join('');
-        }
-
-        window.openContactDetail = function(id) {
-            const c = state.contacts.find(x => x.id === id); if (!c) return;
-            state.selectedContactId = id;
-            const isPending = c.status === 'pending';
-            document.getElementById('detail-name').textContent = c.name || '--';
-            document.getElementById('detail-company').textContent = c.company || '--';
-            document.getElementById('detail-phone').textContent = c.phone || '--';
-            document.getElementById('detail-type').textContent = c.type || '--';
-            document.getElementById('detail-time').textContent = formatDate(c.created_at);
-            document.getElementById('detail-message').textContent = c.message || '无留言内容';
-            document.getElementById('detail-status').innerHTML = `<span class="px-2 py-1 rounded text-xs font-medium" style="background:${isPending ? 'var(--jiagang-primary-100)' : 'var(--jiagang-primary-50)'}; color:${isPending ? 'var(--jiagang-primary-800)' : 'var(--state-success)'}">${isPending ? '未处理' : '已处理'}</span>`;
-            document.getElementById('detail-toggle-status').textContent = isPending ? '标记已处理' : '标记未处理';
-            document.getElementById('detail-drawer').classList.add('open');
-            document.getElementById('detail-drawer').setAttribute('aria-hidden', 'false');
-        };
-
-        function closeContactDetail() {
-            document.getElementById('detail-drawer').classList.remove('open');
-            document.getElementById('detail-drawer').setAttribute('aria-hidden', 'true');
-            state.selectedContactId = null;
-        }
-        document.getElementById('detail-close').addEventListener('click', closeContactDetail);
-        document.getElementById('detail-close-bottom').addEventListener('click', closeContactDetail);
-        document.getElementById('detail-backdrop').addEventListener('click', closeContactDetail);
-
-        document.getElementById('detail-toggle-status').addEventListener('click', async () => {
-            const id = state.selectedContactId; if (!id) return;
-            const c = state.contacts.find(x => x.id === id);
-            try {
-                const res = await api('/admin/api/contacts/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: c.status === 'pending' ? 'done' : 'pending' }) });
-                if (handleUnauthorized(res)) return;
-                if (res.ok) { showToast('状态已更新'); await loadStats(); await loadContacts(); closeContactDetail(); }
-                else showToast('更新失败', 'error');
-            } catch (e) { showToast('网络异常', 'error'); }
-        });
-
-        document.getElementById('detail-delete').addEventListener('click', async () => {
-            const id = state.selectedContactId; if (!id) return;
-            if (!confirm('确定删除这条留言吗？')) return;
-            try {
-                const res = await api('/admin/api/contacts/' + id, { method: 'DELETE' });
-                if (handleUnauthorized(res)) return;
-                if (res.ok) { showToast('已删除'); await loadStats(); await loadContacts(); closeContactDetail(); }
-                else showToast('删除失败', 'error');
-            } catch (e) { showToast('网络异常', 'error'); }
-        });
-
-        document.getElementById('refresh-contacts').addEventListener('click', loadContacts);
-        document.getElementById('search-contacts').addEventListener('input', applyContactFilters);
-        document.getElementById('filter-status').addEventListener('change', applyContactFilters);
-        document.getElementById('filter-type').addEventListener('change', applyContactFilters);
-        document.getElementById('page-size').addEventListener('change', () => { state.contactPageSize = parseInt(document.getElementById('page-size').value); state.contactPage = 1; renderContacts(); });
-        document.getElementById('page-prev').addEventListener('click', () => { if (state.contactPage > 1) { state.contactPage--; renderContacts(); } });
-        document.getElementById('page-next').addEventListener('click', () => { const totalPages = Math.ceil(state.filteredContacts.length / state.contactPageSize); if (state.contactPage < totalPages) { state.contactPage++; renderContacts(); } });
-
-        // 产品管理
-        async function loadProducts() {
-            const tbody = document.getElementById('products-body');
-            tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr>';
-            try {
-                const res = await api('/admin/api/products');
-                if (handleUnauthorized(res)) return;
-                if (!res.ok) throw new Error('加载失败');
-                state.products = await res.json();
-                renderProducts();
-            } catch (e) { tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-10 text-center" style="color:var(--state-error)">加载失败：${e.message}</td></tr>`; }
-        }
-
-        function renderProducts() {
-            const tbody = document.getElementById('products-body');
-            if (!state.products.length) { tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">暂无产品</td></tr>'; return; }
-            tbody.innerHTML = state.products.map(p => `<tr>
-                <td>${p.sort_order}</td>
-                <td class="font-medium">${escapeHtml(p.name)}</td>
-                <td>${escapeHtml(p.slug)}</td>
-                <td>${escapeHtml(p.category || '-')}</td>
-                <td>${p.is_featured ? '<span class="px-2 py-1 rounded text-xs bg-amber-100 text-amber-700">推荐</span>' : '-'}</td>
-                <td>${p.is_published ? '<span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700">发布</span>' : '<span class="px-2 py-1 rounded text-xs bg-slate-100 text-slate-600">草稿</span>'}</td>
-                <td class="space-x-3"><button onclick="editProduct(${p.id})" class="text-sm font-medium" style="color:var(--jiagang-primary)">编辑</button><a href="product-detail.html?slug=${encodeURIComponent(p.slug)}" target="_blank" class="text-sm font-medium" style="color:var(--state-info)">预览</a><button onclick="deleteProduct(${p.id})" class="text-sm font-medium" style="color:var(--state-error)">删除</button></td>
-            </tr>`).join('');
-        }
-
-        function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-        function openModal(id) { document.getElementById(id).classList.add('open'); lucide.createIcons(); }
-
-        window.openProductModal = function(product = null) {
-            document.getElementById('product-modal-title').textContent = product ? '编辑产品' : '新增产品';
-            document.getElementById('product-id').value = product ? product.id : '';
-            document.getElementById('product-name').value = product ? product.name : '';
-            document.getElementById('product-slug').value = product ? product.slug : '';
-            document.getElementById('product-summary').value = product ? (product.summary || '') : '';
-            document.getElementById('product-description').value = product ? (product.description || '') : '';
-            document.getElementById('product-icon').value = product ? (product.icon || '') : '';
-            document.getElementById('product-image').value = product ? (product.image_url || '') : '';
-            document.getElementById('product-category').value = product ? (product.category || '') : '';
-            document.getElementById('product-sort').value = product ? product.sort_order : 0;
-            document.getElementById('product-featured').checked = product ? product.is_featured : false;
-            document.getElementById('product-published').checked = product ? product.is_published : true;
-            const featuresContainer = document.getElementById('product-features');
-            featuresContainer.innerHTML = '';
-            if (product && product.features) product.features.forEach(f => addFeatureRow(f));
-            if (!product) addFeatureRow();
-            const paramsContainer = document.getElementById('product-parameters');
-            paramsContainer.innerHTML = '';
-            if (product && product.parameters) product.parameters.forEach(p => addParameterRow(p));
-            if (!product) addParameterRow();
-            openModal('product-modal');
-        };
-
-        window.editProduct = async function(id) {
-            try {
-                const res = await api('/admin/api/products/' + id);
-                if (handleUnauthorized(res)) return;
-                if (!res.ok) throw new Error('加载失败');
-                const product = await res.json();
-                openProductModal(product);
-            } catch (e) { showToast('加载失败', 'error'); }
-        };
-
-        window.deleteProduct = async function(id) {
-            if (!confirm('确定删除该产品吗？相关特点和参数也会一并删除。')) return;
-            try {
-                const res = await api('/admin/api/products/' + id, { method: 'DELETE' });
-                if (handleUnauthorized(res)) return;
-                if (res.ok) { showToast('已删除'); await loadStats(); await loadProducts(); }
-                else showToast('删除失败', 'error');
-            } catch (e) { showToast('网络异常', 'error'); }
-        };
-
-        window.addFeatureRow = function(f = null) {
-            const div = document.createElement('div');
-            div.className = 'grid grid-cols-12 gap-2';
-            div.innerHTML = `<div class="col-span-3"><input type="text" placeholder="标题" class="feature-title w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(f ? f.title : '')}"></div><div class="col-span-2"><input type="text" placeholder="图标" class="feature-icon w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(f ? (f.icon || '') : '')}"></div><div class="col-span-6"><input type="text" placeholder="描述" class="feature-desc w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(f ? (f.description || '') : '')}"></div><div class="col-span-1"><button onclick="this.parentElement.remove()" class="w-full h-full rounded border border-[var(--state-error)] text-[var(--state-error)] text-xs hover:bg-red-50">删除</button></div>`;
-            document.getElementById('product-features').appendChild(div);
-        };
-
-        window.addParameterRow = function(p = null) {
-            const div = document.createElement('div');
-            div.className = 'grid grid-cols-12 gap-2';
-            div.innerHTML = `<div class="col-span-5"><input type="text" placeholder="参数名" class="param-label w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(p ? p.label : '')}"></div><div class="col-span-6"><input type="text" placeholder="参数值" class="param-value w-full px-2 py-1.5 rounded border border-[var(--jiagang-input)] text-sm" value="${escapeHtml(p ? p.value : '')}"></div><div class="col-span-1"><button onclick="this.parentElement.remove()" class="w-full h-full rounded border border-[var(--state-error)] text-[var(--state-error)] text-xs hover:bg-red-50">删除</button></div>`;
-            document.getElementById('product-parameters').appendChild(div);
-        };
-
-        document.getElementById('save-product').addEventListener('click', async () => {
-            const id = document.getElementById('product-id').value;
-            const body = {
-                name: document.getElementById('product-name').value.trim(),
-                slug: document.getElementById('product-slug').value.trim(),
-                summary: document.getElementById('product-summary').value.trim(),
-                description: document.getElementById('product-description').value.trim(),
-                icon: document.getElementById('product-icon').value.trim(),
-                image_url: document.getElementById('product-image').value.trim(),
-                category: document.getElementById('product-category').value.trim(),
-                sort_order: parseInt(document.getElementById('product-sort').value) || 0,
-                is_featured: document.getElementById('product-featured').checked ? 1 : 0,
-                is_published: document.getElementById('product-published').checked ? 1 : 0,
-                features: Array.from(document.querySelectorAll('#product-features > div')).map(div => ({
-                    title: div.querySelector('.feature-title').value.trim(),
-                    icon: div.querySelector('.feature-icon').value.trim(),
-                    description: div.querySelector('.feature-desc').value.trim()
-                })).filter(f => f.title),
-                parameters: Array.from(document.querySelectorAll('#product-parameters > div')).map(div => ({
-                    label: div.querySelector('.param-label').value.trim(),
-                    value: div.querySelector('.param-value').value.trim()
-                })).filter(p => p.label && p.value !== '')
-            };
-            if (!body.name || !body.slug) { showToast('名称和标识不能为空', 'error'); return; }
-            try {
-                const res = await api(id ? '/admin/api/products/' + id : '/admin/api/products', {
-                    method: id ? 'PATCH' : 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
-                });
-                if (handleUnauthorized(res)) return;
-                if (res.ok) { showToast(id ? '产品已更新' : '产品已创建'); closeModal('product-modal'); await loadStats(); await loadProducts(); }
-                else { const err = await res.json().catch(() => ({})); showToast(err.error || '保存失败', 'error'); }
-            } catch (e) { showToast('网络异常', 'error'); }
-        });
-        document.getElementById('refresh-products').addEventListener('click', loadProducts);
-
-        // 文章管理
-        async function loadArticles() {
-            const tbody = document.getElementById('articles-body');
-            tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">加载中...</td></tr>';
-            try {
-                const res = await api('/admin/api/articles');
-                if (handleUnauthorized(res)) return;
-                if (!res.ok) throw new Error('加载失败');
-                state.articles = await res.json();
-                renderArticles();
-            } catch (e) { tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-10 text-center" style="color:var(--state-error)">加载失败：${e.message}</td></tr>`; }
-        }
-
-        function renderArticles() {
-            const tbody = document.getElementById('articles-body');
-            if (!state.articles.length) { tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-10 text-center text-[var(--jiagang-muted-foreground)]">暂无文章</td></tr>'; return; }
-            tbody.innerHTML = state.articles.map(a => `<tr>
-                <td class="whitespace-nowrap">${formatDate(a.published_at)}</td>
-                <td class="font-medium">${escapeHtml(a.title)}</td>
-                <td>${escapeHtml(a.category || '-')}</td>
-                <td>${escapeHtml(a.author || '-')}</td>
-                <td>${a.is_published ? '<span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700">发布</span>' : '<span class="px-2 py-1 rounded text-xs bg-slate-100 text-slate-600">草稿</span>'}</td>
-                <td>${a.view_count || 0}</td>
-                <td class="space-x-3"><button onclick="editArticle(${a.id})" class="text-sm font-medium" style="color:var(--jiagang-primary)">编辑</button><a href="news-detail.html?id=${a.id}" target="_blank" class="text-sm font-medium" style="color:var(--state-info)">预览</a><button onclick="deleteArticle(${a.id})" class="text-sm font-medium" style="color:var(--state-error)">删除</button></td>
-            </tr>`).join('');
-        }
-
-        window.openArticleModal = function(article = null) {
-            document.getElementById('article-modal-title').textContent = article ? '编辑文章' : '新增文章';
-            document.getElementById('article-id').value = article ? article.id : '';
-            document.getElementById('article-title').value = article ? article.title : '';
-            document.getElementById('article-summary').value = article ? (article.summary || '') : '';
-            document.getElementById('article-content').value = article ? (article.content || '') : '';
-            document.getElementById('article-cover-icon').value = article ? (article.cover_icon || '') : '';
-            document.getElementById('article-cover-image').value = article ? (article.cover_image_url || '') : '';
-            document.getElementById('article-category').value = article ? (article.category || '') : '';
-            document.getElementById('article-author').value = article ? (article.author || '') : '';
-            document.getElementById('article-published').checked = article ? article.is_published : true;
-            if (article && article.published_at) {
-                const d = new Date(article.published_at);
-                document.getElementById('article-published-at').value = isNaN(d.getTime()) ? '' : new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,16);
-            } else { document.getElementById('article-published-at').value = ''; }
-            openModal('article-modal');
-        };
-
-        window.editArticle = async function(id) {
-            try {
-                const res = await api('/admin/api/articles/' + id);
-                if (handleUnauthorized(res)) return;
-                if (!res.ok) throw new Error('加载失败');
-                const article = await res.json();
-                openArticleModal(article);
-            } catch (e) { showToast('加载失败', 'error'); }
-        };
-
-        window.deleteArticle = async function(id) {
-            if (!confirm('确定删除该文章吗？')) return;
-            try {
-                const res = await api('/admin/api/articles/' + id, { method: 'DELETE' });
-                if (handleUnauthorized(res)) return;
-                if (res.ok) { showToast('已删除'); await loadStats(); await loadArticles(); }
-                else showToast('删除失败', 'error');
-            } catch (e) { showToast('网络异常', 'error'); }
-        };
-
-        document.getElementById('save-article').addEventListener('click', async () => {
-            const id = document.getElementById('article-id').value;
-            const body = {
-                title: document.getElementById('article-title').value.trim(),
-                summary: document.getElementById('article-summary').value.trim(),
-                content: document.getElementById('article-content').value.trim(),
-                cover_icon: document.getElementById('article-cover-icon').value.trim(),
-                cover_image_url: document.getElementById('article-cover-image').value.trim(),
-                category: document.getElementById('article-category').value.trim(),
-                author: document.getElementById('article-author').value.trim(),
-                published_at: document.getElementById('article-published-at').value || new Date().toISOString(),
-                is_published: document.getElementById('article-published').checked ? 1 : 0
-            };
-            if (!body.title) { showToast('标题不能为空', 'error'); return; }
-            try {
-                const res = await api(id ? '/admin/api/articles/' + id : '/admin/api/articles', {
-                    method: id ? 'PATCH' : 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
-                });
-                if (handleUnauthorized(res)) return;
-                if (res.ok) { showToast(id ? '文章已更新' : '文章已创建'); closeModal('article-modal'); await loadStats(); await loadArticles(); }
-                else { const err = await res.json().catch(() => ({})); showToast(err.error || '保存失败', 'error'); }
-            } catch (e) { showToast('网络异常', 'error'); }
-        });
-        document.getElementById('refresh-articles').addEventListener('click', loadArticles);
-
-        // 页面内容
-        const PAGE_BLOCK_PAGE_URLS = { global: '../index.html', index: '../index.html', products: '../products.html', about: '../about.html', news: '../news.html', contact: '../contact.html', 'product-detail': '../product-detail.html', 'news-detail': '../news-detail.html' };
 
         function updatePageBlockPreviewLink() {
             const page = document.getElementById('page-blocks-selector').value || 'index';
             const link = document.getElementById('preview-page-link');
             const desc = document.getElementById('page-blocks-page-desc');
             link.href = PAGE_BLOCK_PAGE_URLS[page] || '../index.html';
-            if (desc) desc.textContent = PAGE_BLOCK_PAGE_LABELS[page] ? `当前编辑：${PAGE_BLOCK_PAGE_LABELS[page]} · 后台项目与前端位置一一对应` : '';
+            if (desc) desc.textContent = PAGE_BLOCK_PAGE_LABELS[page] ? `当前编辑：${PAGE_BLOCK_PAGE_LABELS[page]} · 后台项与前端元素一一对应` : '';
         }
 
         function renderPageBlockInput(b) {
             const common = 'block-value w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]';
-            if (b.type === 'html') return `<textarea class="${common}" rows="5" placeholder="支持 HTML">${escapeHtml(b.value || '')}</textarea>`;
+            if (b.type === 'html') return `<textarea class="${common} font-mono" rows="6" placeholder="支持 HTML">${escapeHtml(b.value || '')}</textarea>`;
             const placeholder = b.type === 'image' ? '图片 URL' : '内容';
             return `<input type="${b.type === 'image' ? 'url' : 'text'}" class="${common}" value="${escapeHtml(b.value || '')}" placeholder="${placeholder}">`;
         }
@@ -1203,7 +816,10 @@
                 if (!blocks.length) return '';
                 return `
                 <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] overflow-hidden">
-                    <div class="px-4 py-3 bg-[var(--jiagang-muted)] border-b border-[var(--jiagang-border)] font-bold text-sm text-[var(--jiagang-foreground)]">${escapeHtml(getSectionDisplayName(section))}</div>
+                    <div class="px-4 py-3 bg-[var(--jiagang-muted)] border-b border-[var(--jiagang-border)]">
+                        <div class="font-bold text-sm text-[var(--jiagang-foreground)]">${escapeHtml(getSectionDisplayName(section))}</div>
+                        <div class="text-xs text-[var(--jiagang-muted-foreground)] mt-0.5">${escapeHtml(SECTION_DESCRIPTIONS[section] || '')}</div>
+                    </div>
                     <ul class="divide-y divide-[var(--jiagang-border)]">
                         ${blocks.map(b => `
                         <li><button type="button" class="page-block-nav-btn w-full text-left px-4 py-2 text-xs text-[var(--jiagang-muted-foreground)] hover:bg-[var(--jiagang-muted)] hover:text-[var(--jiagang-foreground)] transition-colors" data-target="pb-${b.id}">${escapeHtml(getBlockLocationHint(b))}</button></li>
@@ -1216,11 +832,23 @@
                     const target = document.getElementById(btn.dataset.target);
                     if (target) {
                         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        target.classList.add('ring-2');
-                        setTimeout(() => target.classList.remove('ring-2'), 1500);
+                        target.classList.add('ring-2', 'ring-[var(--jiagang-ring)]');
+                        setTimeout(() => target.classList.remove('ring-2', 'ring-[var(--jiagang-ring)]'), 1500);
                     }
                 });
             });
+        }
+
+        async function savePageBlockCard(card) {
+            const id = card.dataset.blockId;
+            const value = card.querySelector('.block-value').value;
+            const isPublished = card.querySelector('.block-published').checked ? 1 : 0;
+            const res = await api('/admin/api/page-blocks/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ value, is_published: isPublished }) });
+            if (handleUnauthorized(res)) return false;
+            if (!res.ok) throw new Error('保存失败');
+            const preview = card.querySelector('.page-block-preview img');
+            if (preview) { preview.src = value; preview.style.display = value ? 'block' : 'none'; }
+            return true;
         }
 
         async function loadPageBlocks() {
@@ -1241,12 +869,9 @@
                     document.getElementById('page-blocks-nav').innerHTML = '<div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 text-sm text-[var(--jiagang-muted-foreground)]">该页面暂无结构导航。</div>';
                     return;
                 }
-                // 按 section 分组，组内按 sort_order 排序
                 const groups = {};
                 blocks.forEach(b => { groups[b.section] = groups[b.section] || []; groups[b.section].push(b); });
-                Object.keys(groups).forEach(section => {
-                    groups[section].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-                });
+                Object.keys(groups).forEach(section => { groups[section].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)); });
 
                 renderPageBlockNav(page, groups);
 
@@ -1256,10 +881,13 @@
                     if (!sectionBlocks || !sectionBlocks.length) return '';
                     return `
                     <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] overflow-hidden" data-section="${escapeHtml(section)}">
-                        <div class="px-6 py-4 bg-[var(--jiagang-muted)] border-b border-[var(--jiagang-border)] flex items-center justify-between">
-                            <div>
-                                <h3 class="font-bold text-sm text-[var(--jiagang-foreground)]">${escapeHtml(getSectionDisplayName(section))}</h3>
-                                <span class="text-xs text-[var(--jiagang-muted-foreground)]">${escapeHtml(section)} · ${sectionBlocks.length} 项</span>
+                        <div class="px-6 py-4 bg-[var(--jiagang-muted)] border-b border-[var(--jiagang-border)]">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-bold text-sm text-[var(--jiagang-foreground)]">${escapeHtml(getSectionDisplayName(section))}</h3>
+                                    <span class="text-xs text-[var(--jiagang-muted-foreground)]">${escapeHtml(SECTION_DESCRIPTIONS[section] || '')}</span>
+                                </div>
+                                <span class="text-xs text-[var(--jiagang-muted-foreground)]">${sectionBlocks.length} 项</span>
                             </div>
                         </div>
                         <div class="divide-y divide-[var(--jiagang-border)]">
@@ -1268,7 +896,7 @@
                                 <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-3 mb-3">
                                     <div class="min-w-0">
                                         <div class="flex items-center gap-2 flex-wrap">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-[var(--jiagang-primary-100)] text-[var(--jiagang-primary-800)]">${escapeHtml(b.type)}</span>
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-[var(--jiagang-primary-100)] text-[var(--jiagang-primary-800)]">${escapeHtml(BLOCK_TYPE_LABELS[b.type] || b.type)}</span>
                                             <span class="text-xs text-[var(--jiagang-muted-foreground)]"># ${escapeHtml(getBlockFullKey(b))}</span>
                                         </div>
                                         <div class="font-bold text-[var(--jiagang-foreground)] mt-1.5">${escapeHtml(getBlockLocationHint(b))}</div>
@@ -1276,8 +904,8 @@
                                     </div>
                                     <div class="flex items-center gap-2 shrink-0">
                                         <label class="inline-flex items-center gap-1.5 text-xs cursor-pointer"><input type="checkbox" class="block-published w-4 h-4 rounded border-[var(--jiagang-input)]" ${b.is_published ? 'checked' : ''}> 显示</label>
-                                        <button class="edit-block-btn px-2.5 py-1 text-xs rounded-md border border-[var(--jiagang-border)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)]">编辑</button>
                                         <button class="save-block-btn px-2.5 py-1 text-xs rounded-md bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)]">保存</button>
+                                        <button class="edit-block-btn px-2.5 py-1 text-xs rounded-md border border-[var(--jiagang-border)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)]">编辑</button>
                                         <button class="delete-block-btn px-2.5 py-1 text-xs rounded-md border border-[var(--state-error)] text-[var(--state-error)] hover:bg-red-50">删除</button>
                                     </div>
                                 </div>
@@ -1293,19 +921,8 @@
                 container.querySelectorAll('.save-block-btn').forEach(btn => {
                     btn.addEventListener('click', async () => {
                         const card = btn.closest('[data-block-id]');
-                        const id = card.dataset.blockId;
-                        const value = card.querySelector('.block-value').value;
-                        const isPublished = card.querySelector('.block-published').checked ? 1 : 0;
-                        try {
-                            const res = await api('/admin/api/page-blocks/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ value, is_published: isPublished }) });
-                            if (handleUnauthorized(res)) return;
-                            if (!res.ok) throw new Error('保存失败');
-                            const preview = card.querySelector('.page-block-preview img');
-                            if (preview) { preview.src = value; preview.style.display = value ? 'block' : 'none'; }
-                            showToast('已保存');
-                        } catch (e) {
-                            showToast(e.message || '保存失败', 'error');
-                        }
+                        try { await savePageBlockCard(card); showToast('已保存'); }
+                        catch (e) { showToast(e.message || '保存失败', 'error'); }
                     });
                 });
 
@@ -1340,9 +957,7 @@
                             card.remove();
                             showToast('已删除');
                             loadPageBlocks();
-                        } catch (e) {
-                            showToast(e.message || '删除失败', 'error');
-                        }
+                        } catch (e) { showToast(e.message || '删除失败', 'error'); }
                     });
                 });
             } catch (e) {
@@ -1353,6 +968,23 @@
 
         document.getElementById('page-blocks-selector').addEventListener('change', () => { updatePageBlockPreviewLink(); loadPageBlocks(); });
         document.getElementById('refresh-page-blocks').addEventListener('click', loadPageBlocks);
+
+        document.getElementById('save-all-page-blocks').addEventListener('click', async () => {
+            const cards = document.querySelectorAll('#page-blocks-form [data-block-id]');
+            if (!cards.length) { showToast('当前没有可保存的内容', 'error'); return; }
+            const btn = document.getElementById('save-all-page-blocks');
+            const original = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<span data-lucide="loader-2" class="w-4 h-4 animate-spin"></span>保存中...';
+            lucide.createIcons();
+            let ok = 0, fail = 0;
+            for (const card of cards) {
+                try { if (await savePageBlockCard(card)) ok++; else fail++; }
+                catch (e) { fail++; }
+            }
+            btn.disabled = false; btn.innerHTML = original; lucide.createIcons();
+            if (fail) showToast(`已保存 ${ok} 项，${fail} 项失败`, 'error');
+            else { showToast(`全部 ${ok} 项已保存`); await loadPageBlocks(); }
+        });
 
         document.getElementById('add-page-block').addEventListener('click', () => {
             document.getElementById('page-block-id').value = '';
@@ -1390,12 +1022,9 @@
                 showToast(id ? '已更新' : '已创建');
                 document.getElementById('page-blocks-selector').value = page;
                 await loadPageBlocks();
-            } catch (e) {
-                showToast(e.message || '保存失败', 'error');
-            }
+            } catch (e) { showToast(e.message || '保存失败', 'error'); }
         });
-
-        // 站点配置
+// 站点配置
         const SETTINGS_CONTACT_KEYS = ['company_name','company_slogan','address','phone','email','work_time','service_regions','copyright_year'];
         const SETTINGS_SEO_KEYS = ['seo_title','seo_description','hero_title','hero_subtitle','hero_tag','about_intro'];
         const STAT_SECTIONS = ['home_hero','about_stats','parts_capacity','about_honors','about_process'];
