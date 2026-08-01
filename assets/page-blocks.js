@@ -25,8 +25,12 @@ async function applyPageBlocks(page) {
     }
 
     for (const block of blocks) {
-      const selector = `[data-block="${block.section}.${block.key}"]`;
-      const els = document.querySelectorAll(selector);
+      let selector = `[data-block="${block.page}.${block.section}.${block.key}"]`;
+      let els = document.querySelectorAll(selector);
+      if (!els.length) {
+        selector = `[data-block="${block.section}.${block.key}"]`;
+        els = document.querySelectorAll(selector);
+      }
       if (!els.length) continue;
       for (const el of els) {
         if (block.type === 'html') {

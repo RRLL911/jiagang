@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-block="meta.title">关于我们 - 唐山嘉港环保科技有限公司</title>
+    <title data-block="about.meta.title">关于我们 - 唐山嘉港环保科技有限公司</title>
     <style id="theme-vars">
 :root {
   --jiagang-background: #ffffff;
@@ -180,8 +180,8 @@
                 <a href="index.html" class="flex items-center gap-3" data-dom-id="nav-home">
                     <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold text-lg">嘉</div>
                     <div class="hidden sm:block">
-                        <div class="font-bold text-lg leading-tight text-[var(--jiagang-foreground)] site-name">唐山嘉港环保科技</div>
-                        <div class="text-xs text-[var(--jiagang-muted-fg)] site-slogan">选煤选矿装备制造商</div>
+                        <div class="font-bold text-lg leading-tight text-[var(--jiagang-foreground)] site-name" data-block="global.header.company_name_short">唐山嘉港环保科技</div>
+                        <div class="text-xs text-[var(--jiagang-muted-fg)] site-slogan" data-block="global.header.company_slogan">选煤选矿装备制造商</div>
                     </div>
                 </a>
                 <nav class="hidden md:flex items-center gap-8">
@@ -214,8 +214,8 @@
         <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl">
-                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6" data-block="hero.title">关于嘉港环保</h1>
-                    <p class="text-lg text-[var(--jiagang-muted-fg)]" data-block="hero.subtitle">扎根唐山遵化，服务全国选煤选矿行业，以研发设计、精密制造、配件自供、技改服务构建全链路竞争力。</p>
+                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6" data-block="about.hero.title">关于嘉港环保</h1>
+                    <p class="text-lg text-[var(--jiagang-muted-fg)]" data-block="about.hero.subtitle">扎根唐山遵化，服务全国选煤选矿行业，以研发设计、精密制造、配件自供、技改服务构建全链路竞争力。</p>
                 </div>
             </div>
         </section>
@@ -224,24 +224,24 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                     <div>
-                        <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title mb-6" data-block="intro.title">企业简介</h2>
-                        <div id="about-intro" class="space-y-4 text-[var(--jiagang-muted-fg)] leading-relaxed" data-block="intro.content">
+                        <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title mb-6" data-block="about.intro.title">企业简介</h2>
+                        <div id="about-intro" class="space-y-4 text-[var(--jiagang-muted-fg)] leading-relaxed" data-block="about.intro.content">
                             <p>唐山嘉港环保科技有限公司成立于2018年11月30日，位于河北省遵化市新店子镇平东线北侧，注册资金100万元。公司厂区占地3万平方米、建筑面积1万平方米，现有员工120余人，其中技术人员40人、高级工程师8人。</p>
                             <p>公司主营业务覆盖选煤、选矿设备的研发、设计、制造、销售，以及配套配件供应与工程技术服务。产品主要包括LL-A系列立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备、旋流器及旋流器组、高频筛与弧形筛等。</p>
                             <p>与纯组装型煤机厂最大的区别在于，嘉港环保的筛篮、不锈钢焊接筛网、筛板等易耗件实现自产，拥有两条专业筛网生产线，年产筛网约1万㎡，能够为客户提供更快的配件响应与更稳定的供货保障。</p>
                         </div>
-                        <img src="" alt="企业简介" class="mt-8 w-full h-64 object-cover rounded-2xl border border-[var(--jiagang-border)] hidden" data-block="intro.image" onload="this.classList.remove('hidden')">
+                        <img src="" alt="企业简介" class="mt-8 w-full h-64 object-cover rounded-2xl border border-[var(--jiagang-border)] hidden" data-block="about.intro.image" onload="this.classList.remove('hidden')">
                     </div>
                     <div class="rounded-2xl bg-[var(--jiagang-primary-50)] border border-[var(--jiagang-primary-200)] p-8">
-                        <h3 class="font-bold text-xl mb-6 text-[var(--jiagang-foreground)]" data-block="company.title">企业信息</h3>
+                        <h3 class="font-bold text-xl mb-6 text-[var(--jiagang-foreground)]" data-block="about.company.title">企业信息</h3>
                         <ul id="company-info" class="space-y-4 text-sm">
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="company.label_1">公司全称</span><span class="font-medium" data-key="company_name" data-block="company.value_1">唐山嘉港环保科技有限公司</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="company.label_2">成立时间</span><span class="font-medium" data-key="established_date" data-block="company.value_2">2018年11月30日</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="company.label_3">注册资本</span><span class="font-medium" data-key="registered_capital" data-block="company.value_3">100万元</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="company.label_4">注册地址</span><span class="font-medium" data-key="address" data-block="company.value_4">河北省遵化市新店子镇平东线北侧</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="company.label_5">法定代表人</span><span class="font-medium" data-key="legal_representative" data-block="company.value_5">杨巧娟</span></li>
-                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="company.label_6">员工规模</span><span class="font-medium" data-key="employee_scale" data-block="company.value_6">120余人</span></li>
-                            <li class="flex justify-between"><span class="text-[var(--jiagang-muted-fg)]" data-block="company.label_7">厂区占地</span><span class="font-medium" data-key="factory_area" data-block="company.value_7">3万平方米</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="about.company.label_1">公司全称</span><span class="font-medium" data-key="company_name" data-block="about.company.value_1">唐山嘉港环保科技有限公司</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="about.company.label_2">成立时间</span><span class="font-medium" data-key="established_date" data-block="about.company.value_2">2018年11月30日</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="about.company.label_3">注册资本</span><span class="font-medium" data-key="registered_capital" data-block="about.company.value_3">100万元</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="about.company.label_4">注册地址</span><span class="font-medium" data-key="address" data-block="about.company.value_4">河北省遵化市新店子镇平东线北侧</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="about.company.label_5">法定代表人</span><span class="font-medium" data-key="legal_representative" data-block="about.company.value_5">杨巧娟</span></li>
+                            <li class="flex justify-between border-b border-[var(--jiagang-primary-200)] pb-3"><span class="text-[var(--jiagang-muted-fg)]" data-block="about.company.label_6">员工规模</span><span class="font-medium" data-key="employee_scale" data-block="about.company.value_6">120余人</span></li>
+                            <li class="flex justify-between"><span class="text-[var(--jiagang-muted-fg)]" data-block="about.company.label_7">厂区占地</span><span class="font-medium" data-key="factory_area" data-block="about.company.value_7">3万平方米</span></li>
                         </ul>
                     </div>
                 </div>
@@ -251,23 +251,23 @@
         <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="mission.title">资质荣誉</h2>
+                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="about.mission.title">资质荣誉</h2>
                 </div>
                 <div id="honors-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="rounded-xl bg-white p-6 border border-[var(--jiagang-border)] text-center">
                         <div class="w-14 h-14 mx-auto rounded-full bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4"><span data-lucide="award" class="w-7 h-7"></span></div>
-                        <h3 class="font-bold text-lg mb-2" data-block="honors.honor_1_title">国家级高新技术企业</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="honors.honor_1_desc">2024 年获评，技术实力获国家级认可。</p>
+                        <h3 class="font-bold text-lg mb-2" data-block="about.honors.honor_1_title">国家级高新技术企业</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="about.honors.honor_1_desc">2024 年获评，技术实力获国家级认可。</p>
                     </div>
                     <div class="rounded-xl bg-white p-6 border border-[var(--jiagang-border)] text-center">
                         <div class="w-14 h-14 mx-auto rounded-full bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4"><span data-lucide="lightbulb" class="w-7 h-7"></span></div>
-                        <h3 class="font-bold text-lg mb-2" data-block="honors.honor_2_title">河北省创新型中小企业</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="honors.honor_2_desc">2025 年认定，持续推动产品迭代。</p>
+                        <h3 class="font-bold text-lg mb-2" data-block="about.honors.honor_2_title">河北省创新型中小企业</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="about.honors.honor_2_desc">2025 年认定，持续推动产品迭代。</p>
                     </div>
                     <div class="rounded-xl bg-white p-6 border border-[var(--jiagang-border)] text-center">
                         <div class="w-14 h-14 mx-auto rounded-full bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-4"><span data-lucide="file-check" class="w-7 h-7"></span></div>
-                        <h3 class="font-bold text-lg mb-2" data-block="honors.honor_3_title">自主知识产权专利</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="honors.honor_3_desc">离心机布料锥、刮刀焊接辅助等结构专利。</p>
+                        <h3 class="font-bold text-lg mb-2" data-block="about.honors.honor_3_title">自主知识产权专利</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="about.honors.honor_3_desc">离心机布料锥、刮刀焊接辅助等结构专利。</p>
                     </div>
                 </div>
             </div>
@@ -276,29 +276,29 @@
         <section class="py-16 lg:py-24 bg-[var(--jiagang-background)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="vision.title">制造与质控</h2>
-                    <p class="mt-4 text-[var(--jiagang-muted-fg)]" data-block="vision.content">从毛坯到装配，闭环在厂里</p>
+                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="about.vision.title">制造与质控</h2>
+                    <p class="mt-4 text-[var(--jiagang-muted-fg)]" data-block="about.vision.content">从毛坯到装配，闭环在厂里</p>
                 </div>
                 <div id="process-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="rounded-xl border border-[var(--jiagang-border)] p-6">
                         <span data-lucide="cog" class="w-8 h-8 text-[var(--jiagang-primary)] mb-3"></span>
-                        <h3 class="font-bold mb-2" data-block="process.process_1_title">机加工</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="process.process_1_desc">动平衡试验机、车床、龙门铣、刨插钻磨齐全，关键件一次装夹成型。</p>
+                        <h3 class="font-bold mb-2" data-block="about.process.process_1_title">机加工</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="about.process.process_1_desc">动平衡试验机、车床、龙门铣、刨插钻磨齐全，关键件一次装夹成型。</p>
                     </div>
                     <div class="rounded-xl border border-[var(--jiagang-border)] p-6">
                         <span data-lucide="hammer" class="w-8 h-8 text-[var(--jiagang-primary)] mb-3"></span>
-                        <h3 class="font-bold mb-2" data-block="process.process_2_title">铆焊</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="process.process_2_desc">数控火焰切割、剪板卷板、自动焊，槽体、筛篮、旋流器外壳自主焊接。</p>
+                        <h3 class="font-bold mb-2" data-block="about.process.process_2_title">铆焊</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="about.process.process_2_desc">数控火焰切割、剪板卷板、自动焊，槽体、筛篮、旋流器外壳自主焊接。</p>
                     </div>
                     <div class="rounded-xl border border-[var(--jiagang-border)] p-6">
                         <span data-lucide="flame" class="w-8 h-8 text-[var(--jiagang-primary)] mb-3"></span>
-                        <h3 class="font-bold mb-2" data-block="process.process_3_title">铸造与热处理</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="process.process_3_desc">高频炉、喷丸机，耐磨件热处理自主可控。</p>
+                        <h3 class="font-bold mb-2" data-block="about.process.process_3_title">铸造与热处理</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="about.process.process_3_desc">高频炉、喷丸机，耐磨件热处理自主可控。</p>
                     </div>
                     <div class="rounded-xl border border-[var(--jiagang-border)] p-6">
                         <span data-lucide="clipboard-check" class="w-8 h-8 text-[var(--jiagang-primary)] mb-3"></span>
-                        <h3 class="font-bold mb-2" data-block="process.process_4_title">质控链路</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="process.process_4_desc">化学成分分析 → 无损探伤 → 空载/负载试验 → 出厂检验报告。</p>
+                        <h3 class="font-bold mb-2" data-block="about.process.process_4_title">质控链路</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="about.process.process_4_desc">化学成分分析 → 无损探伤 → 空载/负载试验 → 出厂检验报告。</p>
                     </div>
                 </div>
             </div>
@@ -311,9 +311,9 @@
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-[var(--jiagang-primary)] flex items-center justify-center text-white font-bold">嘉</div>
-                        <div class="font-bold text-xl site-full-name">唐山嘉港环保科技有限公司</div>
+                        <div class="font-bold text-xl site-full-name" data-block="global.footer.company_name">唐山嘉港环保科技有限公司</div>
                     </div>
-                    <p class="text-sm text-slate-400 max-w-sm site-footer-intro">专注选煤选矿设备研发、设计、制造、销售及技术服务。</p>
+                    <p class="text-sm text-slate-400 max-w-sm site-footer-intro" data-block="global.footer.intro">专注选煤选矿设备研发、设计、制造、销售及技术服务。</p>
                 </div>
                 <div>
                     <h4 class="font-bold mb-4" data-block="global.footer.links_title">快速链接</h4>
@@ -327,14 +327,14 @@
                 <div>
                     <h4 class="font-bold mb-4" data-block="global.footer.contact_title">联系方式</h4>
                     <ul class="space-y-2 text-sm text-slate-400">
-                        <li class="flex items-center gap-2"><span data-lucide="map-pin" class="w-4 h-4"></span><span class="site-address">河北省遵化市新店子镇平东线北侧</span></li>
-                        <li class="flex items-center gap-2"><span data-lucide="phone" class="w-4 h-4"></span><span class="site-phone">0315-0000000</span></li>
-                        <li class="flex items-center gap-2"><span data-lucide="mail" class="w-4 h-4"></span><span class="site-email">contact@jiagang.cn</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="map-pin" class="w-4 h-4"></span><span class="site-address" data-block="global.footer.address">河北省遵化市新店子镇平东线北侧</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="phone" class="w-4 h-4"></span><span class="site-phone" data-block="global.footer.phone">0315-0000000</span></li>
+                        <li class="flex items-center gap-2"><span data-lucide="mail" class="w-4 h-4"></span><span class="site-email" data-block="global.footer.email">contact@jiagang.cn</span></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-slate-700 pt-8 text-center text-sm text-slate-500">
-                <p>© <span class="site-copyright-year">2026</span> <span class="site-full-name">唐山嘉港环保科技有限公司</span> <span data-block="global.footer.copyright_suffix">版权所有</span></p>
+                <p>© <span class="site-copyright-year" data-block="global.footer.copyright_year">2026</span> <span class="site-full-name">唐山嘉港环保科技有限公司</span> <span data-block="global.footer.copyright_suffix">版权所有</span></p>
             </div>
         </div>
     </footer>
@@ -380,7 +380,7 @@
 
                 if (settings.about_intro) {
                     const intro = document.getElementById('about-intro');
-                    intro.innerHTML = `<p>${escapeHtml(settings.about_intro).replace(/\n/g, '</p><p>')}</p>`;
+                    if (intro && !intro.hasAttribute('data-block')) intro.innerHTML = `<p>${escapeHtml(settings.about_intro).replace(/\n/g, '</p><p>')}</p>`;
                 }
 
                 document.querySelectorAll('#company-info [data-key]').forEach(el => {
