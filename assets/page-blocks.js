@@ -45,6 +45,8 @@ async function applyPageBlocks(page) {
           }
         } else if (el.tagName === 'OPTION') {
           el.textContent = block.value || '';
+        } else if (el.tagName === 'TITLE') {
+          el.textContent = block.value || '';
         } else {
           el.innerHTML = block.value || '';
         }

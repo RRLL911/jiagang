@@ -158,6 +158,7 @@ CREATE TABLE IF NOT EXISTS page_blocks (
 
 -- 默认首页内容
 INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('index', 'meta', 'title', 'text', '唐山嘉港环保科技有限公司 - 选煤选矿设备研发制造', '页面标题', 0),
 ('index', 'hero', 'title', 'text', '选煤选矿装备<br/>研发制造一体化服务商', '首页主标题', 1),
 ('index', 'hero', 'subtitle', 'text', '立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备，服务山西、陕西、内蒙古、河北等产煤带。', '首页副标题', 2),
 ('index', 'hero', 'tag', 'text', '国家级高新技术企业', '首页标签', 3),
@@ -194,6 +195,7 @@ INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_
 
 -- 默认产品页内容
 INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('products', 'meta', 'title', 'text', '产品中心 - 唐山嘉港环保科技有限公司', '页面标题', 0),
 ('products', 'hero', 'title', 'text', '产品中心', '产品页标题', 1),
 ('products', 'hero', 'subtitle', 'text', '覆盖选煤厂“分选+脱水”主工艺段，单机与成套设备可按煤质定制。', '产品页副标题', 2),
 ('products', 'hero', 'background_image', 'image', '', '产品页背景图', 3),
@@ -207,6 +209,7 @@ INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_
 
 -- 默认关于我们页内容
 INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('about', 'meta', 'title', 'text', '关于我们 - 唐山嘉港环保科技有限公司', '页面标题', 0),
 ('about', 'hero', 'title', 'text', '关于嘉港环保', '关于页标题', 1),
 ('about', 'hero', 'subtitle', 'text', '扎根唐山遵化，服务全国选煤选矿行业，以研发设计、精密制造、配件自供、技改服务构建全链路竞争力。', '关于页副标题', 2),
 ('about', 'intro', 'title', 'text', '企业简介', '简介标题', 1),
@@ -247,12 +250,14 @@ INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_
 
 -- 默认技术资讯页内容
 INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('news', 'meta', 'title', 'text', '技术资讯 - 唐山嘉港环保科技有限公司', '页面标题', 0),
 ('news', 'hero', 'title', 'text', '技术资讯', '资讯页标题', 1),
 ('news', 'hero', 'subtitle', 'text', '选煤设备技术解析、维护经验与行业动态。', '资讯页副标题', 2),
 ('news', 'hero', 'background_image', 'image', '', '资讯页背景图', 3);
 
 -- 默认联系我们页内容
 INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('contact', 'meta', 'title', 'text', '联系我们 - 唐山嘉港环保科技有限公司', '页面标题', 0),
 ('contact', 'hero', 'title', 'text', '联系我们', '联系页标题', 1),
 ('contact', 'hero', 'subtitle', 'text', '无论您需要设备选型、技改方案还是配件报价，欢迎随时与我们联系。', '联系页副标题', 2),
 ('contact', 'hero', 'background_image', 'image', '', '联系页背景图', 3),
@@ -282,6 +287,7 @@ INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_
 
 -- 默认产品详情页内容
 INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('product-detail', 'meta', 'title', 'text', '产品详情 - 唐山嘉港环保科技有限公司', '页面标题', 0),
 ('product-detail', 'overview', 'title', 'text', '产品概述', '概述标题', 1),
 ('product-detail', 'features', 'title', 'text', '结构特点', '结构特点标题', 1),
 ('product-detail', 'parameters', 'title', 'text', '典型技术参数', '参数标题', 1),
@@ -291,6 +297,7 @@ INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_
 
 -- 默认文章详情页内容
 INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('news-detail', 'meta', 'title', 'text', '文章详情 - 唐山嘉港环保科技有限公司', '页面标题', 0),
 ('news-detail', 'hero', 'title', 'text', '文章详情', '文章详情标题', 1),
 ('news-detail', 'common', 'loading_text', 'text', '加载文章中...', '加载提示', 2);
 

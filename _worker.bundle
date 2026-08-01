@@ -1,9 +1,9 @@
-------formdata-undici-092451501997
+------formdata-undici-094610970356
 Content-Disposition: form-data; name="metadata"
 
-{"main_module":"functionsWorker-0.5235607793542034.js"}
-------formdata-undici-092451501997
-Content-Disposition: form-data; name="functionsWorker-0.5235607793542034.js"; filename="functionsWorker-0.5235607793542034.js"
+{"main_module":"functionsWorker-0.7476683280194525.js"}
+------formdata-undici-094610970356
+Content-Disposition: form-data; name="functionsWorker-0.7476683280194525.js"; filename="functionsWorker-0.7476683280194525.js"
 Content-Type: application/javascript+module
 
 var __defProp = Object.defineProperty;
@@ -1329,7 +1329,7 @@ async function onRequestGet14(context) {
 }
 __name(onRequestGet14, "onRequestGet");
 
-// ../.wrangler/tmp/pages-XzNISC/functionsRoutes-0.03932010273132336.mjs
+// ../.wrangler/tmp/pages-R45RbD/functionsRoutes-0.5000022210125602.mjs
 var routes = [
   {
     routePath: "/admin/api/articles/:id*",
@@ -1978,4 +1978,4 @@ export {
   pages_template_worker_default as default
 };
 
-------formdata-undici-092451501997--
+------formdata-undici-094610970356--
