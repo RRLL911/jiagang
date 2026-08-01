@@ -1,5 +1,6 @@
-// 公开 API：产品详情 GET /api/products/:slug
+// 公开 API：产品详情 GET /api/products/:slug（同时兜底处理 /api/products 根路径列表）
 import { jsonResponse } from '../../_shared.js';
+import { onRequestGet as onRequestGetList } from './index.js';
 
 const CREATE_PRODUCTS_TABLE = `
   CREATE TABLE IF NOT EXISTS products (
@@ -51,7 +52,7 @@ async function ensureTables(env) {
 export async function onRequestGet(context) {
   const { env } = context;
   const slug = context.params.slug;
-  if (!slug) return jsonResponse({ error: '缺少产品标识' }, 400);
+  if (!slug) return onRequestGetList(context);
 
   try {
     await ensureTables(env);

@@ -1,6 +1,5 @@
-// 公开 API：文章详情 GET /api/articles/:id（同时兜底处理 /api/articles 根路径列表）
+// 公开 API：文章列表 GET /api/articles
 import { jsonResponse } from '../../_shared.js';
-import { onRequestGet as onRequestGetList } from './index.js';
 
 const CREATE_ARTICLES_TABLE = `
   CREATE TABLE IF NOT EXISTS articles (
@@ -26,21 +25,24 @@ async function ensureTable(env) {
 
 export async function onRequestGet(context) {
   const { env } = context;
-  const id = context.params.id;
-  if (!id) return onRequestGetList(context);
+  const url = new URL(context.request.url);
+  const category = url.searchParams.get('category') || '';
+  const limit = parseInt(url.searchParams.get('limit') || '50', 10);
 
   try {
     await ensureTable(env);
-    const article = await env.DB.prepare(
-      `SELECT * FROM articles WHERE id = ? AND is_published = 1`
-    ).bind(id).first();
+    let sql = `SELECT id, title, summary, cover_icon, cover_image_url, category, author, published_at, view_count, created_at
+                 FROM articles WHERE is_published = 1`;
+    const params = [];
+    if (category) {
+      sql += ` AND category = ?`;
+      params.push(category);
+    }
+    sql += ` ORDER BY published_at DESC LIMIT ?`;
+    params.push(Math.min(limit, 200));
 
-    if (!article) return jsonResponse({ error: '文章不存在' }, 404);
-
-    // 异步增加浏览量，不阻塞响应
-    env.DB.prepare(`UPDATE articles SET view_count = view_count + 1 WHERE id = ?`).bind(id).run().catch(() => {});
-
-    return jsonResponse(article);
+    const { results } = await env.DB.prepare(sql).bind(...params).all();
+    return jsonResponse(results || []);
   } catch (err) {
     return jsonResponse({ error: '查询失败', detail: err.message }, 500);
   }

@@ -1,9 +1,9 @@
-------formdata-undici-007976817338
+------formdata-undici-010958425636
 Content-Disposition: form-data; name="metadata"
 
-{"main_module":"functionsWorker-0.23937305097527495.js"}
-------formdata-undici-007976817338
-Content-Disposition: form-data; name="functionsWorker-0.23937305097527495.js"; filename="functionsWorker-0.23937305097527495.js"
+{"main_module":"functionsWorker-0.6679426285907716.js"}
+------formdata-undici-010958425636
+Content-Disposition: form-data; name="functionsWorker-0.6679426285907716.js"; filename="functionsWorker-0.6679426285907716.js"
 Content-Type: application/javascript+module
 
 var __defProp = Object.defineProperty;
@@ -969,7 +969,7 @@ async function onRequestGet8(context) {
 }
 __name(onRequestGet8, "onRequestGet");
 
-// api/articles/[[id]].js
+// api/articles/index.js
 var CREATE_ARTICLES_TABLE3 = `
   CREATE TABLE IF NOT EXISTS articles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -993,11 +993,57 @@ async function ensureTable4(env) {
 __name(ensureTable4, "ensureTable");
 async function onRequestGet9(context) {
   const { env } = context;
-  const id = context.params.id;
-  if (!id)
-    return jsonResponse({ error: "\u7F3A\u5C11\u6587\u7AE0 ID" }, 400);
+  const url = new URL(context.request.url);
+  const category = url.searchParams.get("category") || "";
+  const limit = parseInt(url.searchParams.get("limit") || "50", 10);
   try {
     await ensureTable4(env);
+    let sql = `SELECT id, title, summary, cover_icon, cover_image_url, category, author, published_at, view_count, created_at
+                 FROM articles WHERE is_published = 1`;
+    const params = [];
+    if (category) {
+      sql += ` AND category = ?`;
+      params.push(category);
+    }
+    sql += ` ORDER BY published_at DESC LIMIT ?`;
+    params.push(Math.min(limit, 200));
+    const { results } = await env.DB.prepare(sql).bind(...params).all();
+    return jsonResponse(results || []);
+  } catch (err) {
+    return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
+  }
+}
+__name(onRequestGet9, "onRequestGet");
+
+// api/articles/[[id]].js
+var CREATE_ARTICLES_TABLE4 = `
+  CREATE TABLE IF NOT EXISTS articles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    summary TEXT,
+    content TEXT,
+    cover_icon TEXT,
+    cover_image_url TEXT,
+    category TEXT,
+    author TEXT,
+    published_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_published INTEGER NOT NULL DEFAULT 1,
+    view_count INTEGER NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+async function ensureTable5(env) {
+  await env.DB.prepare(CREATE_ARTICLES_TABLE4).run();
+}
+__name(ensureTable5, "ensureTable");
+async function onRequestGet10(context) {
+  const { env } = context;
+  const id = context.params.id;
+  if (!id)
+    return onRequestGet9(context);
+  try {
+    await ensureTable5(env);
     const article = await env.DB.prepare(
       `SELECT * FROM articles WHERE id = ? AND is_published = 1`
     ).bind(id).first();
@@ -1010,10 +1056,75 @@ async function onRequestGet9(context) {
     return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
   }
 }
-__name(onRequestGet9, "onRequestGet");
+__name(onRequestGet10, "onRequestGet");
+
+// api/products/index.js
+var CREATE_PRODUCTS_TABLE3 = `
+  CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    slug TEXT NOT NULL UNIQUE,
+    summary TEXT,
+    description TEXT,
+    icon TEXT,
+    image_url TEXT,
+    category TEXT,
+    sort_order INTEGER NOT NULL DEFAULT 0,
+    is_featured INTEGER NOT NULL DEFAULT 0,
+    is_published INTEGER NOT NULL DEFAULT 1,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+var DEFAULT_PRODUCTS = [
+  { name: "LL-A \u7ACB\u5F0F\u522E\u5200\u5378\u6599\u79BB\u5FC3\u8131\u6C34\u673A", slug: "ll-a-centrifuge", summary: "\u672B\u7CBE\u7164\u3001\u672B\u4E2D\u7164\u8131\u6C34\uFF1B\u5165\u6599\u7C92\u5EA6 0\u201313mm\uFF1B\u7ACB\u5F0F\u522E\u5200\u5378\u6599\u9632\u5835\u3001\u72EC\u7ACB\u7A00\u6CB9\u7AD9\u5F3A\u5236\u6DA6\u6ED1\u3002", icon: "refresh-cw", category: "\u8131\u6C34\u8BBE\u5907", sort_order: 1, is_featured: 1 },
+  { name: "\u673A\u68B0\u6405\u62CC\u5F0F\u6D6E\u9009\u673A", slug: "mechanical-flotation-machine", summary: "-0.5mm \u7EC6\u7C92\u7164\u6CE5\u5206\u9009\uFF1B\u81EA\u5438\u77FF\u6D46+\u81EA\u5438\u7A7A\u6C14\uFF1B\u53F6\u8F6E-\u5B9A\u5B50\u7EC4\u4F18\u5316\uFF0C\u7CBE\u7164\u56DE\u6536\u7387\u9AD8\u3002", icon: "droplets", category: "\u5206\u9009\u8BBE\u5907", sort_order: 2, is_featured: 1 },
+  { name: "\u8DF3\u6C70\u673A\u53CA\u8DF3\u6C70\u6210\u5957\u8BBE\u5907", slug: "jig-machine", summary: "\u7C97\u3001\u4E2D\u7C92\u7164\u6392\u77F8\u4E0E\u5206\u9009\uFF1B\u5355\u673A\u6216\u6210\u5957\uFF1B\u7535\u63A7\u3001\u6392\u6599\u3001\u98CE\u9600\u6309\u7164\u8D28\u914D\u7F6E\u3002", icon: "arrow-up-down", category: "\u5206\u9009\u8BBE\u5907", sort_order: 3, is_featured: 0 },
+  { name: "\u65CB\u6D41\u5668\u53CA\u65CB\u6D41\u5668\u7EC4", slug: "hydrocyclone", summary: "\u5206\u7EA7\u3001\u6D53\u7F29\u3001\u91CD\u4ECB\u5206\u9009\u4E09\u7528\uFF1B\u8010\u78E8\u886C\u91CC\u4E0E\u8FDB\u6599\u538B\u529B\u6BB5\u53EF\u6539\u578B\u3002", icon: "target", category: "\u5206\u9009\u8BBE\u5907", sort_order: 4, is_featured: 0 },
+  { name: "\u9AD8\u9891\u7B5B / \u5F27\u5F62\u7B5B", slug: "high-frequency-screen", summary: "\u8131\u6C34\u3001\u8131\u4ECB\u3001\u5206\u7EA7\uFF1B\u5E38\u4E0E\u79BB\u5FC3\u673A\u3001\u65CB\u6D41\u5668\u4E32\u8054\u5F62\u6210\u5C0F\u6BB5\u5DE5\u827A\u3002", icon: "layout-grid", category: "\u7B5B\u5206\u8BBE\u5907", sort_order: 5, is_featured: 0 },
+  { name: "\u81EA\u4EA7\u914D\u4EF6", slug: "spare-parts", summary: "\u7B5B\u7BEE\u3001\u4E0D\u9508\u94A2\u710A\u63A5\u7B5B\u7F51\u3001\u7B5B\u677F\u3001\u65CB\u6D41\u5668\u886C\u4EF6\u3001\u6D6E\u9009\u673A\u53F6\u8F6E\u5B9A\u5B50\u3001\u79BB\u5FC3\u673A\u522E\u5200\u3002", icon: "package", category: "\u914D\u4EF6", sort_order: 6, is_featured: 0 }
+];
+async function ensureTables4(env) {
+  await env.DB.prepare(CREATE_PRODUCTS_TABLE3).run();
+  const { results } = await env.DB.prepare(`SELECT COUNT(*) as count FROM products`).all();
+  if (results && results[0].count === 0) {
+    for (const p of DEFAULT_PRODUCTS) {
+      await env.DB.prepare(
+        `INSERT INTO products (name, slug, summary, icon, category, sort_order, is_featured, is_published)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 1)`
+      ).bind(p.name, p.slug, p.summary, p.icon, p.category, p.sort_order, p.is_featured).run();
+    }
+  }
+}
+__name(ensureTables4, "ensureTables");
+async function onRequestGet11(context) {
+  const { env } = context;
+  const url = new URL(context.request.url);
+  const category = url.searchParams.get("category") || "";
+  const featured = url.searchParams.get("featured");
+  try {
+    await ensureTables4(env);
+    let sql = `SELECT id, name, slug, summary, icon, image_url, category, sort_order, is_featured, is_published, created_at
+                 FROM products WHERE is_published = 1`;
+    const params = [];
+    if (category) {
+      sql += ` AND category = ?`;
+      params.push(category);
+    }
+    if (featured === "1") {
+      sql += ` AND is_featured = 1`;
+    }
+    sql += ` ORDER BY sort_order ASC, created_at DESC`;
+    const { results } = await env.DB.prepare(sql).bind(...params).all();
+    return jsonResponse(results || []);
+  } catch (err) {
+    return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
+  }
+}
+__name(onRequestGet11, "onRequestGet");
 
 // api/products/[[slug]].js
-var CREATE_PRODUCTS_TABLE3 = `
+var CREATE_PRODUCTS_TABLE4 = `
   CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -1051,19 +1162,19 @@ var CREATE_PARAMETERS_TABLE2 = `
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
   )
 `;
-async function ensureTables4(env) {
-  await env.DB.prepare(CREATE_PRODUCTS_TABLE3).run();
+async function ensureTables5(env) {
+  await env.DB.prepare(CREATE_PRODUCTS_TABLE4).run();
   await env.DB.prepare(CREATE_FEATURES_TABLE2).run();
   await env.DB.prepare(CREATE_PARAMETERS_TABLE2).run();
 }
-__name(ensureTables4, "ensureTables");
-async function onRequestGet10(context) {
+__name(ensureTables5, "ensureTables");
+async function onRequestGet12(context) {
   const { env } = context;
   const slug = context.params.slug;
   if (!slug)
-    return jsonResponse({ error: "\u7F3A\u5C11\u4EA7\u54C1\u6807\u8BC6" }, 400);
+    return onRequestGet11(context);
   try {
-    await ensureTables4(env);
+    await ensureTables5(env);
     const product = await env.DB.prepare(
       `SELECT * FROM products WHERE slug = ? AND is_published = 1`
     ).bind(slug).first();
@@ -1080,53 +1191,7 @@ async function onRequestGet10(context) {
     return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
   }
 }
-__name(onRequestGet10, "onRequestGet");
-
-// api/articles.js
-var CREATE_ARTICLES_TABLE4 = `
-  CREATE TABLE IF NOT EXISTS articles (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    summary TEXT,
-    content TEXT,
-    cover_icon TEXT,
-    cover_image_url TEXT,
-    category TEXT,
-    author TEXT,
-    published_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    is_published INTEGER NOT NULL DEFAULT 1,
-    view_count INTEGER NOT NULL DEFAULT 0,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-  )
-`;
-async function ensureTable5(env) {
-  await env.DB.prepare(CREATE_ARTICLES_TABLE4).run();
-}
-__name(ensureTable5, "ensureTable");
-async function onRequestGet11(context) {
-  const { env } = context;
-  const url = new URL(context.request.url);
-  const category = url.searchParams.get("category") || "";
-  const limit = parseInt(url.searchParams.get("limit") || "50", 10);
-  try {
-    await ensureTable5(env);
-    let sql = `SELECT id, title, summary, cover_icon, cover_image_url, category, author, published_at, view_count, created_at
-                 FROM articles WHERE is_published = 1`;
-    const params = [];
-    if (category) {
-      sql += ` AND category = ?`;
-      params.push(category);
-    }
-    sql += ` ORDER BY published_at DESC LIMIT ?`;
-    params.push(Math.min(limit, 200));
-    const { results } = await env.DB.prepare(sql).bind(...params).all();
-    return jsonResponse(results || []);
-  } catch (err) {
-    return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
-  }
-}
-__name(onRequestGet11, "onRequestGet");
+__name(onRequestGet12, "onRequestGet");
 
 // api/contact.js
 async function onRequestPost5(context) {
@@ -1181,7 +1246,7 @@ async function ensureTable6(env) {
   await env.DB.prepare(CREATE_PAGE_BLOCKS_TABLE2).run();
 }
 __name(ensureTable6, "ensureTable");
-async function onRequestGet12(context) {
+async function onRequestGet13(context) {
   const { env } = context;
   const url = new URL(context.request.url);
   const page = url.searchParams.get("page") || "";
@@ -1199,71 +1264,6 @@ async function onRequestGet12(context) {
       params.push(section);
     }
     sql += ` ORDER BY page, section, sort_order, key`;
-    const { results } = await env.DB.prepare(sql).bind(...params).all();
-    return jsonResponse(results || []);
-  } catch (err) {
-    return jsonResponse({ error: "\u67E5\u8BE2\u5931\u8D25", detail: err.message }, 500);
-  }
-}
-__name(onRequestGet12, "onRequestGet");
-
-// api/products.js
-var CREATE_PRODUCTS_TABLE4 = `
-  CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    slug TEXT NOT NULL UNIQUE,
-    summary TEXT,
-    description TEXT,
-    icon TEXT,
-    image_url TEXT,
-    category TEXT,
-    sort_order INTEGER NOT NULL DEFAULT 0,
-    is_featured INTEGER NOT NULL DEFAULT 0,
-    is_published INTEGER NOT NULL DEFAULT 1,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-  )
-`;
-var DEFAULT_PRODUCTS = [
-  { name: "LL-A \u7ACB\u5F0F\u522E\u5200\u5378\u6599\u79BB\u5FC3\u8131\u6C34\u673A", slug: "ll-a-centrifuge", summary: "\u672B\u7CBE\u7164\u3001\u672B\u4E2D\u7164\u8131\u6C34\uFF1B\u5165\u6599\u7C92\u5EA6 0\u201313mm\uFF1B\u7ACB\u5F0F\u522E\u5200\u5378\u6599\u9632\u5835\u3001\u72EC\u7ACB\u7A00\u6CB9\u7AD9\u5F3A\u5236\u6DA6\u6ED1\u3002", icon: "refresh-cw", category: "\u8131\u6C34\u8BBE\u5907", sort_order: 1, is_featured: 1 },
-  { name: "\u673A\u68B0\u6405\u62CC\u5F0F\u6D6E\u9009\u673A", slug: "mechanical-flotation-machine", summary: "-0.5mm \u7EC6\u7C92\u7164\u6CE5\u5206\u9009\uFF1B\u81EA\u5438\u77FF\u6D46+\u81EA\u5438\u7A7A\u6C14\uFF1B\u53F6\u8F6E-\u5B9A\u5B50\u7EC4\u4F18\u5316\uFF0C\u7CBE\u7164\u56DE\u6536\u7387\u9AD8\u3002", icon: "droplets", category: "\u5206\u9009\u8BBE\u5907", sort_order: 2, is_featured: 1 },
-  { name: "\u8DF3\u6C70\u673A\u53CA\u8DF3\u6C70\u6210\u5957\u8BBE\u5907", slug: "jig-machine", summary: "\u7C97\u3001\u4E2D\u7C92\u7164\u6392\u77F8\u4E0E\u5206\u9009\uFF1B\u5355\u673A\u6216\u6210\u5957\uFF1B\u7535\u63A7\u3001\u6392\u6599\u3001\u98CE\u9600\u6309\u7164\u8D28\u914D\u7F6E\u3002", icon: "arrow-up-down", category: "\u5206\u9009\u8BBE\u5907", sort_order: 3, is_featured: 0 },
-  { name: "\u65CB\u6D41\u5668\u53CA\u65CB\u6D41\u5668\u7EC4", slug: "hydrocyclone", summary: "\u5206\u7EA7\u3001\u6D53\u7F29\u3001\u91CD\u4ECB\u5206\u9009\u4E09\u7528\uFF1B\u8010\u78E8\u886C\u91CC\u4E0E\u8FDB\u6599\u538B\u529B\u6BB5\u53EF\u6539\u578B\u3002", icon: "target", category: "\u5206\u9009\u8BBE\u5907", sort_order: 4, is_featured: 0 },
-  { name: "\u9AD8\u9891\u7B5B / \u5F27\u5F62\u7B5B", slug: "high-frequency-screen", summary: "\u8131\u6C34\u3001\u8131\u4ECB\u3001\u5206\u7EA7\uFF1B\u5E38\u4E0E\u79BB\u5FC3\u673A\u3001\u65CB\u6D41\u5668\u4E32\u8054\u5F62\u6210\u5C0F\u6BB5\u5DE5\u827A\u3002", icon: "layout-grid", category: "\u7B5B\u5206\u8BBE\u5907", sort_order: 5, is_featured: 0 },
-  { name: "\u81EA\u4EA7\u914D\u4EF6", slug: "spare-parts", summary: "\u7B5B\u7BEE\u3001\u4E0D\u9508\u94A2\u710A\u63A5\u7B5B\u7F51\u3001\u7B5B\u677F\u3001\u65CB\u6D41\u5668\u886C\u4EF6\u3001\u6D6E\u9009\u673A\u53F6\u8F6E\u5B9A\u5B50\u3001\u79BB\u5FC3\u673A\u522E\u5200\u3002", icon: "package", category: "\u914D\u4EF6", sort_order: 6, is_featured: 0 }
-];
-async function ensureTables5(env) {
-  await env.DB.prepare(CREATE_PRODUCTS_TABLE4).run();
-  const { results } = await env.DB.prepare(`SELECT COUNT(*) as count FROM products`).all();
-  if (results && results[0].count === 0) {
-    for (const p of DEFAULT_PRODUCTS) {
-      await env.DB.prepare(
-        `INSERT INTO products (name, slug, summary, icon, category, sort_order, is_featured, is_published)
-         VALUES (?, ?, ?, ?, ?, ?, ?, 1)`
-      ).bind(p.name, p.slug, p.summary, p.icon, p.category, p.sort_order, p.is_featured).run();
-    }
-  }
-}
-__name(ensureTables5, "ensureTables");
-async function onRequestGet13(context) {
-  const { env } = context;
-  const url = new URL(context.request.url);
-  const category = url.searchParams.get("category") || "";
-  const featured = url.searchParams.get("featured");
-  try {
-    await ensureTables5(env);
-    let sql = `SELECT id, name, slug, summary, icon, image_url, category, sort_order, is_featured, is_published, created_at
-                 FROM products WHERE is_published = 1`;
-    const params = [];
-    if (category) {
-      sql += ` AND category = ?`;
-      params.push(category);
-    }
-    if (featured === "1") {
-      sql += ` AND is_featured = 1`;
-    }
-    sql += ` ORDER BY sort_order ASC, created_at DESC`;
     const { results } = await env.DB.prepare(sql).bind(...params).all();
     return jsonResponse(results || []);
   } catch (err) {
@@ -1329,7 +1329,7 @@ async function onRequestGet14(context) {
 }
 __name(onRequestGet14, "onRequestGet");
 
-// ../.wrangler/tmp/pages-GqJ0I7/functionsRoutes-0.32053903163631947.mjs
+// ../.wrangler/tmp/pages-CVA7ZN/functionsRoutes-0.6971184225991791.mjs
 var routes = [
   {
     routePath: "/admin/api/articles/:id*",
@@ -1483,21 +1483,21 @@ var routes = [
     mountPath: "/api/articles",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet9]
+    modules: [onRequestGet10]
   },
   {
     routePath: "/api/products/:slug*",
     mountPath: "/api/products",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet10]
+    modules: [onRequestGet12]
   },
   {
     routePath: "/api/articles",
-    mountPath: "/api",
+    mountPath: "/api/articles",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet11]
+    modules: [onRequestGet9]
   },
   {
     routePath: "/api/contact",
@@ -1511,14 +1511,14 @@ var routes = [
     mountPath: "/api",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet12]
+    modules: [onRequestGet13]
   },
   {
     routePath: "/api/products",
-    mountPath: "/api",
+    mountPath: "/api/products",
     method: "GET",
     middlewares: [],
-    modules: [onRequestGet13]
+    modules: [onRequestGet11]
   },
   {
     routePath: "/api/settings",
@@ -1978,4 +1978,4 @@ export {
   pages_template_worker_default as default
 };
 
-------formdata-undici-007976817338--
+------formdata-undici-010958425636--
