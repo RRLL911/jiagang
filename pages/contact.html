@@ -76,6 +76,7 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="../assets/page-blocks.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--jiagang-background);
@@ -210,11 +211,11 @@
     </header>
 
     <main class="flex-1">
-        <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]">
+        <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]" data-block="hero.background_image">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl">
-                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6">联系我们</h1>
-                    <p class="text-lg text-[var(--jiagang-muted-fg)]">无论您需要设备选型、技改方案还是配件报价，欢迎随时与我们联系。</p>
+                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6" data-block="hero.title">联系我们</h1>
+                    <p class="text-lg text-[var(--jiagang-muted-fg)]" data-block="hero.subtitle">无论您需要设备选型、技改方案还是配件报价，欢迎随时与我们联系。</p>
                 </div>
             </div>
         </section>
@@ -227,8 +228,8 @@
                             <span data-lucide="map-pin" class="w-6 h-6"></span>
                         </div>
                         <div>
-                            <h3 class="font-bold mb-1">公司地址</h3>
-                            <p class="text-sm text-[var(--jiagang-muted-fg)] site-address">河北省遵化市新店子镇平东线北侧</p>
+                            <h3 class="font-bold mb-1" data-block="info.address_title">公司地址</h3>
+                            <p class="text-sm text-[var(--jiagang-muted-fg)] site-address" data-block="info.address_value">河北省遵化市新店子镇平东线北侧</p>
                         </div>
                     </div>
                     <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 flex items-start gap-4">
@@ -236,8 +237,8 @@
                             <span data-lucide="phone" class="w-6 h-6"></span>
                         </div>
                         <div>
-                            <h3 class="font-bold mb-1">联系电话</h3>
-                            <p class="text-sm text-[var(--jiagang-muted-fg)]"><a href="tel:0315-0000000" class="site-phone hover:text-[var(--jiagang-primary)]">0315-0000000</a></p>
+                            <h3 class="font-bold mb-1" data-block="info.phone_title">联系电话</h3>
+                            <p class="text-sm text-[var(--jiagang-muted-fg)]"><a href="tel:0315-0000000" class="site-phone hover:text-[var(--jiagang-primary)]" data-block="info.phone_value">0315-0000000</a></p>
                         </div>
                     </div>
                     <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 flex items-start gap-4">
@@ -245,33 +246,33 @@
                             <span data-lucide="mail" class="w-6 h-6"></span>
                         </div>
                         <div>
-                            <h3 class="font-bold mb-1">电子邮箱</h3>
-                            <p class="text-sm text-[var(--jiagang-muted-fg)]"><a href="mailto:contact@jiagang.cn" class="site-email hover:text-[var(--jiagang-primary)]">contact@jiagang.cn</a></p>
+                            <h3 class="font-bold mb-1" data-block="info.email_title">电子邮箱</h3>
+                            <p class="text-sm text-[var(--jiagang-muted-fg)]"><a href="mailto:contact@jiagang.cn" class="site-email hover:text-[var(--jiagang-primary)]" data-block="info.email_value">contact@jiagang.cn</a></p>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid lg:grid-cols-2 gap-12">
                     <div>
-                        <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title mb-6">在线留言</h2>
-                        <p class="text-[var(--jiagang-muted-fg)] mb-8">填写以下信息，我们的技术团队将在 24 小时内与您联系。</p>
+                        <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title mb-6" data-block="info.title">在线留言</h2>
+                        <p class="text-[var(--jiagang-muted-fg)] mb-8" data-block="info.form_intro">填写以下信息，我们的技术团队将在 24 小时内与您联系。</p>
                         <form id="contact-form" class="space-y-5">
                             <div class="grid sm:grid-cols-2 gap-5">
                                 <div>
-                                    <label class="block text-sm font-medium mb-1.5">您的称呼 <span class="text-[var(--state-error)]">*</span></label>
+                                    <label class="block text-sm font-medium mb-1.5" data-block="info.label_name">您的称呼 <span class="text-[var(--state-error)]">*</span></label>
                                     <input type="text" name="name" required class="w-full px-4 py-2.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-background)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-primary)]">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium mb-1.5">联系电话 <span class="text-[var(--state-error)]">*</span></label>
+                                    <label class="block text-sm font-medium mb-1.5" data-block="info.label_phone">联系电话 <span class="text-[var(--state-error)]">*</span></label>
                                     <input type="tel" name="phone" required class="w-full px-4 py-2.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-background)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-primary)]">
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1.5">公司名称</label>
+                                <label class="block text-sm font-medium mb-1.5" data-block="info.label_company">公司名称</label>
                                 <input type="text" name="company" class="w-full px-4 py-2.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-background)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-primary)]">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1.5">需求类型</label>
+                                <label class="block text-sm font-medium mb-1.5" data-block="info.label_type">需求类型</label>
                                 <select name="type" class="w-full px-4 py-2.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-background)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-primary)]">
                                     <option>设备选型咨询</option>
                                     <option>技改方案</option>
@@ -281,27 +282,27 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1.5">需求描述</label>
+                                <label class="block text-sm font-medium mb-1.5" data-block="info.label_message">需求描述</label>
                                 <textarea name="message" rows="4" class="w-full px-4 py-2.5 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-background)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-primary)]"></textarea>
                             </div>
-                            <button type="submit" class="px-6 py-3 rounded-lg bg-[var(--jiagang-primary)] text-white font-semibold hover:bg-[var(--jiagang-primary-700)] transition-colors" data-dom-id="contact-submit">提交留言</button>
+                            <button type="submit" class="px-6 py-3 rounded-lg bg-[var(--jiagang-primary)] text-white font-semibold hover:bg-[var(--jiagang-primary-700)] transition-colors" data-dom-id="contact-submit" data-block="info.submit_text">提交留言</button>
                         </form>
                     </div>
                     <div class="rounded-2xl bg-[var(--jiagang-muted)] border border-[var(--jiagang-border)] p-8">
-                        <h3 class="font-bold text-xl mb-4">服务区域</h3>
-                        <p class="site-service-regions text-[var(--jiagang-muted-fg)] mb-6">嘉港环保设备主要销往山西、陕西、内蒙古、河北等产煤带，同时覆盖铁、金及非金属矿的筛分脱水领域。</p>
+                        <h3 class="font-bold text-xl mb-4" data-block="info.service_title">服务区域</h3>
+                        <p class="site-service-regions text-[var(--jiagang-muted-fg)] mb-6" data-block="info.service_content">嘉港环保设备主要销往山西、陕西、内蒙古、河北等产煤带，同时覆盖铁、金及非金属矿的筛分脱水领域。</p>
                         <ul class="space-y-3 mb-8">
-                            <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span>新建选煤厂成套主机供应</li>
-                            <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span>老厂技改与设备换代</li>
-                            <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span>筛网筛篮等易耗件常年供货</li>
-                            <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span>现场技术调试与培训</li>
+                            <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span><span data-block="info.service_item_1">新建选煤厂成套主机供应</span></li>
+                            <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span><span data-block="info.service_item_2">老厂技改与设备换代</span></li>
+                            <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span><span data-block="info.service_item_3">筛网筛篮等易耗件常年供货</span></li>
+                            <li class="flex items-center gap-3 text-[var(--jiagang-muted-fg)]"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)]"></span><span data-block="info.service_item_4">现场技术调试与培训</span></li>
                         </ul>
                         <div class="rounded-xl bg-[var(--jiagang-primary-50)] border border-[var(--jiagang-primary-200)] p-6">
                             <div class="flex items-center gap-3 mb-2">
                                 <span data-lucide="clock" class="w-5 h-5 text-[var(--jiagang-primary)]"></span>
-                                <span class="font-bold">工作时间</span>
+                                <span class="font-bold" data-block="info.work_time_title">工作时间</span>
                             </div>
-                            <p class="site-work-time text-sm text-[var(--jiagang-muted-fg)]">周一至周六 08:00–17:30</p>
+                            <p class="site-work-time text-sm text-[var(--jiagang-muted-fg)]" data-block="info.work_time">周一至周六 08:00–17:30</p>
                         </div>
                     </div>
                 </div>
@@ -406,6 +407,7 @@
         });
 
         loadSettings();
+        applyPageBlocks('contact');
     </script>
 
     <style>

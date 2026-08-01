@@ -76,6 +76,7 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="../assets/page-blocks.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--jiagang-background);
@@ -210,11 +211,11 @@
     </header>
 
     <main class="flex-1">
-        <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]">
+        <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]" data-block="hero.background_image">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl">
-                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6">技术资讯</h1>
-                    <p class="text-lg text-[var(--jiagang-muted-fg)]">选煤设备技术解析、维护经验与行业动态。</p>
+                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6" data-block="hero.title">技术资讯</h1>
+                    <p class="text-lg text-[var(--jiagang-muted-fg)]" data-block="hero.subtitle">选煤设备技术解析、维护经验与行业动态。</p>
                 </div>
             </div>
         </section>
@@ -337,6 +338,7 @@
 
         loadSettings();
         loadArticles();
+        applyPageBlocks('news');
     </script>
 
     <style>

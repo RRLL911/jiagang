@@ -76,6 +76,7 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="../assets/page-blocks.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--jiagang-background);
@@ -210,11 +211,11 @@
     </header>
 
     <main class="flex-1">
-        <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]">
+        <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]" data-block="hero.background_image">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl">
-                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6">产品中心</h1>
-                    <p class="text-lg text-[var(--jiagang-muted-fg)]">覆盖选煤厂"分选+脱水"主工艺段，单机与成套设备可按煤质定制。</p>
+                    <h1 class="text-4xl lg:text-5xl font-bold text-[var(--jiagang-foreground)] mb-6" data-block="hero.title">产品中心</h1>
+                    <p class="text-lg text-[var(--jiagang-muted-fg)]" data-block="hero.subtitle">覆盖选煤厂"分选+脱水"主工艺段，单机与成套设备可按煤质定制。</p>
                 </div>
             </div>
         </section>
@@ -230,20 +231,20 @@
         <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title">配件供应能力</h2>
+                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="parts.title">配件供应能力</h2>
                 </div>
                 <div id="parts-capacity" class="grid sm:grid-cols-3 gap-6">
                     <div class="rounded-xl bg-white p-8 text-center border border-[var(--jiagang-border)]">
-                        <div class="text-4xl font-bold text-[var(--jiagang-primary)] mb-2">1200件</div>
-                        <div class="text-sm text-[var(--jiagang-muted-fg)]">筛篮年产能</div>
+                        <div class="text-4xl font-bold text-[var(--jiagang-primary)] mb-2" data-block="parts.stat_1_value">1200件</div>
+                        <div class="text-sm text-[var(--jiagang-muted-fg)]" data-block="parts.stat_1_label">筛篮年产能</div>
                     </div>
                     <div class="rounded-xl bg-white p-8 text-center border border-[var(--jiagang-border)]">
-                        <div class="text-4xl font-bold text-[var(--jiagang-primary)] mb-2">1万㎡</div>
-                        <div class="text-sm text-[var(--jiagang-muted-fg)]">不锈钢焊接筛网年产能</div>
+                        <div class="text-4xl font-bold text-[var(--jiagang-primary)] mb-2" data-block="parts.stat_2_value">1万㎡</div>
+                        <div class="text-sm text-[var(--jiagang-muted-fg)]" data-block="parts.stat_2_label">不锈钢焊接筛网年产能</div>
                     </div>
                     <div class="rounded-xl bg-white p-8 text-center border border-[var(--jiagang-border)]">
-                        <div class="text-4xl font-bold text-[var(--jiagang-primary)] mb-2">4000㎡</div>
-                        <div class="text-sm text-[var(--jiagang-muted-fg)]">筛板年产能</div>
+                        <div class="text-4xl font-bold text-[var(--jiagang-primary)] mb-2" data-block="parts.stat_3_value">4000㎡</div>
+                        <div class="text-sm text-[var(--jiagang-muted-fg)]" data-block="parts.stat_3_label">筛板年产能</div>
                     </div>
                 </div>
             </div>
@@ -358,6 +359,7 @@
 
         loadSettings();
         loadProducts();
+        applyPageBlocks('products');
     </script>
 
     <style>

@@ -76,6 +76,7 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="../assets/page-blocks.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--jiagang-background);
@@ -228,7 +229,7 @@
                     <span class="mx-2">/</span>
                     <a href="news.html" class="hover:text-[var(--jiagang-primary)]">技术资讯</a>
                     <span class="mx-2">/</span>
-                    <span class="text-[var(--jiagang-foreground)]">文章详情</span>
+                    <span class="text-[var(--jiagang-foreground)]" data-block="hero.title">文章详情</span>
                 </div>
             </div>
         </section>
@@ -368,6 +369,7 @@
 
         loadSettings();
         loadArticle();
+        applyPageBlocks('news-detail');
     </script>
 
     <style>

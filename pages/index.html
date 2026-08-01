@@ -76,6 +76,7 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="../assets/page-blocks.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--jiagang-background);
@@ -210,23 +211,23 @@
     </header>
 
     <main class="flex-1">
-        <section class="hero-bg relative overflow-hidden">
+        <section class="hero-bg relative overflow-hidden" data-block="hero.background_image">
             <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="text-white space-y-6">
-                        <div id="hero-tag" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm">
+                        <div id="hero-tag" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm" data-block="hero.tag">
                             <span class="w-2 h-2 rounded-full bg-[var(--jiagang-primary-300)]"></span>
                             国家级高新技术企业
                         </div>
-                        <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">选煤选矿装备<br/>研发制造一体化服务商</h1>
-                        <p id="hero-subtitle" class="text-lg text-white/80 max-w-xl">立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备，服务山西、陕西、内蒙古、河北等产煤带。</p>
+                        <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight" data-block="hero.title">选煤选矿装备<br/>研发制造一体化服务商</h1>
+                        <p id="hero-subtitle" class="text-lg text-white/80 max-w-xl" data-block="hero.subtitle">立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备，服务山西、陕西、内蒙古、河北等产煤带。</p>
                         <div class="flex flex-wrap gap-4 pt-2">
                             <a href="products.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-[var(--jiagang-primary-700)] font-semibold hover:bg-[var(--jiagang-primary-50)] transition-colors" data-dom-id="hero-products">
-                                <span data-lucide="box" class="w-5 h-5"></span>浏览产品
+                                <span data-lucide="box" class="w-5 h-5"></span><span data-block="hero.cta_primary">浏览产品</span>
                             </a>
                             <a href="contact.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/40 text-white font-semibold hover:bg-white/10 transition-colors" data-dom-id="hero-contact">
-                                <span data-lucide="message-circle" class="w-5 h-5"></span>技术咨询
+                                <span data-lucide="message-circle" class="w-5 h-5"></span><span data-block="hero.cta_secondary">技术咨询</span>
                             </a>
                         </div>
                     </div>
@@ -254,8 +255,8 @@
         <section class="py-16 lg:py-24 bg-[var(--jiagang-background)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title">核心产品</h2>
-                    <p class="mt-4 text-[var(--jiagang-muted-fg)]">覆盖选煤厂"分选+脱水"主工艺段</p>
+                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="products.title">核心产品</h2>
+                    <p class="mt-4 text-[var(--jiagang-muted-fg)]" data-block="products.subtitle">覆盖选煤厂"分选+脱水"主工艺段</p>
                 </div>
                 <div id="featured-products" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="col-span-full text-center py-12 text-[var(--jiagang-muted-fg)]">加载产品中...</div>
@@ -267,31 +268,31 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title mb-6">关于嘉港环保</h2>
-                        <p id="about-intro" class="text-[var(--jiagang-muted-fg)] mb-6 leading-relaxed">唐山嘉港环保科技有限公司成立于2018年，位于河北省遵化市新店子镇平东线北侧，注册资金100万元。厂区占地3万平方米、建筑面积1万平方米，现有员工120余人，其中技术人员40人、高级工程师8人。</p>
+                        <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title mb-6" data-block="stats.title">关于嘉港环保</h2>
+                        <p id="about-intro" class="text-[var(--jiagang-muted-fg)] mb-6 leading-relaxed" data-block="stats.intro">唐山嘉港环保科技有限公司成立于2018年，位于河北省遵化市新店子镇平东线北侧，注册资金100万元。厂区占地3万平方米、建筑面积1万平方米，现有员工120余人，其中技术人员40人、高级工程师8人。</p>
                         <ul class="space-y-3 mb-8">
-                            <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]">2024 年获评国家级高新技术企业</span></li>
-                            <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]">2025 年获河北省创新型中小企业认定</span></li>
-                            <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]">筛篮、筛网、筛板等易耗件自产，年产筛网约1万㎡</span></li>
+                            <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]" data-block="stats.highlight_1">2024 年获评国家级高新技术企业</span></li>
+                            <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]" data-block="stats.highlight_2">2025 年获河北省创新型中小企业认定</span></li>
+                            <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]" data-block="stats.highlight_3">筛篮、筛网、筛板等易耗件自产，年产筛网约1万㎡</span></li>
                         </ul>
-                        <a href="about.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[var(--jiagang-primary)] text-[var(--jiagang-primary)] font-medium hover:bg-[var(--jiagang-primary-50)] transition-colors" data-dom-id="home-about-more">了解更多 <span data-lucide="arrow-right" class="w-4 h-4"></span></a>
+                        <a href="about.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[var(--jiagang-primary)] text-[var(--jiagang-primary)] font-medium hover:bg-[var(--jiagang-primary-50)] transition-colors" data-dom-id="home-about-more"><span data-block="stats.more_text">了解更多</span> <span data-lucide="arrow-right" class="w-4 h-4"></span></a>
                     </div>
                     <div id="about-stats" class="grid grid-cols-2 gap-4">
                         <div class="rounded-xl bg-white p-6 text-center border border-[var(--jiagang-border)]">
-                            <div class="text-3xl font-bold text-[var(--jiagang-primary)]">8</div>
-                            <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1">高级工程师</div>
+                            <div class="text-3xl font-bold text-[var(--jiagang-primary)]" data-block="stats.stat_1_value">8</div>
+                            <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1" data-block="stats.stat_1_label">高级工程师</div>
                         </div>
                         <div class="rounded-xl bg-white p-6 text-center border border-[var(--jiagang-border)]">
-                            <div class="text-3xl font-bold text-[var(--jiagang-primary)]">40</div>
-                            <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1">技术人员</div>
+                            <div class="text-3xl font-bold text-[var(--jiagang-primary)]" data-block="stats.stat_2_value">40</div>
+                            <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1" data-block="stats.stat_2_label">技术人员</div>
                         </div>
                         <div class="rounded-xl bg-white p-6 text-center border border-[var(--jiagang-border)]">
-                            <div class="text-3xl font-bold text-[var(--jiagang-primary)]">3万㎡</div>
-                            <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1">厂区占地</div>
+                            <div class="text-3xl font-bold text-[var(--jiagang-primary)]" data-block="stats.stat_3_value">3万㎡</div>
+                            <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1" data-block="stats.stat_3_label">厂区占地</div>
                         </div>
                         <div class="rounded-xl bg-white p-6 text-center border border-[var(--jiagang-border)]">
-                            <div class="text-3xl font-bold text-[var(--jiagang-primary)]">1万㎡</div>
-                            <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1">建筑面积</div>
+                            <div class="text-3xl font-bold text-[var(--jiagang-primary)]" data-block="stats.stat_4_value">1万㎡</div>
+                            <div class="text-sm text-[var(--jiagang-muted-fg)] mt-1" data-block="stats.stat_4_label">建筑面积</div>
                         </div>
                     </div>
                 </div>
@@ -301,30 +302,30 @@
         <section class="py-16 lg:py-24 bg-[var(--jiagang-background)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title">服务优势</h2>
-                    <p class="mt-4 text-[var(--jiagang-muted-fg)]">从研发设计到技改服务，全链路闭环</p>
+                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="features.title">服务优势</h2>
+                    <p class="mt-4 text-[var(--jiagang-muted-fg)]" data-block="features.subtitle">从研发设计到技改服务，全链路闭环</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="text-center px-4">
                         <div class="w-16 h-16 mx-auto rounded-2xl bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-5">
                             <span data-lucide="pen-tool" class="w-8 h-8"></span>
                         </div>
-                        <h3 class="font-bold text-lg mb-2">研发设计</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]">按煤质与现场工况定制设备改型，专利覆盖离心机布料锥、刮刀焊接辅助等核心结构。</p>
+                        <h3 class="font-bold text-lg mb-2" data-block="features.feature_1_title">研发设计</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="features.feature_1_desc">按煤质与现场工况定制设备改型，专利覆盖离心机布料锥、刮刀焊接辅助等核心结构。</p>
                     </div>
                     <div class="text-center px-4">
                         <div class="w-16 h-16 mx-auto rounded-2xl bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-5">
                             <span data-lucide="settings" class="w-8 h-8"></span>
                         </div>
-                        <h3 class="font-bold text-lg mb-2">精密制造</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]">机加工、铆焊、铸造、热处理、动平衡校验全流程自控，确保出厂负载试验合格。</p>
+                        <h3 class="font-bold text-lg mb-2" data-block="features.feature_2_title">精密制造</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="features.feature_2_desc">机加工、铆焊、铸造、热处理、动平衡校验全流程自控，确保出厂负载试验合格。</p>
                     </div>
                     <div class="text-center px-4">
                         <div class="w-16 h-16 mx-auto rounded-2xl bg-[var(--jiagang-primary-50)] text-[var(--jiagang-primary)] flex items-center justify-center mb-5">
                             <span data-lucide="wrench" class="w-8 h-8"></span>
                         </div>
-                        <h3 class="font-bold text-lg mb-2">技改服务</h3>
-                        <p class="text-sm text-[var(--jiagang-muted-fg)]">老厂离心机换代、浮选段扩容、筛网筛篮常年供货，响应快、责任单一。</p>
+                        <h3 class="font-bold text-lg mb-2" data-block="features.feature_3_title">技改服务</h3>
+                        <p class="text-sm text-[var(--jiagang-muted-fg)]" data-block="features.feature_3_desc">老厂离心机换代、浮选段扩容、筛网筛篮常年供货，响应快、责任单一。</p>
                     </div>
                 </div>
             </div>
@@ -332,12 +333,12 @@
 
         <section class="py-16 lg:py-20 hero-bg">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-                <h2 class="text-3xl font-bold mb-4">需要选型或技改方案？</h2>
-                <p class="text-white/80 mb-8">留下您的需求，我们的技术团队将在 24 小时内与您联系。</p>
+                <h2 class="text-3xl font-bold mb-4" data-block="cta.title">需要选型或技改方案？</h2>
+                <p class="text-white/80 mb-8" data-block="cta.subtitle">留下您的需求，我们的技术团队将在 24 小时内与您联系。</p>
                 <form id="cta-form" class="max-w-lg mx-auto flex flex-col sm:flex-row gap-3">
                     <input type="text" name="name" placeholder="您的称呼" required class="flex-1 px-4 py-3 rounded-lg text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-white/50">
                     <input type="tel" name="phone" placeholder="联系电话" required class="flex-1 px-4 py-3 rounded-lg text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-white/50">
-                    <button type="submit" class="px-6 py-3 rounded-lg bg-white text-[var(--jiagang-primary-700)] font-semibold hover:bg-[var(--jiagang-primary-50)] transition-colors">提交</button>
+                    <button type="submit" class="px-6 py-3 rounded-lg bg-white text-[var(--jiagang-primary-700)] font-semibold hover:bg-[var(--jiagang-primary-50)] transition-colors" data-block="cta.button_text">提交</button>
                 </form>
             </div>
         </section>
@@ -499,6 +500,7 @@
 
         loadSettings();
         loadFeaturedProducts();
+        applyPageBlocks('index');
     </script>
 
     <style>

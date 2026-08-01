@@ -76,6 +76,7 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="../assets/page-blocks.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
     --color-background: var(--jiagang-background);
@@ -230,7 +231,7 @@
                         <span id="product-icon" data-lucide="box" class="w-40 h-40 text-[var(--jiagang-primary-300)]"></span>
                     </div>
                     <div>
-                        <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] mb-4">产品概述</h2>
+                        <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] mb-4" data-block="overview.title">产品概述</h2>
                         <p id="product-summary" class="text-[var(--jiagang-muted-fg)] mb-6 leading-relaxed">加载中...</p>
                         <ul id="product-features-list" class="space-y-3 mb-8">
                             <li class="flex items-start gap-3"><span data-lucide="check-circle" class="w-5 h-5 text-[var(--jiagang-primary)] mt-0.5"></span><span class="text-[var(--jiagang-muted-fg)]">加载中...</span></li>
@@ -244,7 +245,7 @@
         <section class="py-16 lg:py-24 bg-[var(--jiagang-muted)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title">结构特点</h2>
+                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="features.title">结构特点</h2>
                 </div>
                 <div id="product-features-cards" class="grid md:grid-cols-3 gap-6">
                     <div class="rounded-xl bg-white p-6 border border-[var(--jiagang-border)] text-center text-[var(--jiagang-muted-fg)]">加载中...</div>
@@ -255,14 +256,14 @@
         <section class="py-16 lg:py-24 bg-[var(--jiagang-background)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title">典型技术参数</h2>
+                    <h2 class="text-3xl font-bold text-[var(--jiagang-foreground)] section-title" data-block="parameters.title">典型技术参数</h2>
                 </div>
                 <div class="overflow-x-auto rounded-xl border border-[var(--jiagang-border)]">
                     <table class="min-w-full text-sm">
                         <thead class="bg-[var(--jiagang-muted)]">
                             <tr>
-                                <th class="px-6 py-3 text-left font-semibold">项目</th>
-                                <th class="px-6 py-3 text-left font-semibold">参数</th>
+                                <th class="px-6 py-3 text-left font-semibold" data-block="parameters.header_item">项目</th>
+                                <th class="px-6 py-3 text-left font-semibold" data-block="parameters.header_value">参数</th>
                             </tr>
                         </thead>
                         <tbody id="product-parameters" class="divide-y divide-[var(--jiagang-border)]">
@@ -270,7 +271,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="mt-4 text-xs text-[var(--jiagang-muted-fg)]">* 具体型号参数以实际技术协议为准，可拨打 <span class="site-phone">0315-0000000</span> 获取详细选型手册。</p>
+                <p class="mt-4 text-xs text-[var(--jiagang-muted-fg)]" data-block="parameters.disclaimer">* 具体型号参数以实际技术协议为准，可拨打 <span class="site-phone">0315-0000000</span> 获取详细选型手册。</p>
             </div>
         </section>
     </main>
@@ -429,6 +430,7 @@
 
         loadSettings();
         loadProductDetail();
+        applyPageBlocks('product-detail');
     </script>
 
     <style>

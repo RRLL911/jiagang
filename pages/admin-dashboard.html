@@ -214,6 +214,7 @@
             <a href="#products" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="products"><span data-lucide="box" class="w-5 h-5"></span>产品管理</a>
             <a href="#articles" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="articles"><span data-lucide="newspaper" class="w-5 h-5"></span>文章管理</a>
             <a href="#settings" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="settings"><span data-lucide="settings" class="w-5 h-5"></span>站点配置</a>
+            <a href="#page-blocks" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]" data-section="page-blocks"><span data-lucide="file-text" class="w-5 h-5"></span>页面内容</a>
             <a href="index.html" target="_blank" class="flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)]"><span data-lucide="external-link" class="w-5 h-5"></span>访问官网</a>
             <button id="logout-btn" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-[var(--jiagang-neutral-300)] text-left"><span data-lucide="log-out" class="w-5 h-5"></span>退出登录</button>
         </nav>
@@ -270,6 +271,7 @@
                             <button onclick="showSection('articles')" class="p-4 rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] text-left"><span data-lucide="newspaper" class="w-6 h-6 mb-2" style="color:var(--jiagang-primary)"></span><div class="font-medium">文章管理</div><div class="text-xs text-[var(--jiagang-muted-foreground)]">发布/编辑技术资讯</div></button>
                             <button onclick="showSection('settings')" class="p-4 rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] text-left"><span data-lucide="settings" class="w-6 h-6 mb-2" style="color:var(--jiagang-primary)"></span><div class="font-medium">站点配置</div><div class="text-xs text-[var(--jiagang-muted-foreground)]">修改公司信息/数据</div></button>
                             <button onclick="showSection('contacts')" class="p-4 rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] text-left"><span data-lucide="message-square" class="w-6 h-6 mb-2" style="color:var(--jiagang-primary)"></span><div class="font-medium">留言管理</div><div class="text-xs text-[var(--jiagang-muted-foreground)]">查看客户留言</div></button>
+                            <button onclick="showSection('page-blocks')" class="col-span-2 p-4 rounded-lg border border-[var(--jiagang-border)] hover:bg-[var(--jiagang-muted)] text-left"><span data-lucide="file-text" class="w-6 h-6 mb-2" style="color:var(--jiagang-primary)"></span><div class="font-medium">页面内容</div><div class="text-xs text-[var(--jiagang-muted-foreground)]">管理各页面可配置内容块</div></button>
                         </div>
                     </div>
                     <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6">
@@ -365,6 +367,32 @@
                     </div>
                 </div>
             </section>
+
+            <!-- 页面内容 -->
+            <section id="page-blocks-view" class="section-view">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <h2 class="text-xl font-bold text-[var(--jiagang-foreground)]">页面内容</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <a id="preview-page-link" href="../index.html" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="external-link" class="w-4 h-4"></span>预览页面</a>
+                        <button id="add-page-block" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)] transition-colors"><span data-lucide="plus" class="w-4 h-4"></span>新增内容块</button>
+                        <button id="refresh-page-blocks" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="refresh-cw" class="w-4 h-4"></span>刷新</button>
+                    </div>
+                </div>
+                <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] p-6 mb-6">
+                    <label class="block text-sm font-medium mb-2">选择页面</label>
+                    <select id="page-blocks-selector" class="w-full md:w-64 px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]">
+                        <option value="">请选择</option>
+                        <option value="index">首页</option>
+                        <option value="products">产品中心</option>
+                        <option value="about">关于我们</option>
+                        <option value="news">技术资讯</option>
+                        <option value="contact">联系我们</option>
+                        <option value="product-detail">产品详情</option>
+                        <option value="news-detail">文章详情</option>
+                    </select>
+                </div>
+                <div id="page-blocks-form" class="space-y-6"></div>
+            </section>
         </div>
     </main>
 
@@ -428,6 +456,35 @@
         </div>
     </div>
 
+    <!-- 内容块编辑模态框 -->
+    <div id="page-block-modal" class="modal-overlay">
+        <div class="modal-panel">
+            <div class="modal-header"><h3 id="page-block-modal-title" class="text-lg font-bold text-[var(--jiagang-foreground)]">新增内容块</h3><button onclick="closeModal('page-block-modal')" class="p-2 rounded-lg hover:bg-[var(--jiagang-muted)] text-[var(--jiagang-muted-foreground)]"><span data-lucide="x" class="w-5 h-5"></span></button></div>
+            <div class="modal-body space-y-4">
+                <input type="hidden" id="page-block-id">
+                <div><label class="block text-sm font-medium mb-1">页面 <span class="text-[var(--state-error)]">*</span></label><input type="text" id="page-block-page" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]" placeholder="如 index"></div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium mb-1">区块 <span class="text-[var(--state-error)]">*</span></label><input type="text" id="page-block-section" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]" placeholder="如 hero"></div>
+                    <div><label class="block text-sm font-medium mb-1">键名 <span class="text-[var(--state-error)]">*</span></label><input type="text" id="page-block-key" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]" placeholder="如 title"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium mb-1">类型</label>
+                        <select id="page-block-type" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]">
+                            <option value="text">普通文字</option>
+                            <option value="html">富文本/HTML</option>
+                            <option value="image">图片 URL</option>
+                        </select>
+                    </div>
+                    <div><label class="block text-sm font-medium mb-1">显示名称</label><input type="text" id="page-block-label" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]" placeholder="如 首页主标题"></div>
+                </div>
+                <div><label class="block text-sm font-medium mb-1">内容</label><textarea id="page-block-value" rows="4" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></textarea></div>
+                <div><label class="block text-sm font-medium mb-1">排序</label><input type="number" id="page-block-sort" value="0" class="w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]"></div>
+                <div class="flex items-center gap-4"><label class="flex items-center gap-2 text-sm"><input type="checkbox" id="page-block-published" checked class="w-4 h-4 rounded border-[var(--jiagang-input)]"> 显示</label></div>
+            </div>
+            <div class="modal-footer"><button onclick="closeModal('page-block-modal')" class="px-4 py-2 rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)]">取消</button><button id="save-page-block" class="px-4 py-2 rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)]">保存</button></div>
+        </div>
+    </div>
+
     <!-- 留言详情抽屉 -->
     <div id="detail-drawer" class="detail-drawer" aria-hidden="true">
         <div id="detail-backdrop" class="detail-backdrop"></div>
@@ -460,7 +517,7 @@
         const token = localStorage.getItem('jiagang_admin_token');
         if (!token) window.location.href = 'admin-login.html';
 
-        const SECTION_TITLES = { dashboard: '仪表盘', contacts: '留言管理', products: '产品管理', articles: '文章管理', settings: '站点配置' };
+        const SECTION_TITLES = { dashboard: '仪表盘', contacts: '留言管理', products: '产品管理', articles: '文章管理', settings: '站点配置', 'page-blocks': '页面内容' };
         const state = {
             contacts: [], filteredContacts: [], products: [], articles: [],
             contactPage: 1, contactPageSize: 10, contactSortDesc: true,
@@ -515,6 +572,7 @@
             if (section === 'products') loadProducts();
             if (section === 'articles') loadArticles();
             if (section === 'settings') loadSettings();
+            if (section === 'page-blocks') loadPageBlocks();
         }
 
         document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', e => { e.preventDefault(); showSection(a.dataset.section); }));
@@ -879,6 +937,161 @@
             } catch (e) { showToast('网络异常', 'error'); }
         });
         document.getElementById('refresh-articles').addEventListener('click', loadArticles);
+
+        // 页面内容
+        const PAGE_BLOCK_PAGE_URLS = { index: '../index.html', products: '../products.html', about: '../about.html', news: '../news.html', contact: '../contact.html', 'product-detail': '../product-detail.html', 'news-detail': '../news-detail.html' };
+
+        function updatePageBlockPreviewLink() {
+            const page = document.getElementById('page-blocks-selector').value || 'index';
+            const link = document.getElementById('preview-page-link');
+            link.href = PAGE_BLOCK_PAGE_URLS[page] || '../index.html';
+        }
+
+        function renderPageBlockInput(b) {
+            const common = 'block-value w-full px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]';
+            if (b.type === 'html') return `<textarea class="${common}" rows="5" placeholder="支持 HTML">${escapeHtml(b.value || '')}</textarea>`;
+            const placeholder = b.type === 'image' ? '图片 URL' : '内容';
+            return `<input type="${b.type === 'image' ? 'url' : 'text'}" class="${common}" value="${escapeHtml(b.value || '')}" placeholder="${placeholder}">`;
+        }
+
+        function renderPageBlockPreview(b) {
+            if (b.type !== 'image') return '';
+            return `<div class="mt-2 page-block-preview"><img src="${escapeHtml(b.value || '')}" alt="预览" class="max-h-32 rounded-lg border border-[var(--jiagang-border)] object-cover" onerror="this.style.display='none'" onload="this.style.display='block'"></div>`;
+        }
+
+        async function loadPageBlocks() {
+            const selector = document.getElementById('page-blocks-selector');
+            const container = document.getElementById('page-blocks-form');
+            const page = selector.value || 'index';
+            if (!selector.value) selector.value = page;
+            updatePageBlockPreviewLink();
+            container.innerHTML = '<div class="text-sm text-[var(--jiagang-muted-foreground)]">加载中...</div>';
+            try {
+                const res = await api('/admin/api/page-blocks?page=' + encodeURIComponent(page));
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error('加载失败');
+                const blocks = await res.json();
+                if (!blocks.length) {
+                    container.innerHTML = '<div class="text-sm text-[var(--jiagang-muted-foreground)]">该页面暂无内容块，点击右上角“新增内容块”添加。</div>';
+                    return;
+                }
+                // 按 section 分组
+                const groups = {};
+                blocks.forEach(b => { groups[b.section] = groups[b.section] || []; groups[b.section].push(b); });
+                container.innerHTML = Object.keys(groups).map(section => {
+                    const sectionBlocks = groups[section];
+                    return `
+                    <div class="rounded-xl border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] overflow-hidden" data-section="${escapeHtml(section)}">
+                        <div class="px-6 py-3 bg-[var(--jiagang-muted)] border-b border-[var(--jiagang-border)] flex items-center justify-between">
+                            <h3 class="font-bold text-sm uppercase tracking-wide text-[var(--jiagang-foreground)]">${escapeHtml(section)}</h3>
+                            <span class="text-xs text-[var(--jiagang-muted-foreground)]">${sectionBlocks.length} 项</span>
+                        </div>
+                        <div class="p-6 space-y-5">
+                            ${sectionBlocks.map(b => `
+                            <div class="rounded-lg border border-[var(--jiagang-border)] p-4" data-block-id="${b.id}">
+                                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                                    <div>
+                                        <div class="font-bold text-sm">${escapeHtml(b.label || b.key)}</div>
+                                        <div class="text-xs text-[var(--jiagang-muted-foreground)] mt-0.5">${escapeHtml(b.section)}.${escapeHtml(b.key)} · <span class="inline-block px-1.5 py-0.5 rounded bg-[var(--jiagang-muted)] text-[var(--jiagang-foreground)]">${escapeHtml(b.type)}</span></div>
+                                    </div>
+                                    <div class="flex items-center gap-2 shrink-0">
+                                        <label class="inline-flex items-center gap-1.5 text-xs"><input type="checkbox" class="block-published w-4 h-4 rounded border-[var(--jiagang-input)]" ${b.is_published ? 'checked' : ''}> 显示</label>
+                                        <button class="save-block-btn px-2.5 py-1 text-xs rounded-md bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)]">保存</button>
+                                        <button class="delete-block-btn px-2.5 py-1 text-xs rounded-md border border-[var(--state-error)] text-[var(--state-error)] hover:bg-red-50">删除</button>
+                                    </div>
+                                </div>
+                                ${renderPageBlockInput(b)}
+                                ${renderPageBlockPreview(b)}
+                            </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+
+                container.querySelectorAll('.save-block-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const card = btn.closest('[data-block-id]');
+                        const id = card.dataset.blockId;
+                        const value = card.querySelector('.block-value').value;
+                        const isPublished = card.querySelector('.block-published').checked ? 1 : 0;
+                        try {
+                            const res = await api('/admin/api/page-blocks/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ value, is_published: isPublished }) });
+                            if (handleUnauthorized(res)) return;
+                            if (!res.ok) throw new Error('保存失败');
+                            const preview = card.querySelector('.page-block-preview img');
+                            if (preview) { preview.src = value; preview.style.display = value ? 'block' : 'none'; }
+                            showToast('已保存');
+                        } catch (e) {
+                            showToast(e.message || '保存失败', 'error');
+                        }
+                    });
+                });
+
+                container.querySelectorAll('.delete-block-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const card = btn.closest('[data-block-id]');
+                        const id = card.dataset.blockId;
+                        if (!confirm('确定删除该内容块？')) return;
+                        try {
+                            const res = await api('/admin/api/page-blocks/' + id, { method: 'DELETE' });
+                            if (handleUnauthorized(res)) return;
+                            if (!res.ok) throw new Error('删除失败');
+                            card.remove();
+                            showToast('已删除');
+                        } catch (e) {
+                            showToast(e.message || '删除失败', 'error');
+                        }
+                    });
+                });
+            } catch (e) {
+                container.innerHTML = '<div class="text-sm text-[var(--state-error)]">加载失败，请刷新重试</div>';
+            }
+        }
+
+        document.getElementById('page-blocks-selector').addEventListener('change', () => { updatePageBlockPreviewLink(); loadPageBlocks(); });
+        document.getElementById('refresh-page-blocks').addEventListener('click', loadPageBlocks);
+
+        document.getElementById('add-page-block').addEventListener('click', () => {
+            document.getElementById('page-block-id').value = '';
+            document.getElementById('page-block-page').value = document.getElementById('page-blocks-selector').value || 'index';
+            document.getElementById('page-block-section').value = '';
+            document.getElementById('page-block-key').value = '';
+            document.getElementById('page-block-type').value = 'text';
+            document.getElementById('page-block-label').value = '';
+            document.getElementById('page-block-value').value = '';
+            document.getElementById('page-block-sort').value = '0';
+            document.getElementById('page-block-published').checked = true;
+            document.getElementById('page-block-modal-title').textContent = '新增内容块';
+            document.getElementById('page-block-modal').classList.add('open');
+        });
+
+        document.getElementById('save-page-block').addEventListener('click', async () => {
+            const id = document.getElementById('page-block-id').value;
+            const page = document.getElementById('page-block-page').value.trim();
+            const section = document.getElementById('page-block-section').value.trim();
+            const key = document.getElementById('page-block-key').value.trim();
+            if (!page || !section || !key) { showToast('页面、区块和键名不能为空', 'error'); return; }
+            const body = {
+                page, section, key,
+                type: document.getElementById('page-block-type').value,
+                label: document.getElementById('page-block-label').value.trim(),
+                value: document.getElementById('page-block-value').value,
+                sort_order: parseInt(document.getElementById('page-block-sort').value, 10) || 0,
+                is_published: document.getElementById('page-block-published').checked ? 1 : 0
+            };
+            try {
+                const res = await api('/admin/api/page-blocks' + (id ? '/' + id : ''), { method: id ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+                if (handleUnauthorized(res)) return;
+                if (!res.ok) throw new Error(id ? '更新失败' : '创建失败');
+                closeModal('page-block-modal');
+                showToast(id ? '已更新' : '已创建');
+                document.getElementById('page-blocks-selector').value = page;
+                await loadPageBlocks();
+            } catch (e) {
+                showToast(e.message || '保存失败', 'error');
+            }
+        });
 
         // 站点配置
         const SETTINGS_CONTACT_KEYS = ['company_name','company_slogan','address','phone','email','work_time','service_regions','copyright_year'];
