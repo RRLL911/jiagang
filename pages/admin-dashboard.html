@@ -382,6 +382,7 @@
                     <label class="block text-sm font-medium mb-2">选择页面</label>
                     <select id="page-blocks-selector" class="w-full md:w-64 px-3 py-2 rounded-lg border border-[var(--jiagang-input)] bg-[var(--jiagang-background)] text-sm text-[var(--jiagang-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--jiagang-ring)]">
                         <option value="">请选择</option>
+                        <option value="global">全局站点（导航、页脚等）</option>
                         <option value="index">首页</option>
                         <option value="products">产品中心</option>
                         <option value="about">关于我们</option>
@@ -939,7 +940,7 @@
         document.getElementById('refresh-articles').addEventListener('click', loadArticles);
 
         // 页面内容
-        const PAGE_BLOCK_PAGE_URLS = { index: '../index.html', products: '../products.html', about: '../about.html', news: '../news.html', contact: '../contact.html', 'product-detail': '../product-detail.html', 'news-detail': '../news-detail.html' };
+        const PAGE_BLOCK_PAGE_URLS = { global: '../index.html', index: '../index.html', products: '../products.html', about: '../about.html', news: '../news.html', contact: '../contact.html', 'product-detail': '../product-detail.html', 'news-detail': '../news-detail.html' };
 
         function updatePageBlockPreviewLink() {
             const page = document.getElementById('page-blocks-selector').value || 'index';
@@ -996,6 +997,7 @@
                                     </div>
                                     <div class="flex items-center gap-2 shrink-0">
                                         <label class="inline-flex items-center gap-1.5 text-xs"><input type="checkbox" class="block-published w-4 h-4 rounded border-[var(--jiagang-input)]" ${b.is_published ? 'checked' : ''}> 显示</label>
+                                        <button class="edit-block-btn px-2.5 py-1 text-xs rounded-md border border-[var(--jiagang-border)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)]">编辑</button>
                                         <button class="save-block-btn px-2.5 py-1 text-xs rounded-md bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)]">保存</button>
                                         <button class="delete-block-btn px-2.5 py-1 text-xs rounded-md border border-[var(--state-error)] text-[var(--state-error)] hover:bg-red-50">删除</button>
                                     </div>
@@ -1025,6 +1027,25 @@
                         } catch (e) {
                             showToast(e.message || '保存失败', 'error');
                         }
+                    });
+                });
+
+                container.querySelectorAll('.edit-block-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const card = btn.closest('[data-block-id]');
+                        const b = blocks.find(x => String(x.id) === card.dataset.blockId);
+                        if (!b) return;
+                        document.getElementById('page-block-id').value = b.id;
+                        document.getElementById('page-block-page').value = b.page;
+                        document.getElementById('page-block-section').value = b.section;
+                        document.getElementById('page-block-key').value = b.key;
+                        document.getElementById('page-block-type').value = b.type || 'text';
+                        document.getElementById('page-block-label').value = b.label || '';
+                        document.getElementById('page-block-value').value = b.value || '';
+                        document.getElementById('page-block-sort').value = b.sort_order || 0;
+                        document.getElementById('page-block-published').checked = b.is_published ? true : false;
+                        document.getElementById('page-block-modal-title').textContent = '编辑内容块';
+                        document.getElementById('page-block-modal').classList.add('open');
                     });
                 });
 

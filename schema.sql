@@ -291,7 +291,42 @@ INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_
 
 -- 默认文章详情页内容
 INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
-('news-detail', 'hero', 'title', 'text', '文章详情', '文章详情标题', 1);
+('news-detail', 'hero', 'title', 'text', '文章详情', '文章详情标题', 1),
+('news-detail', 'common', 'loading_text', 'text', '加载文章中...', '加载提示', 2);
+
+-- 全局站点内容（导航、页脚、面包屑共用文案等）
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('global', 'header', 'nav_home', 'text', '首页', '导航-首页', 1),
+('global', 'header', 'nav_about', 'text', '关于我们', '导航-关于我们', 2),
+('global', 'header', 'nav_products', 'text', '产品中心', '导航-产品中心', 3),
+('global', 'header', 'nav_news', 'text', '技术资讯', '导航-技术资讯', 4),
+('global', 'header', 'nav_contact', 'text', '联系我们', '导航-联系我们', 5),
+('global', 'footer', 'links_title', 'text', '快速链接', '页脚-链接标题', 1),
+('global', 'footer', 'contact_title', 'text', '联系方式', '页脚-联系标题', 2),
+('global', 'footer', 'link_home', 'text', '首页', '页脚-首页', 3),
+('global', 'footer', 'link_about', 'text', '关于我们', '页脚-关于我们', 4),
+('global', 'footer', 'link_products', 'text', '产品中心', '页脚-产品中心', 5),
+('global', 'footer', 'link_contact', 'text', '联系我们', '页脚-联系我们', 6),
+('global', 'footer', 'copyright_suffix', 'text', '版权所有', '页脚-版权后缀', 7);
+
+-- 首页补充内容块
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('index', 'cta', 'placeholder_name', 'text', '您的称呼', 'CTA表单-姓名占位', 1),
+('index', 'cta', 'placeholder_phone', 'text', '联系电话', 'CTA表单-电话占位', 2),
+('index', 'products', 'view_detail', 'text', '了解详情', '产品卡片-了解详情', 3);
+
+-- 产品详情页补充内容块
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('product-detail', 'common', 'contact_btn', 'text', '获取报价', '联系按钮', 1),
+('product-detail', 'common', 'back_btn', 'text', '返回产品中心', '返回按钮', 2);
+
+-- 联系表单选项
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('contact', 'form', 'option_1', 'text', '设备选型咨询', '需求类型1', 1),
+('contact', 'form', 'option_2', 'text', '技改方案', '需求类型2', 2),
+('contact', 'form', 'option_3', 'text', '配件报价', '需求类型3', 3),
+('contact', 'form', 'option_4', 'text', '技术服务', '需求类型4', 4),
+('contact', 'form', 'option_5', 'text', '其他', '需求类型5', 5);
 
 -- 索引
 CREATE INDEX IF NOT EXISTS idx_contacts_status ON contacts(status);
