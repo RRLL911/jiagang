@@ -1,0 +1,214 @@
+// 管理后台 API：初始化页面内容块默认值
+// POST /admin/api/page-blocks/seed
+// 将 seed-page-blocks.sql 中的默认值写入 page_blocks 表（INSERT OR IGNORE）。
+import { requireAuth, jsonResponse } from '../../../_shared.js';
+
+const DEFAULT_PAGE_BLOCKS_SQL = `
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('index', 'meta', 'title', 'text', '唐山嘉港环保科技有限公司 - 选煤选矿设备研发制造', '首页 - 页面标题', 0),
+('index', 'hero', 'title', 'text', '选煤选矿装备<br/>研发制造一体化服务商', '首页 - 首屏横幅 - 主标题', 1),
+('index', 'hero', 'subtitle', 'text', '立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备，服务山西、陕西、内蒙古、河北等产煤带。', '首页 - 首屏横幅 - 副标题', 2),
+('index', 'hero', 'tag', 'text', '国家级高新技术企业', '首页 - 首屏横幅 - 左上角标签', 3),
+('index', 'hero', 'cta_primary', 'text', '浏览产品', '首页 - 首屏横幅 - 主按钮文字', 4),
+('index', 'hero', 'cta_secondary', 'text', '技术咨询', '首页 - 首屏横幅 - 次按钮文字', 5),
+('index', 'hero', 'background_image', 'image', '', '首页 - 首屏横幅 - 背景图', 6),
+('index', 'products', 'title', 'text', '核心产品', '首页 - 产品展示区 - 标题', 1),
+('index', 'products', 'subtitle', 'text', '覆盖选煤厂“分选+脱水”主工艺段', '首页 - 产品展示区 - 副标题', 2),
+('index', 'products', 'view_detail', 'text', '了解详情', '首页 - 产品展示区 - 卡片按钮文字', 3),
+('index', 'stats', 'title', 'text', '关于嘉港环保', '首页 - 数据简介区 - 标题', 1),
+('index', 'stats', 'intro', 'text', '唐山嘉港环保科技有限公司成立于2018年，位于河北省遵化市新店子镇平东线北侧，注册资金100万元。厂区占地3万平方米、建筑面积1万平方米，现有员工120余人，其中技术人员40人、高级工程师8人。', '首页 - 数据简介区 - 公司简介段落', 2),
+('index', 'stats', 'highlight_1', 'text', '2024 年获评国家级高新技术企业', '首页 - 数据简介区 - 亮点 1', 3),
+('index', 'stats', 'highlight_2', 'text', '2025 年获河北省创新型中小企业认定', '首页 - 数据简介区 - 亮点 2', 4),
+('index', 'stats', 'highlight_3', 'text', '筛篮、筛网、筛板等易耗件自产，年产筛网约1万㎡', '首页 - 数据简介区 - 亮点 3', 5),
+('index', 'stats', 'more_text', 'text', '了解更多', '首页 - 数据简介区 - 了解更多按钮', 6),
+('index', 'stats', 'stat_1_value', 'text', '8', '首页 - 数据简介区 - 数据卡片 1 数值', 7),
+('index', 'stats', 'stat_1_label', 'text', '高级工程师', '首页 - 数据简介区 - 数据卡片 1 标签', 8),
+('index', 'stats', 'stat_2_value', 'text', '40', '首页 - 数据简介区 - 数据卡片 2 数值', 9),
+('index', 'stats', 'stat_2_label', 'text', '技术人员', '首页 - 数据简介区 - 数据卡片 2 标签', 10),
+('index', 'stats', 'stat_3_value', 'text', '3万㎡', '首页 - 数据简介区 - 数据卡片 3 数值', 11),
+('index', 'stats', 'stat_3_label', 'text', '厂区占地', '首页 - 数据简介区 - 数据卡片 3 标签', 12),
+('index', 'stats', 'stat_4_value', 'text', '1万㎡', '首页 - 数据简介区 - 数据卡片 4 数值', 13),
+('index', 'stats', 'stat_4_label', 'text', '建筑面积', '首页 - 数据简介区 - 数据卡片 4 标签', 14),
+('index', 'features', 'title', 'text', '服务优势', '首页 - 服务优势区 - 标题', 1),
+('index', 'features', 'subtitle', 'text', '从研发设计到技改服务，全链路闭环', '首页 - 服务优势区 - 副标题', 2),
+('index', 'features', 'feature_1_title', 'text', '研发设计', '首页 - 服务优势区 - 优势 1 标题', 3),
+('index', 'features', 'feature_1_desc', 'text', '按煤质与现场工况定制设备改型，专利覆盖离心机布料锥、刮刀焊接辅助等核心结构。', '首页 - 服务优势区 - 优势 1 描述', 4),
+('index', 'features', 'feature_2_title', 'text', '精密制造', '首页 - 服务优势区 - 优势 2 标题', 5),
+('index', 'features', 'feature_2_desc', 'text', '机加工、铆焊、铸造、热处理、动平衡校验全流程自控，确保出厂负载试验合格。', '首页 - 服务优势区 - 优势 2 描述', 6),
+('index', 'features', 'feature_3_title', 'text', '技改服务', '首页 - 服务优势区 - 优势 3 标题', 7),
+('index', 'features', 'feature_3_desc', 'text', '老厂离心机换代、浮选段扩容、筛网筛篮常年供货，响应快、责任单一。', '首页 - 服务优势区 - 优势 3 描述', 8),
+('index', 'cta', 'title', 'text', '需要选型或技改方案？', '首页 - 底部 CTA - 标题', 1),
+('index', 'cta', 'subtitle', 'text', '留下您的需求，我们的技术团队将在 24 小时内与您联系。', '首页 - 底部 CTA - 副标题', 2),
+('index', 'cta', 'placeholder_name', 'text', '您的称呼', '首页 - 底部 CTA - 姓名占位文字', 3),
+('index', 'cta', 'placeholder_phone', 'text', '联系电话', '首页 - 底部 CTA - 电话占位文字', 4),
+('index', 'cta', 'button_text', 'text', '提交', '首页 - 底部 CTA - 提交按钮', 5);
+
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('products', 'meta', 'title', 'text', '产品中心 - 唐山嘉港环保科技有限公司', '产品中心 - 页面标题', 0),
+('products', 'hero', 'title', 'text', '产品中心', '产品中心 - 顶部横幅 - 标题', 1),
+('products', 'hero', 'subtitle', 'text', '覆盖选煤厂“分选+脱水”主工艺段，单机与成套设备可按煤质定制。', '产品中心 - 顶部横幅 - 副标题', 2),
+('products', 'hero', 'background_image', 'image', '', '产品中心 - 顶部横幅 - 背景图', 3),
+('products', 'parts', 'title', 'text', '配件供应能力', '产品中心 - 配件产能区 - 标题', 1),
+('products', 'parts', 'stat_1_value', 'text', '1200件', '产品中心 - 配件产能区 - 数据卡片 1 数值', 2),
+('products', 'parts', 'stat_1_label', 'text', '筛篮年产能', '产品中心 - 配件产能区 - 数据卡片 1 标签', 3),
+('products', 'parts', 'stat_2_value', 'text', '1万㎡', '产品中心 - 配件产能区 - 数据卡片 2 数值', 4),
+('products', 'parts', 'stat_2_label', 'text', '不锈钢焊接筛网年产能', '产品中心 - 配件产能区 - 数据卡片 2 标签', 5),
+('products', 'parts', 'stat_3_value', 'text', '4000㎡', '产品中心 - 配件产能区 - 数据卡片 3 数值', 6),
+('products', 'parts', 'stat_3_label', 'text', '筛板年产能', '产品中心 - 配件产能区 - 数据卡片 3 标签', 7);
+
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('about', 'meta', 'title', 'text', '关于我们 - 唐山嘉港环保科技有限公司', '关于我们 - 页面标题', 0),
+('about', 'hero', 'title', 'text', '关于嘉港环保', '关于我们 - 顶部横幅 - 标题', 1),
+('about', 'hero', 'subtitle', 'text', '扎根唐山遵化，服务全国选煤选矿行业，以研发设计、精密制造、配件自供、技改服务构建全链路竞争力。', '关于我们 - 顶部横幅 - 副标题', 2),
+('about', 'intro', 'title', 'text', '企业简介', '关于我们 - 企业简介区 - 标题', 1),
+('about', 'intro', 'content', 'html', '<p>唐山嘉港环保科技有限公司成立于2018年11月30日，位于河北省遵化市新店子镇平东线北侧，注册资金100万元。公司厂区占地3万平方米、建筑面积1万平方米，现有员工120余人，其中技术人员40人、高级工程师8人。</p><p>公司主营业务覆盖选煤、选矿设备的研发、设计、制造、销售，以及配套配件供应与工程技术服务。产品主要包括LL-A系列立式刮刀卸料离心脱水机、机械搅拌式浮选机、跳汰机及成套设备、旋流器及旋流器组、高频筛与弧形筛等。</p><p>与纯组装型煤机厂最大的区别在于，嘉港环保的筛篮、不锈钢焊接筛网、筛板等易耗件实现自产，拥有两条专业筛网生产线，年产筛网约1万㎡，能够为客户提供更快的配件响应与更稳定的供货保障。</p>', '关于我们 - 企业简介区 - 正文内容', 2),
+('about', 'intro', 'image', 'image', '', '关于我们 - 企业简介区 - 图片', 3),
+('about', 'company', 'title', 'text', '企业信息', '关于我们 - 企业信息区 - 标题', 1),
+('about', 'company', 'label_1', 'text', '公司全称', '关于我们 - 企业信息区 - 第 1 行标签', 2),
+('about', 'company', 'value_1', 'text', '唐山嘉港环保科技有限公司', '关于我们 - 企业信息区 - 第 1 行值', 3),
+('about', 'company', 'label_2', 'text', '成立时间', '关于我们 - 企业信息区 - 第 2 行标签', 4),
+('about', 'company', 'value_2', 'text', '2018年11月30日', '关于我们 - 企业信息区 - 第 2 行值', 5),
+('about', 'company', 'label_3', 'text', '注册资本', '关于我们 - 企业信息区 - 第 3 行标签', 6),
+('about', 'company', 'value_3', 'text', '100万元', '关于我们 - 企业信息区 - 第 3 行值', 7),
+('about', 'company', 'label_4', 'text', '注册地址', '关于我们 - 企业信息区 - 第 4 行标签', 8),
+('about', 'company', 'value_4', 'text', '河北省遵化市新店子镇平东线北侧', '关于我们 - 企业信息区 - 第 4 行值', 9),
+('about', 'company', 'label_5', 'text', '法定代表人', '关于我们 - 企业信息区 - 第 5 行标签', 10),
+('about', 'company', 'value_5', 'text', '杨巧娟', '关于我们 - 企业信息区 - 第 5 行值', 11),
+('about', 'company', 'label_6', 'text', '员工规模', '关于我们 - 企业信息区 - 第 6 行标签', 12),
+('about', 'company', 'value_6', 'text', '120余人', '关于我们 - 企业信息区 - 第 6 行值', 13),
+('about', 'company', 'label_7', 'text', '厂区占地', '关于我们 - 企业信息区 - 第 7 行标签', 14),
+('about', 'company', 'value_7', 'text', '3万平方米', '关于我们 - 企业信息区 - 第 7 行值', 15),
+('about', 'mission', 'title', 'text', '资质荣誉', '关于我们 - 资质荣誉区 - 标题', 1),
+('about', 'honors', 'honor_1_title', 'text', '国家级高新技术企业', '关于我们 - 资质荣誉区 - 荣誉 1 标题', 1),
+('about', 'honors', 'honor_1_desc', 'text', '2024 年获评，技术实力获国家级认可。', '关于我们 - 资质荣誉区 - 荣誉 1 描述', 2),
+('about', 'honors', 'honor_2_title', 'text', '河北省创新型中小企业', '关于我们 - 资质荣誉区 - 荣誉 2 标题', 3),
+('about', 'honors', 'honor_2_desc', 'text', '2025 年认定，持续推动产品迭代。', '关于我们 - 资质荣誉区 - 荣誉 2 描述', 4),
+('about', 'honors', 'honor_3_title', 'text', '自主知识产权专利', '关于我们 - 资质荣誉区 - 荣誉 3 标题', 5),
+('about', 'honors', 'honor_3_desc', 'text', '离心机布料锥、刮刀焊接辅助等结构专利。', '关于我们 - 资质荣誉区 - 荣誉 3 描述', 6),
+('about', 'vision', 'title', 'text', '制造与质控', '关于我们 - 制造质控区 - 标题', 1),
+('about', 'vision', 'content', 'text', '从毛坯到装配，闭环在厂里', '关于我们 - 制造质控区 - 副标题', 2),
+('about', 'process', 'process_1_title', 'text', '机加工', '关于我们 - 制造流程区 - 流程 1 标题', 1),
+('about', 'process', 'process_1_desc', 'text', '动平衡试验机、车床、龙门铣、刨插钻磨齐全，关键件一次装夹成型。', '关于我们 - 制造流程区 - 流程 1 描述', 2),
+('about', 'process', 'process_2_title', 'text', '铆焊', '关于我们 - 制造流程区 - 流程 2 标题', 3),
+('about', 'process', 'process_2_desc', 'text', '数控火焰切割、剪板卷板、自动焊，槽体、筛篮、旋流器外壳自主焊接。', '关于我们 - 制造流程区 - 流程 2 描述', 4),
+('about', 'process', 'process_3_title', 'text', '铸造与热处理', '关于我们 - 制造流程区 - 流程 3 标题', 5),
+('about', 'process', 'process_3_desc', 'text', '高频炉、喷丸机，耐磨件热处理自主可控。', '关于我们 - 制造流程区 - 流程 3 描述', 6),
+('about', 'process', 'process_4_title', 'text', '质控链路', '关于我们 - 制造流程区 - 流程 4 标题', 7),
+('about', 'process', 'process_4_desc', 'text', '化学成分分析 → 无损探伤 → 空载/负载试验 → 出厂检验报告。', '关于我们 - 制造流程区 - 流程 4 描述', 8);
+
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('news', 'meta', 'title', 'text', '技术资讯 - 唐山嘉港环保科技有限公司', '技术资讯 - 页面标题', 0),
+('news', 'hero', 'title', 'text', '技术资讯', '技术资讯 - 顶部横幅 - 标题', 1),
+('news', 'hero', 'subtitle', 'text', '选煤设备技术解析、维护经验与行业动态。', '技术资讯 - 顶部横幅 - 副标题', 2),
+('news', 'hero', 'background_image', 'image', '', '技术资讯 - 顶部横幅 - 背景图', 3);
+
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('contact', 'meta', 'title', 'text', '联系我们 - 唐山嘉港环保科技有限公司', '联系我们 - 页面标题', 0),
+('contact', 'hero', 'title', 'text', '联系我们', '联系我们 - 顶部横幅 - 标题', 1),
+('contact', 'hero', 'subtitle', 'text', '无论您需要设备选型、技改方案还是配件报价，欢迎随时与我们联系。', '联系我们 - 顶部横幅 - 副标题', 2),
+('contact', 'hero', 'background_image', 'image', '', '联系我们 - 顶部横幅 - 背景图', 3),
+('contact', 'info', 'title', 'text', '在线留言', '联系我们 - 联系信息区 - 左侧标题', 1),
+('contact', 'info', 'form_intro', 'text', '填写以下信息，我们的技术团队将在 24 小时内与您联系。', '联系我们 - 联系信息区 - 表单说明', 2),
+('contact', 'info', 'label_name', 'text', '您的称呼 *', '联系我们 - 联系信息区 - 姓名标签', 3),
+('contact', 'info', 'label_phone', 'text', '联系电话 *', '联系我们 - 联系信息区 - 电话标签', 4),
+('contact', 'info', 'label_company', 'text', '公司名称', '联系我们 - 联系信息区 - 公司标签', 5),
+('contact', 'info', 'label_type', 'text', '需求类型', '联系我们 - 联系信息区 - 需求类型标签', 6),
+('contact', 'info', 'label_message', 'text', '需求描述', '联系我们 - 联系信息区 - 需求描述标签', 7),
+('contact', 'info', 'submit_text', 'text', '提交留言', '联系我们 - 联系信息区 - 提交按钮', 8),
+('contact', 'info', 'address_title', 'text', '公司地址', '联系我们 - 联系信息区 - 地址标题', 9),
+('contact', 'info', 'address_value', 'text', '河北省遵化市新店子镇平东线北侧', '联系我们 - 联系信息区 - 地址内容', 10),
+('contact', 'info', 'phone_title', 'text', '联系电话', '联系我们 - 联系信息区 - 电话标题', 11),
+('contact', 'info', 'phone_value', 'text', '0315-0000000', '联系我们 - 联系信息区 - 电话内容', 12),
+('contact', 'info', 'email_title', 'text', '电子邮箱', '联系我们 - 联系信息区 - 邮箱标题', 13),
+('contact', 'info', 'email_value', 'text', 'contact@jiagang.cn', '联系我们 - 联系信息区 - 邮箱内容', 14),
+('contact', 'info', 'service_title', 'text', '服务区域', '联系我们 - 联系信息区 - 服务区域标题', 15),
+('contact', 'info', 'service_content', 'text', '嘉港环保设备主要销往山西、陕西、内蒙古、河北等产煤带，同时覆盖铁、金及非金属矿的筛分脱水领域。', '联系我们 - 联系信息区 - 服务区域说明', 16),
+('contact', 'info', 'service_item_1', 'text', '新建选煤厂成套主机供应', '联系我们 - 联系信息区 - 服务项目 1', 17),
+('contact', 'info', 'service_item_2', 'text', '老厂技改与设备换代', '联系我们 - 联系信息区 - 服务项目 2', 18),
+('contact', 'info', 'service_item_3', 'text', '筛网筛篮等易耗件常年供货', '联系我们 - 联系信息区 - 服务项目 3', 19),
+('contact', 'info', 'service_item_4', 'text', '现场技术调试与培训', '联系我们 - 联系信息区 - 服务项目 4', 20),
+('contact', 'info', 'work_time_title', 'text', '工作时间', '联系我们 - 联系信息区 - 工作时间标题', 21),
+('contact', 'info', 'work_time', 'text', '周一至周六 08:00–17:30', '联系我们 - 联系信息区 - 工作时间内容', 22),
+('contact', 'info', 'map_embed', 'html', '', '联系我们 - 联系信息区 - 地图嵌入代码', 23);
+
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('product-detail', 'meta', 'title', 'text', '产品详情 - 唐山嘉港环保科技有限公司', '产品详情 - 页面标题', 0),
+('product-detail', 'overview', 'title', 'text', '产品概述', '产品详情 - 产品概述区 - 标题', 1),
+('product-detail', 'features', 'title', 'text', '结构特点', '产品详情 - 结构特点区 - 标题', 1),
+('product-detail', 'parameters', 'title', 'text', '典型技术参数', '产品详情 - 技术参数区 - 标题', 1),
+('product-detail', 'parameters', 'header_item', 'text', '项目', '产品详情 - 技术参数区 - 表头项目', 2),
+('product-detail', 'parameters', 'header_value', 'text', '参数', '产品详情 - 技术参数区 - 表头参数', 3),
+('product-detail', 'parameters', 'disclaimer', 'text', '* 具体型号参数以实际技术协议为准，可拨打 0315-0000000 获取详细选型手册。', '产品详情 - 技术参数区 - 底部说明', 4),
+('product-detail', 'common', 'contact_btn', 'text', '获取报价', '产品详情 - 通用 - 获取报价按钮', 1),
+('product-detail', 'common', 'back_btn', 'text', '返回产品中心', '产品详情 - 通用 - 返回按钮', 2);
+
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('news-detail', 'meta', 'title', 'text', '文章详情 - 唐山嘉港环保科技有限公司', '文章详情 - 页面标题', 0),
+('news-detail', 'hero', 'title', 'text', '文章详情', '文章详情 - 顶部横幅 - 标题', 1),
+('news-detail', 'common', 'loading_text', 'text', '加载文章中...', '文章详情 - 加载提示', 2);
+
+INSERT OR IGNORE INTO page_blocks (page, section, key, type, value, label, sort_order) VALUES
+('global', 'header', 'company_name_short', 'text', '唐山嘉港环保科技', '全局 - 顶部导航 - 公司简称', 1),
+('global', 'header', 'company_slogan', 'text', '选煤选矿装备制造商', '全局 - 顶部导航 - 公司口号', 2),
+('global', 'header', 'nav_home', 'text', '首页', '全局 - 顶部导航 - 首页', 3),
+('global', 'header', 'nav_about', 'text', '关于我们', '全局 - 顶部导航 - 关于我们', 4),
+('global', 'header', 'nav_products', 'text', '产品中心', '全局 - 顶部导航 - 产品中心', 5),
+('global', 'header', 'nav_news', 'text', '技术资讯', '全局 - 顶部导航 - 技术资讯', 6),
+('global', 'header', 'nav_contact', 'text', '联系我们', '全局 - 顶部导航 - 联系我们', 7),
+('global', 'footer', 'company_name', 'text', '唐山嘉港环保科技有限公司', '全局 - 页脚 - 公司全称', 1),
+('global', 'footer', 'intro', 'text', '专注选煤选矿设备研发、设计、制造、销售及技术服务。', '全局 - 页脚 - 公司简介', 2),
+('global', 'footer', 'links_title', 'text', '快速链接', '全局 - 页脚 - 链接标题', 3),
+('global', 'footer', 'contact_title', 'text', '联系方式', '全局 - 页脚 - 联系标题', 4),
+('global', 'footer', 'link_home', 'text', '首页', '全局 - 页脚 - 首页链接', 5),
+('global', 'footer', 'link_about', 'text', '关于我们', '全局 - 页脚 - 关于我们链接', 6),
+('global', 'footer', 'link_products', 'text', '产品中心', '全局 - 页脚 - 产品中心链接', 7),
+('global', 'footer', 'link_contact', 'text', '联系我们', '全局 - 页脚 - 联系我们链接', 8),
+('global', 'footer', 'address', 'text', '河北省遵化市新店子镇平东线北侧', '全局 - 页脚 - 地址', 9),
+('global', 'footer', 'phone', 'text', '0315-0000000', '全局 - 页脚 - 电话', 10),
+('global', 'footer', 'email', 'text', 'contact@jiagang.cn', '全局 - 页脚 - 邮箱', 11),
+('global', 'footer', 'copyright_year', 'text', '2026', '全局 - 页脚 - 版权年份', 12),
+('global', 'footer', 'copyright_suffix', 'text', '版权所有', '全局 - 页脚 - 版权后缀', 13);
+`;
+
+const CREATE_PAGE_BLOCKS_TABLE = `
+  CREATE TABLE IF NOT EXISTS page_blocks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    page TEXT NOT NULL,
+    section TEXT NOT NULL,
+    key TEXT NOT NULL,
+    type TEXT NOT NULL DEFAULT 'text',
+    value TEXT,
+    label TEXT,
+    sort_order INTEGER NOT NULL DEFAULT 0,
+    is_published INTEGER NOT NULL DEFAULT 1,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(page, section, key)
+  )
+`;
+
+export async function onRequestPost(context) {
+  const { errorResponse } = await requireAuth(context);
+  if (errorResponse) return errorResponse;
+  const { env } = context;
+
+  try {
+    await env.DB.prepare(CREATE_PAGE_BLOCKS_TABLE).run();
+
+    const statements = DEFAULT_PAGE_BLOCKS_SQL
+      .replace(/^\s*INSERT OR IGNORE INTO page_blocks/, 'INSERT OR IGNORE INTO page_blocks')
+      .split(/;\s*\n/)
+      .map(s => s.trim())
+      .filter(s => s.length > 0 && s.startsWith('INSERT'));
+
+    let inserted = 0;
+    for (const sql of statements) {
+      const result = await env.DB.prepare(sql + ';').run();
+      inserted += result.meta?.changes || 0;
+    }
+
+    return jsonResponse({ success: true, inserted });
+  } catch (err) {
+    return jsonResponse({ error: '初始化失败', detail: err.message }, 500);
+  }
+}

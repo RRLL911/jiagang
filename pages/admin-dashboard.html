@@ -380,6 +380,7 @@
                         <button id="save-all-page-blocks" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--state-success)] text-white hover:opacity-90 transition-colors"><span data-lucide="save" class="w-4 h-4"></span>保存全部修改</button>
                         <button id="add-page-block" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--jiagang-primary)] text-white hover:bg-[var(--jiagang-primary-700)] transition-colors"><span data-lucide="plus" class="w-4 h-4"></span>新增内容块</button>
                         <button id="refresh-page-blocks" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="refresh-cw" class="w-4 h-4"></span>刷新</button>
+                        <button id="seed-page-blocks" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--jiagang-border)] bg-[var(--jiagang-card)] text-[var(--jiagang-foreground)] hover:bg-[var(--jiagang-muted)] transition-colors"><span data-lucide="database" class="w-4 h-4"></span>初始化默认内容</button>
                     </div>
                 </div>
 
@@ -1387,6 +1388,17 @@
 
         document.getElementById('page-blocks-selector').addEventListener('change', () => { updatePageBlockPreviewLink(); loadPageBlocks(); });
         document.getElementById('refresh-page-blocks').addEventListener('click', loadPageBlocks);
+        document.getElementById('seed-page-blocks').addEventListener('click', async () => {
+            if (!confirm('确定要初始化默认页面内容吗？\n\n这会把当前前端所有标题、文字、图片占位写入数据库，已存在的项目不会被覆盖。')) return;
+            try {
+                const res = await api('/admin/api/page-blocks/seed', { method: 'POST' });
+                if (handleUnauthorized(res)) return;
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || data.error || '初始化失败');
+                showToast(`已初始化 ${data.inserted || 0} 项默认内容`);
+                await loadPageBlocks();
+            } catch (e) { showToast(e.message || '初始化失败', 'error'); }
+        });
 
         document.getElementById('save-all-page-blocks').addEventListener('click', async () => {
             const cards = document.querySelectorAll('#page-blocks-form [data-block-id]');
