@@ -1,9 +1,9 @@
-------formdata-undici-043187717459
+------formdata-undici-094609356290
 Content-Disposition: form-data; name="metadata"
 
-{"main_module":"functionsWorker-0.47375485666290795.js"}
-------formdata-undici-043187717459
-Content-Disposition: form-data; name="functionsWorker-0.47375485666290795.js"; filename="functionsWorker-0.47375485666290795.js"
+{"main_module":"functionsWorker-0.455706708397545.js"}
+------formdata-undici-094609356290
+Content-Disposition: form-data; name="functionsWorker-0.455706708397545.js"; filename="functionsWorker-0.455706708397545.js"
 Content-Type: application/javascript+module
 
 var __defProp = Object.defineProperty;
@@ -406,7 +406,7 @@ async function onRequestDelete4(context) {
 }
 __name(onRequestDelete4, "onRequestDelete");
 
-// admin/api/articles.js
+// admin/api/articles/index.js
 var CREATE_ARTICLES_TABLE = `
   CREATE TABLE IF NOT EXISTS articles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -672,7 +672,7 @@ async function onRequestPost3(context) {
 }
 __name(onRequestPost3, "onRequestPost");
 
-// admin/api/products.js
+// admin/api/products/index.js
 var CREATE_PRODUCTS_TABLE = `
   CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1329,7 +1329,7 @@ async function onRequestGet14(context) {
 }
 __name(onRequestGet14, "onRequestGet");
 
-// ../.wrangler/tmp/pages-QnpZtW/functionsRoutes-0.2410445984537034.mjs
+// ../.wrangler/tmp/pages-9FFm6e/functionsRoutes-0.24516953169199207.mjs
 var routes = [
   {
     routePath: "/admin/api/articles/:id*",
@@ -1410,14 +1410,14 @@ var routes = [
   },
   {
     routePath: "/admin/api/articles",
-    mountPath: "/admin/api",
+    mountPath: "/admin/api/articles",
     method: "GET",
     middlewares: [],
     modules: [onRequestGet4]
   },
   {
     routePath: "/admin/api/articles",
-    mountPath: "/admin/api",
+    mountPath: "/admin/api/articles",
     method: "POST",
     middlewares: [],
     modules: [onRequestPost]
@@ -1445,14 +1445,14 @@ var routes = [
   },
   {
     routePath: "/admin/api/products",
-    mountPath: "/admin/api",
+    mountPath: "/admin/api/products",
     method: "GET",
     middlewares: [],
     modules: [onRequestGet6]
   },
   {
     routePath: "/admin/api/products",
-    mountPath: "/admin/api",
+    mountPath: "/admin/api/products",
     method: "POST",
     middlewares: [],
     modules: [onRequestPost4]
@@ -1978,4 +1978,4 @@ export {
   pages_template_worker_default as default
 };
 
-------formdata-undici-043187717459--
+------formdata-undici-094609356290--

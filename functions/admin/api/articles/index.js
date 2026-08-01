@@ -1,7 +1,7 @@
 // 管理后台 API：文章列表 / 创建
 // GET /admin/api/articles
 // POST /admin/api/articles
-import { requireAuth, jsonResponse } from '../../_shared.js';
+import { requireAuth, jsonResponse } from '../../../_shared.js';
 
 const CREATE_ARTICLES_TABLE = `
   CREATE TABLE IF NOT EXISTS articles (
